@@ -9,7 +9,8 @@ namespace HomeworkAi.OpenAi;
 
 public class OpenAiService(
     IOpenAIAPI openAiApi, 
-    IExercisePromptFormatter promptFormatter
+    IExercisePromptFormatter promptFormatter,
+    IExerciseFormatProvider formatProvider
     ) : IOpenAiService
 {
     private static Conversation? _exerciseChat;
@@ -36,11 +37,15 @@ public class OpenAiService(
     //TODO: add this method
     public async Task<ExerciseResponse> ExercisePromptSentence(ExercisePrompt exercisePrompt)
     {
+
         _exerciseChat ??= openAiApi.Chat.CreateConversation(); 
         //var chat = openAiApi.Chat.CreateConversation();
         var startMessage =
             promptFormatter.FormatStartingSystemMessage(exercisePrompt.MotherLanguage.Value, exercisePrompt.TargetLanguage.Value);
         _exerciseChat.AppendSystemMessage(startMessage);
+        var exerciseJsonFormat = formatProvider.FormatType(exercisePrompt.ExerciseType);
+        _exerciseChat.AppendUserInput(exercisePrompt.ToPrompt(exerciseJsonFormat));
+        var result = await _exerciseChat.GetResponseFromChatbotAsync();
         //TODO: only for test
         return new ExerciseResponse();
     }

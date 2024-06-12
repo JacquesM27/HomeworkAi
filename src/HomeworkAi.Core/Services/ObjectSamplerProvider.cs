@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text.Json;
 
@@ -7,30 +6,21 @@ namespace HomeworkAi.Core.Services;
 
 public class ObjectSamplerProvider : IObjectSamplerProvider
 {
-    private readonly ConcurrentDictionary<Type, object> _samples = [];
-    
+    private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };
     public string GetSampleJson(Type type)
     {
-        if (_samples.TryGetValue(type, out var readySample))
-            return SerializeToJson(readySample);
-
         var sample = GenerateSampleObject(type);
-        _samples.TryAdd(type, sample);
         return SerializeToJson(sample);
     }
 
     private static string SerializeToJson(object sample)
     {
-        return JsonSerializer.Serialize(sample, new JsonSerializerOptions { WriteIndented = true });
+        return JsonSerializer.Serialize(sample, Options);
     }
 
     public object GetSampleObject(Type type)
     {
-        if (_samples.TryGetValue(type, out var readySample))
-            return readySample;
-        
         var sample = GenerateSampleObject(type);
-        _samples.TryAdd(type, sample);
         return sample;
     }
     

@@ -14,7 +14,7 @@ public abstract class ExercisePrompt
     public string SupportMaterial { get; set; }
     public string ExerciseType { get; set; }
 
-    public virtual string ToPrompt(string exerciseFormat)
+    public virtual string ToPrompt(string exerciseJsonFormat)
     {
         var propmpt =
             $"2. The language of the exercise is {TargetLanguage.Value}.\n" +
@@ -41,7 +41,7 @@ public abstract class ExercisePrompt
 
         propmpt += $"""
                     9. Your responses should be structured in JSON format as follows:
-                    {exerciseFormat} ;
+                    {exerciseJsonFormat} ;
                     """;
         
         return propmpt;
@@ -53,7 +53,7 @@ public class OpenFormExercisePrompt : ExercisePrompt
     public string DescriptionOfExerciseContent { get; set; }
     public bool QuestionsInMotherLanguage { get; set; }
 
-    public override string ToPrompt(string exerciseFormat)
+    public override string ToPrompt(string exerciseJsonFormat)
     {
         var propmpt = "1. This is open form exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided.";
         // I think it could be made in other way
@@ -66,7 +66,7 @@ public class OpenFormExercisePrompt : ExercisePrompt
         };
 
         propmpt += "\n";
-        propmpt += base.ToPrompt(exerciseFormat);
+        propmpt += base.ToPrompt(exerciseJsonFormat);
 
         return propmpt;
     }
@@ -77,7 +77,7 @@ public class OpenAnswerExercisePrompt : ExercisePrompt
     public int AmountOfSentences { get; set; }
     public bool AnswersInMotherLanguage { get; set; } = false;
     
-    public override string ToPrompt(string exerciseFormat)
+    public override string ToPrompt(string exerciseJsonFormat)
     {
         const int conditionalDenominator = 4;
         var result = (double)AmountOfSentences / conditionalDenominator;
@@ -86,7 +86,7 @@ public class OpenAnswerExercisePrompt : ExercisePrompt
         var propmpt = "1. This is open answer exercise.";
         propmpt += ExerciseType switch
         {
-            "SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. ",
+            "SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. Sentences must be in {(AnswersInMotherLanguage ? TargetLanguage : MotherLanguage)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage : TargetLanguage)}.",
             "SentenceWithVerbToCompleteBasedOnInfinitive" => $" You need to generate {AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with \"____\".",
             "IrregularVerbs" => $" You need to generate {AmountOfSentences} irregular verbs with translation in mother language.",
             "QuestionsToTextOpen" => $" You need to generate a text according to the following requirements and {AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " +
@@ -99,7 +99,7 @@ public class OpenAnswerExercisePrompt : ExercisePrompt
             "MissingWordOrExpressionOpen" => $" You need to generate {AmountOfSentences} sentences in which to cut out a word or expression. Record the sentence in the CorrectSentence field. Record the correct word or phrase that will be cut in the CorrectWordOrExpression field. In addition, in the SentenceWithUnderscoreInsteadOfWordOrExpression field, write a sentence in which you will replace the word or phrase with ___. ",
             _ => throw new InvalidOperationException("type of exercise is not valid")
         };
-        return propmpt + base.ToPrompt(exerciseFormat);
+        return propmpt + base.ToPrompt(exerciseJsonFormat);
     }
 }
 
@@ -109,7 +109,7 @@ public class ClosedExercisePrompt : ExercisePrompt
     public bool QuestionsInMotherLanguage { get; set; } = false;
     public bool AnswersInMotherLanguage { get; set; } = false;
     
-    public override string ToPrompt(string exerciseFormat)
+    public override string ToPrompt(string exerciseJsonFormat)
     {
         const int conditionalDenominator = 4;
         var result = (double)AmountOfSentences / conditionalDenominator;
@@ -117,7 +117,7 @@ public class ClosedExercisePrompt : ExercisePrompt
 
         if (ExerciseType == "SentenceFormationClosed")
         {
-            return $" 1. You need to generate {roundedResult} sentences according to the other requirements." + base.ToPrompt(exerciseFormat);
+            return $" 1. You need to generate {roundedResult} sentences according to the other requirements." + base.ToPrompt(exerciseJsonFormat);
         }
         
         var propmpt = "1. This is closed answer exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors).";
@@ -135,6 +135,6 @@ public class ClosedExercisePrompt : ExercisePrompt
             "MissingWordOrExpressionClosed" => $" You need to generate {AmountOfSentences} sentences in which to cut out a word or expression. Replace word or expression with \"___\". Then generate 3 or 4 answers (one answer must be a cut word or expression from the original sentence), remember that only one of the answers must be correct.",
             _ => throw new InvalidOperationException("type of exercise is not valid")
         };
-        return propmpt + base.ToPrompt(exerciseFormat);
+        return propmpt + base.ToPrompt(exerciseJsonFormat);
     }
 }

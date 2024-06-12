@@ -1,3 +1,4 @@
+using HomeworkAi.Core.Services;
 using HomeworkAi.OpenAi;
 using OpenAI_API;
 
@@ -16,6 +17,9 @@ builder.Services.AddScoped<IOpenAIAPI>(serviceProvider =>
     return new OpenAIAPI(apiKey);
 });
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
+builder.Services.AddScoped<IObjectSamplerProvider, ObjectSamplerProvider>();
+builder.Services.AddScoped<IExercisePromptFormatter, ExercisePromptFormatter>();
+builder.Services.AddScoped<IExerciseFormatProvider, ExerciseFormatProvider>();
 
 var app = builder.Build();
 

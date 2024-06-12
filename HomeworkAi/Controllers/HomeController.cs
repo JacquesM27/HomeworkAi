@@ -14,16 +14,13 @@ public class HomeController(IOpenAiService openAiService) : ControllerBase
         return Ok("test");
     }
     
-    [HttpGet("/gpt")]
-    public async Task<ActionResult> HelloGpt(string text)
+    [HttpPost("/gpt")]
+    public async Task<ActionResult> HelloGpt(OpenAnswerExercisePrompt text)
     {
-        if (String.IsNullOrEmpty(text))
-        {
-            return BadRequest();
-        }
         try
         {
-            var response = await openAiService.CompleteSentence(text);
+            //TODO: add normal methods and prompt injection validation
+            var response = await openAiService.ExercisePromptSentence(text);
             return Ok(response);
         }
         catch (Exception ex)

@@ -1,28 +1,30 @@
 ﻿namespace HomeworkAi.Core.DTO.Exercises;
 
-
-public class QuestionsToTextClosed : Exercise
+public abstract class ClosedAnswerExercise : Exercise
+{
+}
+public class QuestionsToTextClosed : ClosedAnswerExercise
 {
     public string Text { get; set; }
     public List<ClosedQuestion> Questions { get; set; }
 }
 
-public class PassiveSideClosed : Exercise
+public class PassiveSideClosed : ClosedAnswerExercise
 {
     public List<ClosedQuestion> Sentences { get; set; }
 }
 
-public class ParaphrasingClosed : Exercise
+public class ParaphrasingClosed : ClosedAnswerExercise
 {
     public List<ClosedQuestion> Sentences { get; set; }
 }
 
-public class AnswerToQuestionClosed : Exercise
+public class AnswerToQuestionClosed : ClosedAnswerExercise
 {
     public List<ClosedQuestion> Sentences { get; set; }
 }
 
-public class ConditionalClosed : Exercise
+public class ConditionalClosed : ClosedAnswerExercise
 {
     public List<ClosedQuestion> ZeroConditionalSentences { get; set; }
     public List<ClosedQuestion> FirstConditionalSentences { get; set; }
@@ -30,7 +32,7 @@ public class ConditionalClosed : Exercise
     public List<ClosedQuestion> ThirdConditionalSentences { get; set; }
 }
 
-public class SentenceFormationClosed : Exercise
+public class SentenceFormationClosed : ClosedAnswerExercise
 {
     public List<Sentence> Sentences { get; set; }
     
@@ -41,7 +43,7 @@ public class SentenceFormationClosed : Exercise
     }
 }
 
-public class WordMeaning : Exercise
+public class WordMeaning : ClosedAnswerExercise
 {
     public List<CorrectMeaning> CorrectMeanings { get; set; }
 
@@ -52,12 +54,12 @@ public class WordMeaning : Exercise
     }
 }
 
-public class PhrasalVerbsTranslating : Exercise
+public class PhrasalVerbsTranslating : ClosedAnswerExercise
 {
     public List<ClosedQuestion> SentenceWithPhrasalVerb { get; set; }
 }
 
-public class MissingPhrasalVerbsClosed : Exercise
+public class MissingPhrasalVerbsClosed : ClosedAnswerExercise
 {
     public List<SentenceWithPhrasalVerb> SentencesWithPhrasalVerb { get; set; }
     public class SentenceWithPhrasalVerb
@@ -67,7 +69,7 @@ public class MissingPhrasalVerbsClosed : Exercise
     }
 }
 
-public class MissingWordOrExpressionClosed : Exercise
+public class MissingWordOrExpressionClosed : ClosedAnswerExercise
 {
     public List<SentenceWithMisingWordOrExpression> SentencesWithMisingWordOrExpression { get; set; }
     public class SentenceWithMisingWordOrExpression
