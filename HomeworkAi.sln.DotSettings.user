@@ -1,0 +1,10 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=22e8de9a_002D0985_002D4c8e_002Db617_002D2d77e581e7cb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetSampleJson_ReturnsCorrectJson" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Services.ObjectSamplerProviderTests.GetSampleJson_ReturnsCorrectJson&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Services.ObjectSamplerProviderTests.GetSampleJson_ReturnsCorrectJObject&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Services.ObjectSamplerProviderTests.GetSampleObject_ReturnsCorrectObject&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Services.ObjectSamplerProviderTests.GetSampleJson_CachesResult&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Extensions.ReflectionExtensionsTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
