@@ -1,4 +1,4 @@
-﻿using HomeworkAi.Core.Entities;
+﻿using HomeworkAi.Core.ValueObjects;
 
 namespace HomeworkAi.Core.DTO.Exercises;
 

@@ -3,7 +3,7 @@ using HomeworkAi.Core.DTO.Exercises;
 
 namespace HomeworkAi.Core.Services;
 
-public class ExercisePromptFormatter : IExercisePromptFormatter
+public class PromptFormatter : IPromptFormatter
 {
     public string FormatPromptWithExercise(ExercisePrompt prompt) //TODO: add this method
     {

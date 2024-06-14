@@ -1,16 +1,11 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using HomeworkAi.Core.Cache;
 
 namespace HomeworkAi.Core.Services;
 
-public interface IExerciseFormatProvider
-{
-    public string FormatType(string exerciseType);
-}
-
-public class ExerciseFormatProvider(
-    IObjectSamplerProvider objectSamplerProvider,
-    IApplicationMemoryCache applicationMemoryCache) : IExerciseFormatProvider
+public class ExerciseFormatService(
+    IObjectSamplerService objectSamplerService,
+    IApplicationMemoryCache applicationMemoryCache) : IExerciseFormatService
 {
     private static readonly ConcurrentDictionary<string, string> ExerciseTypes = [];
     
@@ -20,9 +15,9 @@ public class ExerciseFormatProvider(
             return json;
 
         var type = applicationMemoryCache.GetExerciseType(exerciseType)
-            ?? throw new ArgumentOutOfRangeException();//TODO: custom class
+                   ?? throw new ArgumentOutOfRangeException();//TODO: custom class
 
-        var sample = objectSamplerProvider.GetSampleJson(type);
+        var sample = objectSamplerService.GetSampleJson(type);
         ExerciseTypes.TryAdd(exerciseType, sample);
         return sample;
     }

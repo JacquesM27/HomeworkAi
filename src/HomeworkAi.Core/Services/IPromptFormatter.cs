@@ -2,7 +2,7 @@
 
 namespace HomeworkAi.Core.Services;
 
-public interface IExercisePromptFormatter
+public interface IPromptFormatter
 {
     string FormatPromptWithExercise(ExercisePrompt prompt);
     string FormatStartingSystemMessage(string motherLanguage, string targetLanguage);

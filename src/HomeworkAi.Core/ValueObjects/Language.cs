@@ -1,4 +1,4 @@
-﻿namespace HomeworkAi.Core.Entities;
+﻿namespace HomeworkAi.Core.ValueObjects;
 
 public sealed class Language
 {

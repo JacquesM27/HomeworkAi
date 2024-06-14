@@ -1,7 +1,7 @@
 ﻿using HomeworkAi.Core.DTO.Exercises;
 using OpenAI_API.Completions;
 
-namespace HomeworkAi.OpenAi;
+namespace HomeworkAi.Core.Services.OpenAi;
 
 public interface IOpenAiService
 {

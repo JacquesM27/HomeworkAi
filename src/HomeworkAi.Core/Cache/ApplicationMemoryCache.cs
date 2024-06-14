@@ -1,7 +1,6 @@
 using System.Collections.Frozen;
 using HomeworkAi.Core.DTO.Exercises;
-using HomeworkAi.Core.Entities;
-using Microsoft.Extensions.Caching.Memory;
+using HomeworkAi.Core.ValueObjects;
 
 namespace HomeworkAi.Core.Cache;
 

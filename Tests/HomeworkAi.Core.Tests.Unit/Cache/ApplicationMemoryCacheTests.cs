@@ -1,6 +1,6 @@
 ﻿using HomeworkAi.Core.Cache;
 using HomeworkAi.Core.DTO.Exercises;
-using HomeworkAi.Core.Entities;
+using HomeworkAi.Core.ValueObjects;
 using Shouldly;
 
 namespace HomeworkAi.Core.Tests.Unit.Cache;

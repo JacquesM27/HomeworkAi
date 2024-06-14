@@ -1,16 +1,15 @@
 ﻿using HomeworkAi.Core.DTO.Exercises;
-using HomeworkAi.Core.Services;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAI_API.Completions;
 using OpenAI_API.Models;
 
-namespace HomeworkAi.OpenAi;
+namespace HomeworkAi.Core.Services.OpenAi;
 
 public class OpenAiService(
     IOpenAIAPI openAiApi, 
-    IExercisePromptFormatter promptFormatter,
-    IExerciseFormatProvider formatProvider
+    IPromptFormatter promptFormatter,
+    IExerciseFormatService formatService
     ) : IOpenAiService
 {
     private static Conversation? _exerciseChat;
@@ -43,7 +42,7 @@ public class OpenAiService(
         var startMessage =
             promptFormatter.FormatStartingSystemMessage(exercisePrompt.MotherLanguage.Value, exercisePrompt.TargetLanguage.Value);
         _exerciseChat.AppendSystemMessage(startMessage);
-        var exerciseJsonFormat = formatProvider.FormatType(exercisePrompt.ExerciseType);
+        var exerciseJsonFormat = formatService.FormatType(exercisePrompt.ExerciseType);
         _exerciseChat.AppendUserInput(exercisePrompt.ToPrompt(exerciseJsonFormat));
         var result = await _exerciseChat.GetResponseFromChatbotAsync();
         //TODO: only for test

@@ -1,5 +1,5 @@
 using HomeworkAi.Core.Services;
-using HomeworkAi.OpenAi;
+using HomeworkAi.Core.Services.OpenAi;
 using OpenAI_API;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +14,9 @@ builder.Services.AddSwaggerGen();
 var apiKey = builder.Configuration["gptApiKey"];
 builder.Services.AddScoped<IOpenAIAPI>(serviceProvider => new OpenAIAPI(apiKey));
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
-builder.Services.AddScoped<IObjectSamplerProvider, ObjectSamplerProvider>();
-builder.Services.AddScoped<IExercisePromptFormatter, ExercisePromptFormatter>();
-builder.Services.AddScoped<IExerciseFormatProvider, ExerciseFormatProvider>();
+builder.Services.AddScoped<IObjectSamplerService, ObjectSamplerService>();
+builder.Services.AddScoped<IPromptFormatter, PromptFormatter>();
+builder.Services.AddScoped<IExerciseFormatService, ExerciseFormatService>();
 
 var app = builder.Build();
 
