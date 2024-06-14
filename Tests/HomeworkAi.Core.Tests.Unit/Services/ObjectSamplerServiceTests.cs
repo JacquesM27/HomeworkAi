@@ -80,7 +80,7 @@ public class ObjectSamplerServiceTests
     public void GetStringValues_ShouldThrowArgumentNullException_WhenObjectIsNull()
     {
         // Arrange
-        object obj = null;
+        object? obj = null;
 
         // Act
         Action act = () => _service.GetStringValues(obj);
@@ -195,22 +195,22 @@ public class ObjectSamplerServiceTests
 
     private class ClassWithStrings
     {
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
+        public string? Field1 { get; set; }
+        public string? Field2 { get; set; }
+        public string? Field3 { get; set; }
     }
 
     private class ClassWithVariousTypes
     {
-        public string StringField { get; set; }
+        public string? StringField { get; set; }
         public int IntField { get; set; }
         public DateTime DateTimeField { get; set; }
-        public NestedClass NestedField { get; set; }
+        public NestedClass? NestedField { get; set; }
     }
 
     private class NestedClass
     {
-        public string NestedStringField { get; set; }
+        public string? NestedStringField { get; set; }
     }
 
     private record RecordWithStrings(string Field1, string Field2, int IntField);
