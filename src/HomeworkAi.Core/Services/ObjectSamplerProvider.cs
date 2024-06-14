@@ -33,13 +33,13 @@ public class ObjectSamplerProvider : IObjectSamplerProvider
 
         if (type.IsValueType)
         {
-            return Activator.CreateInstance(type);
+            return Activator.CreateInstance(type)!;
         }
 
         if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
         {
             var listType = type.GetGenericArguments()[0];
-            var list = (IList)Activator.CreateInstance(type);
+            var list = (IList)Activator.CreateInstance(type)!;
             list.Add(GenerateSampleObject(listType));
             return list;
         }
@@ -53,6 +53,6 @@ public class ObjectSamplerProvider : IObjectSamplerProvider
             }
         }
 
-        return obj;
+        return obj!;
     }
 }

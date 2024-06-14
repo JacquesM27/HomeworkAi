@@ -12,10 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var apiKey = builder.Configuration["gptApiKey"];
-builder.Services.AddScoped<IOpenAIAPI>(serviceProvider =>
-{
-    return new OpenAIAPI(apiKey);
-});
+builder.Services.AddScoped<IOpenAIAPI>(serviceProvider => new OpenAIAPI(apiKey));
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IObjectSamplerProvider, ObjectSamplerProvider>();
 builder.Services.AddScoped<IExercisePromptFormatter, ExercisePromptFormatter>();

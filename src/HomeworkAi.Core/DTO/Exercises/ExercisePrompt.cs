@@ -30,7 +30,7 @@ public abstract class ExercisePrompt
             propmpt += $"6. The main topic of the sentences in the exercise is any.\n";
         
         if (!string.IsNullOrWhiteSpace(GrammarSection))
-            propmpt += $"7. The exercise must be based on the grammatical element - {GrammarSection}. Remember to adjust the level of the grammatical element to the level of the exercise.\n";
+            propmpt += $"7. The exercise must be based on the grammatical element - {GrammarSection}. Remember to adjust the level of the grammatical element to the level of the exercise. Don't create sentences using other grammatical elements.\n";
         else
             propmpt += $"7. No grammatical elements are imposed top-down in the exercise. However, you can emphasize them keeping in mind the level of language proficiency.\n";
 
@@ -103,7 +103,7 @@ public class OpenAnswerExercisePrompt : ExercisePrompt
     }
 }
 
-public class ClosedExercisePrompt : ExercisePrompt
+public class ClosedAnswerExercisePrompt : ExercisePrompt
 {
     public int AmountOfSentences { get; set; }
     public bool QuestionsInMotherLanguage { get; set; } = false;

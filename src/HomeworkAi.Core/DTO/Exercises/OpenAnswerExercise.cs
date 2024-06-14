@@ -5,12 +5,12 @@ public abstract class OpenAnswerExercise : Exercise
 {
 }
 
-public class SentencesTranscription : Exercise
+public class SentencesTranscription : OpenAnswerExercise
 {
     public List<string> Sentences { get; set; }
 }
 
-public class SentenceWithVerbToCompleteBasedOnInfinitive : Exercise
+public class SentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExercise
 {
     public List<Sentence> Sentences { get; set; }
     
@@ -22,7 +22,7 @@ public class SentenceWithVerbToCompleteBasedOnInfinitive : Exercise
     }
 }
 
-public class SentenceWithVerbToComplete : Exercise
+public class SentenceWithVerbToComplete : OpenAnswerExercise
 {
     public List<Sentence> Sentences { get; set; }
     
@@ -33,7 +33,7 @@ public class SentenceWithVerbToComplete : Exercise
     }
 }
 
-public class IrregularVerbs : Exercise
+public class IrregularVerbs : OpenAnswerExercise
 {
     public List<Verb> Verbs { get; set; }
     public bool ShowMotherLanguage { get; set; }
@@ -48,18 +48,18 @@ public class IrregularVerbs : Exercise
     }
 }
 
-public class QuestionsToTextOpen : Exercise
+public class QuestionsToTextOpen : OpenAnswerExercise
 {
     public string Text { get; set; }
     public List<string> Questions { get; set; }
 }
 
-public class PassiveSideOpen : Exercise
+public class PassiveSideOpen : OpenAnswerExercise
 {
     public List<string> Sentences { get; set; }
 }
 
-public class ParaphrasingOpen : Exercise
+public class ParaphrasingOpen : OpenAnswerExercise
 {
     public List<SentenceWithParaphrasing> Sentences { get; set; }
     
@@ -70,12 +70,12 @@ public class ParaphrasingOpen : Exercise
     }
 }
 
-public class AnswerToQuestionOpen : Exercise
+public class AnswerToQuestionOpen : OpenAnswerExercise
 {
     public List<string> Sentences { get; set; }
 }
 
-public class ConditionalOpen : Exercise
+public class ConditionalOpen : OpenAnswerExercise
 {
     public List<string> ZeroConditionalSentences { get; set; }
     public List<string> FirstConditionalSentences { get; set; }
@@ -83,7 +83,7 @@ public class ConditionalOpen : Exercise
     public List<string> ThirdConditionalSentences { get; set; }
 }
 
-public class MissingPhrasalVerbsOpen : Exercise
+public class MissingPhrasalVerbsOpen : OpenAnswerExercise
 {
     public List<SentenceWithPhrasalVerb> SentencesWithPhrasalVerb { get; set; }
     public class SentenceWithPhrasalVerb
@@ -94,7 +94,7 @@ public class MissingPhrasalVerbsOpen : Exercise
     }
 }
 
-public class MissingWordOrExpressionOpen : Exercise
+public class MissingWordOrExpressionOpen : OpenAnswerExercise
 {
     public List<SentenceWithMisingWordOrExpression> SentencesWithMisingWordOrExpression { get; set; }
     public class SentenceWithMisingWordOrExpression

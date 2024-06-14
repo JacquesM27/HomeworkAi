@@ -1,6 +1,6 @@
 ﻿namespace HomeworkAi.Core.Entities;
 
-public class Language
+public sealed class Language
 {
     public string Value { get; }
     
@@ -9,7 +9,7 @@ public class Language
     public const string German = nameof(German);
     public const string Italian = nameof(Italian);
 
-    public static readonly string[] Languages = [ English, Polish, German, Italian ];
+    internal static readonly string[] Languages = [ English, Polish, German, Italian ];
 
     public Language(string value)
     {

@@ -6,5 +6,10 @@
     &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Services.ObjectSamplerProviderTests.GetSampleObject_ReturnsCorrectObject&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Services.ObjectSamplerProviderTests.GetSampleJson_CachesResult&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Extensions.ReflectionExtensionsTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Cache.ApplicationMemoryCacheTests.GetExerciseType_ShouldReturnCorrectType&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Cache.ApplicationMemoryCacheTests.GetExerciseType_ShouldNotReturnCorrectType&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Cache.ApplicationMemoryCacheTests.GetClosedAnswerExercises_ShouldHasAllDerivedNames&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Cache.ApplicationMemoryCacheTests.GetOpenAnswerAnswerExercises_ShouldHasAllDerivedNames&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::167A494C-CD82-4D56-B690-5AC59862D2EA::net8.0::HomeworkAi.Core.Tests.Unit.Cache.ApplicationMemoryCacheTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
