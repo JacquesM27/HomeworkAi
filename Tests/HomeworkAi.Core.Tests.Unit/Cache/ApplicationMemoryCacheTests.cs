@@ -95,7 +95,7 @@ public class ApplicationMemoryCacheTests
     }
 
     [Fact]
-    public void GetOpenFormExercises_ShouldHasAllDerviedNames()
+    public void GetOpenFormExercises_ShouldHasAllDerivedNames()
     {
         // Arrange
         List<string> exercises =
