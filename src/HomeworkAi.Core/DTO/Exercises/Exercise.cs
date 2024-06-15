@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-
-namespace HomeworkAi.Core.DTO.Exercises;
+﻿namespace HomeworkAi.Core.DTO.Exercises;
 
 public abstract class Exercise
 {

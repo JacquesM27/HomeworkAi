@@ -1,5 +1,4 @@
-﻿using System.Text;
-using HomeworkAi.Core.DTO.Exercises;
+﻿using HomeworkAi.Core.DTO.Exercises;
 
 namespace HomeworkAi.Core.Services;
 
