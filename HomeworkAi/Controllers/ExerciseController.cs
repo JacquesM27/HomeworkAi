@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using HomeworkAi.Core.Attributes;
 using HomeworkAi.Core.DTO.Exercises;
 using HomeworkAi.Core.Services.OpenAi;
+using HomeworkAi.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeworkAi.Controllers;

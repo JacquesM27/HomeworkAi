@@ -20,7 +20,6 @@ public class ObjectSamplerService : IObjectSamplerService
 
     public string GetStringValues(object? obj)
     {
-        //TODO: add custom exception
         ArgumentNullException.ThrowIfNull(obj);
 
         var type = obj.GetType();

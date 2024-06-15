@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using HomeworkAi.Core.Cache;
+using HomeworkAi.Core.Exceptions;
 
 namespace HomeworkAi.Core.Services;
 
@@ -15,7 +16,7 @@ public class ExerciseFormatService(
             return json;
 
         var type = applicationMemoryCache.GetExerciseType(exerciseType)
-                   ?? throw new ArgumentOutOfRangeException();//TODO: custom class
+                   ?? throw new InvalidExerciseTypeException(exerciseType);
 
         var sample = objectSamplerService.GetSampleJson(type);
         ExerciseTypes.TryAdd(exerciseType, sample);

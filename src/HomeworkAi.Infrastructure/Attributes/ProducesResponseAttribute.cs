@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HomeworkAi.Core.Attributes;
+namespace HomeworkAi.Infrastructure.Attributes;
 
 /// <summary>
 /// A custom filter that specifies the type of the value and status code returned by the action.

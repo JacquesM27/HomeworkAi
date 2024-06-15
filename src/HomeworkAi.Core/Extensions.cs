@@ -1,6 +1,8 @@
 ﻿using HomeworkAi.Core.Cache;
 using HomeworkAi.Core.Services;
 using HomeworkAi.Core.Services.OpenAi;
+using HomeworkAi.Infrastructure;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAI_API;
@@ -22,6 +24,16 @@ public static class Extensions
         services.AddTransient<IPromptFormatter, PromptFormatter>();
         services.AddScoped<IExerciseFormatService, ExerciseFormatService>();
 
+        services.AddInfrastructure();
+        
+        
         return services;
+    }
+
+    public static WebApplication UseCore(this WebApplication app)
+    {
+        app.UseInfrastructure();
+
+        return app;
     }
 }
