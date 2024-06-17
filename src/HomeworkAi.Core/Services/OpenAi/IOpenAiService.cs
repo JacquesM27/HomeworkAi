@@ -8,5 +8,5 @@ public interface IOpenAiService
     Task<CompletionResult> CompleteSentence(string text);
     Task<string> GetChatConversations(string text);
     Task<ExerciseResponse> ExercisePromptSentence(ExercisePrompt exercisePrompt);
-    Task<bool> IsUserPromptAvoidOriginTopic(string topic);
+    Task<bool> IsUserPromptAvoidOriginTopic(ExercisePrompt exercisePrompt);
 }

@@ -9,7 +9,8 @@ namespace HomeworkAi.Core.Services.OpenAi;
 public class OpenAiService(
     IOpenAIAPI openAiApi, 
     IPromptFormatter promptFormatter,
-    IExerciseFormatService formatService
+    IExerciseFormatService formatService,
+    IObjectSamplerService objectSamplerService
     ) : IOpenAiService
 {
     private static Conversation? _exerciseChat;
@@ -49,9 +50,14 @@ public class OpenAiService(
         return new ExerciseResponse();
     }
 
-    public async Task<bool> IsUserPromptAvoidOriginTopic(string topic)
+    public async Task<bool> IsUserPromptAvoidOriginTopic(ExercisePrompt exercisePrompt)
     {
+        var startMessage = promptFormatter.FormatValidationSystemMessage();
         _promptSecurityChat ??= openAiApi.Chat.CreateConversation();
+        _promptSecurityChat.AppendSystemMessage(startMessage);
+        var exercise = $"\nExercise prompt: \"{objectSamplerService.GetStringValues(exercisePrompt)}\"";
+        _promptSecurityChat.AppendUserInput(exercise);
+        var result = await _promptSecurityChat.GetResponseFromChatbotAsync();
         //TODO: only for test
         return true;
     }

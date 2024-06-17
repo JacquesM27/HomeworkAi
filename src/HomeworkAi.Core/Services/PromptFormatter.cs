@@ -50,6 +50,6 @@ public class PromptFormatter : IPromptFormatter
           {
               "isSuspicious": true/false,
               "reasons": ["Reason 1", "Reason 2"]
-          }    
+          }
           """;
 }
