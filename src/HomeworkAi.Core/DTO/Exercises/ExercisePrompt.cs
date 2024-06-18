@@ -55,9 +55,9 @@ public class OpenFormExercisePrompt : ExercisePrompt
 
     public override string ToPrompt(string exerciseJsonFormat)
     {
-        var propmpt = "1. This is open form exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided.";
+        var prompt = "1. This is open form exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided.";
         // I think it could be made in other way
-        propmpt += ExerciseType switch
+        prompt += ExerciseType switch
         {
             "MailExercise" => " You need to generate a short description of the email to be written by the student.",
             "Essay" => " You need to generate a short essay topic to be written by the student.",
@@ -65,10 +65,10 @@ public class OpenFormExercisePrompt : ExercisePrompt
             _ => throw new InvalidOperationException("type of exercise is not valid")
         };
 
-        propmpt += "\n";
-        propmpt += base.ToPrompt(exerciseJsonFormat);
+        prompt += "\n";
+        prompt += base.ToPrompt(exerciseJsonFormat);
 
-        return propmpt;
+        return prompt;
     }
 }
 
@@ -83,8 +83,8 @@ public class OpenAnswerExercisePrompt : ExercisePrompt
         var result = (double)AmountOfSentences / conditionalDenominator;
         var roundedResult = (int)Math.Ceiling(result);
         
-        var propmpt = "1. This is open answer exercise.";
-        propmpt += ExerciseType switch
+        var prompt = "1. This is open answer exercise.";
+        prompt += ExerciseType switch
         {
             "SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. Sentences must be in {(AnswersInMotherLanguage ? TargetLanguage : MotherLanguage)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage : TargetLanguage)}.",
             "SentenceWithVerbToCompleteBasedOnInfinitive" => $" You need to generate {AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with \"____\".",
@@ -99,7 +99,7 @@ public class OpenAnswerExercisePrompt : ExercisePrompt
             "MissingWordOrExpressionOpen" => $" You need to generate {AmountOfSentences} sentences in which to cut out a word or expression. Record the sentence in the CorrectSentence field. Record the correct word or phrase that will be cut in the CorrectWordOrExpression field. In addition, in the SentenceWithUnderscoreInsteadOfWordOrExpression field, write a sentence in which you will replace the word or phrase with ___. ",
             _ => throw new InvalidOperationException("type of exercise is not valid")
         };
-        return propmpt + base.ToPrompt(exerciseJsonFormat);
+        return prompt + base.ToPrompt(exerciseJsonFormat);
     }
 }
 
@@ -120,8 +120,8 @@ public class ClosedAnswerExercisePrompt : ExercisePrompt
             return $" 1. You need to generate {roundedResult} sentences according to the other requirements." + base.ToPrompt(exerciseJsonFormat);
         }
         
-        var propmpt = "1. This is closed answer exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors).";
-        propmpt += ExerciseType switch
+        var prompt = "1. This is closed answer exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors).";
+        prompt += ExerciseType switch
         {
             "QuestionsToTextClosed" => $" You need to generate a text according to the following requirements and {AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " + 
                                        $"Questions for the text have to be in {(QuestionsInMotherLanguage ? "the student's mother language" : "a language consistent with the language of the task")}. Answers for the text have to be in {(AnswersInMotherLanguage ? "the student's mother language" : "a language consistent with the language of the task")}. Remember - only one answer must be correct.",
@@ -135,6 +135,6 @@ public class ClosedAnswerExercisePrompt : ExercisePrompt
             "MissingWordOrExpressionClosed" => $" You need to generate {AmountOfSentences} sentences in which to cut out a word or expression. Replace word or expression with \"___\". Then generate 3 or 4 answers (one answer must be a cut word or expression from the original sentence), remember that only one of the answers must be correct.",
             _ => throw new InvalidOperationException("type of exercise is not valid")
         };
-        return propmpt + base.ToPrompt(exerciseJsonFormat);
+        return prompt + base.ToPrompt(exerciseJsonFormat);
     }
 }

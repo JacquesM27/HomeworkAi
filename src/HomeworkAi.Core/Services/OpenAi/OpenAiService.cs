@@ -1,4 +1,5 @@
 ﻿using HomeworkAi.Core.DTO.Exercises;
+using HomeworkAi.Core.Exceptions;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAI_API.Completions;
@@ -37,6 +38,8 @@ public class OpenAiService(
     //TODO: add this method
     public async Task<ExerciseResponse> ExercisePromptSentence(ExercisePrompt exercisePrompt)
     {
+        if (await IsUserPromptAvoidOriginTopic(exercisePrompt))
+            throw new PromptInjectionException();
 
         _exerciseChat ??= openAiApi.Chat.CreateConversation(); 
         //var chat = openAiApi.Chat.CreateConversation();
@@ -46,8 +49,20 @@ public class OpenAiService(
         var exerciseJsonFormat = formatService.FormatType(exercisePrompt.ExerciseType);
         _exerciseChat.AppendUserInput(exercisePrompt.ToPrompt(exerciseJsonFormat));
         var result = await _exerciseChat.GetResponseFromChatbotAsync();
+        var deserialized = formatService.DeserializeExercise(result, exercisePrompt.ExerciseType);
+        // var response = new ExerciseResponse()
+        // {
+        //     Exercise = deserialized,
+        //     ExerciseHeaderInMotherLanguage = exercisePrompt.ExerciseHeaderInMotherLanguage,
+        //     MotherLanguage = exercisePrompt.MotherLanguage,
+        //     TargetLanguage = exercisePrompt.TargetLanguage,
+        //     TargetLanguageLevel = exercisePrompt.TargetLanguageLevel,
+        //     TopicsOfSentences = exercisePrompt.TopicsOfSentences,
+        //     GrammarSection = exercisePrompt.GrammarSection,
+        //     SupportMaterial = exercisePrompt.SupportMaterial
+        // };
         //TODO: only for test
-        return new ExerciseResponse();
+        return new OpenFormExerciseResponse();
     }
 
     public async Task<bool> IsUserPromptAvoidOriginTopic(ExercisePrompt exercisePrompt)
@@ -58,7 +73,7 @@ public class OpenAiService(
         var exercise = $"\nExercise prompt: \"{objectSamplerService.GetStringValues(exercisePrompt)}\"";
         _promptSecurityChat.AppendUserInput(exercise);
         var result = await _promptSecurityChat.GetResponseFromChatbotAsync();
-        //TODO: only for test
-        return true;
+        var deserialized = formatService.DeserializeSuspiciousPrompt(result);
+        return deserialized.IsSuspicious;
     }
 }

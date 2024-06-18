@@ -18,4 +18,6 @@ public sealed class Language
         
         Value = value;
     }
+
+    public static implicit operator Language(string language) => new (language);
 }

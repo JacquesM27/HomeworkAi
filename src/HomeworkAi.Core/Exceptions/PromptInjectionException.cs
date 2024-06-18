@@ -2,5 +2,5 @@
 
 namespace HomeworkAi.Core.Exceptions;
 
-public sealed class PromptInjectionException(string type)
+public sealed class PromptInjectionException()
     : CustomException($"Prompt contains an invalid injection value."); 
