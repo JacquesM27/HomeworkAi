@@ -11,7 +11,8 @@ public class OpenAiService(
     IOpenAIAPI openAiApi, 
     IPromptFormatter promptFormatter,
     IExerciseFormatService formatService,
-    IObjectSamplerService objectSamplerService
+    IObjectSamplerService objectSamplerService,
+    IExerciseResponseFactory responseFactory
     ) : IOpenAiService
 {
     private static Conversation? _exerciseChat;
@@ -35,14 +36,12 @@ public class OpenAiService(
         return response;
     }
 
-    //TODO: add this method
     public async Task<ExerciseResponse> ExercisePromptSentence(ExercisePrompt exercisePrompt)
     {
         if (await IsUserPromptAvoidOriginTopic(exercisePrompt))
             throw new PromptInjectionException();
 
         _exerciseChat ??= openAiApi.Chat.CreateConversation(); 
-        //var chat = openAiApi.Chat.CreateConversation();
         var startMessage =
             promptFormatter.FormatStartingSystemMessage(exercisePrompt.MotherLanguage.Value, exercisePrompt.TargetLanguage.Value);
         _exerciseChat.AppendSystemMessage(startMessage);
@@ -50,19 +49,8 @@ public class OpenAiService(
         _exerciseChat.AppendUserInput(exercisePrompt.ToPrompt(exerciseJsonFormat));
         var result = await _exerciseChat.GetResponseFromChatbotAsync();
         var deserialized = formatService.DeserializeExercise(result, exercisePrompt.ExerciseType);
-        // var response = new ExerciseResponse()
-        // {
-        //     Exercise = deserialized,
-        //     ExerciseHeaderInMotherLanguage = exercisePrompt.ExerciseHeaderInMotherLanguage,
-        //     MotherLanguage = exercisePrompt.MotherLanguage,
-        //     TargetLanguage = exercisePrompt.TargetLanguage,
-        //     TargetLanguageLevel = exercisePrompt.TargetLanguageLevel,
-        //     TopicsOfSentences = exercisePrompt.TopicsOfSentences,
-        //     GrammarSection = exercisePrompt.GrammarSection,
-        //     SupportMaterial = exercisePrompt.SupportMaterial
-        // };
-        //TODO: only for test
-        return new OpenFormExerciseResponse();
+        var response = responseFactory.CreateResponse(deserialized, exercisePrompt);
+        return response;
     }
 
     public async Task<bool> IsUserPromptAvoidOriginTopic(ExercisePrompt exercisePrompt)
