@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\HomeworkAi.Core\HomeworkAi.Core.csproj" />
+      <ProjectReference Include="..\src\HomeworkAi.Modules.OpenAi\HomeworkAi.Modules.OpenAi.csproj" />
     </ItemGroup>
 
 </Project>

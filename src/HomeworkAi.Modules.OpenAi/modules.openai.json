@@ -1,0 +1,8 @@
+﻿{
+  "openai": {
+    "module": {
+      "name": "OpenAi",
+      "enabled": true
+    }
+  }
+}

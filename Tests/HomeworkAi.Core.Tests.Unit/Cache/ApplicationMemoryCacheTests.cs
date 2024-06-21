@@ -1,6 +1,6 @@
 ﻿using HomeworkAi.Core.Cache;
-using HomeworkAi.Core.DTO.Exercises;
-using HomeworkAi.Core.ValueObjects;
+using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.Contracts.ValueObjects;
 using Shouldly;
 
 namespace HomeworkAi.Core.Tests.Unit.Cache;
@@ -100,7 +100,7 @@ public class ApplicationMemoryCacheTests
         // Arrange
         List<string> exercises =
         [
-            nameof(MailExercise),
+            nameof(Mail),
             nameof(Essay),
             nameof(SummaryOfText),
         ];

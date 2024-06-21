@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using HomeworkAi.Core.DTO.Exercises;
 using HomeworkAi.Core.Services;
+using HomeworkAi.Modules.Contracts.Exercises;
 using Shouldly;
 
 namespace HomeworkAi.Core.Tests.Unit.Services;

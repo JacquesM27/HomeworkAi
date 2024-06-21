@@ -1,12 +1,13 @@
-﻿using HomeworkAi.Core.DTO.Exercises;
+﻿using HomeworkAi.Core.Exercises;
 using HomeworkAi.Core.Services.OpenAi;
+using HomeworkAi.Modules.Contracts.Exercises;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeworkAi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class HomeController(IOpenAiService openAiService) : ControllerBase
+public class HomeController(IOpenAiExerciseService openAiExerciseService) : ControllerBase
 {
     [HttpGet]
     public ActionResult<string> Hello()
@@ -15,12 +16,12 @@ public class HomeController(IOpenAiService openAiService) : ControllerBase
     }
     
     [HttpPost("/gpt")]
-    public async Task<ActionResult> HelloGpt(OpenAnswerExercisePrompt text)
+    public async Task<ActionResult> HelloGpt(OpenAnswerExercisePromptOld text)
     {
         try
         {
             //TODO: add normal methods and prompt injection validation
-            var response = await openAiService.ExercisePromptSentence(text);
+            var response = await openAiExerciseService.PromptForExercise(text);
             return Ok(response);
         }
         catch (Exception ex)
@@ -30,7 +31,7 @@ public class HomeController(IOpenAiService openAiService) : ControllerBase
     }
 
     [HttpGet("test")]
-    public async Task<ActionResult> Hello(OpenAnswerExercisePrompt prompt)
+    public async Task<ActionResult> Hello(OpenAnswerExercisePromptOld promptOld)
     {
         return Ok();
     }

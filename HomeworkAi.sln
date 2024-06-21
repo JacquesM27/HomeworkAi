@@ -4,13 +4,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi", "HomeworkAi\Ho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8D55839C-E90D-4A4B-833D-A9F354EFFD08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Core", "src\HomeworkAi.Core\HomeworkAi.Core.csproj", "{D6336779-D46D-4421-930A-C884062070F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Modules.OpenAi", "src\HomeworkAi.Modules.OpenAi\HomeworkAi.Modules.OpenAi.csproj", "{D6336779-D46D-4421-930A-C884062070F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8E4631DB-829E-41F2-8E29-9B28092D5080}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Core.Tests.Unit", "Tests\HomeworkAi.Core.Tests.Unit\HomeworkAi.Core.Tests.Unit.csproj", "{167A494C-CD82-4D56-B690-5AC59862D2EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Infrastructure", "src\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj", "{B358E6D4-76C3-4365-94D5-C32277462FFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Modules.Contracts", "src\HomeworkAi.Modules.Contracts\HomeworkAi.Modules.Contracts.csproj", "{28EBF9AF-AB8C-4C44-A481-3BA259196A3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +36,15 @@ Global
 		{B358E6D4-76C3-4365-94D5-C32277462FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B358E6D4-76C3-4365-94D5-C32277462FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B358E6D4-76C3-4365-94D5-C32277462FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EBF9AF-AB8C-4C44-A481-3BA259196A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EBF9AF-AB8C-4C44-A481-3BA259196A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EBF9AF-AB8C-4C44-A481-3BA259196A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EBF9AF-AB8C-4C44-A481-3BA259196A3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D6336779-D46D-4421-930A-C884062070F0} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
 		{167A494C-CD82-4D56-B690-5AC59862D2EA} = {8E4631DB-829E-41F2-8E29-9B28092D5080}
 		{B358E6D4-76C3-4365-94D5-C32277462FFB} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
+		{28EBF9AF-AB8C-4C44-A481-3BA259196A3A} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
 	EndGlobalSection
 EndGlobal
