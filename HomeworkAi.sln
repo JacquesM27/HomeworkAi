@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Modules.OpenAi",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8E4631DB-829E-41F2-8E29-9B28092D5080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Core.Tests.Unit", "Tests\HomeworkAi.Core.Tests.Unit\HomeworkAi.Core.Tests.Unit.csproj", "{167A494C-CD82-4D56-B690-5AC59862D2EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Modules.OpenAi.Tests.Unit", "Tests\HomeworkAi.Modules.OpenAi.Tests.Unit\HomeworkAi.Modules.OpenAi.Tests.Unit.csproj", "{167A494C-CD82-4D56-B690-5AC59862D2EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Infrastructure", "src\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj", "{B358E6D4-76C3-4365-94D5-C32277462FFB}"
 EndProject

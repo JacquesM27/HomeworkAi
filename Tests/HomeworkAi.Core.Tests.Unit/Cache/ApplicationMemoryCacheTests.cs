@@ -1,9 +1,9 @@
-﻿using HomeworkAi.Core.Cache;
+﻿using HomeworkAi.Modules.OpenAi.Cache;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Contracts.ValueObjects;
 using Shouldly;
 
-namespace HomeworkAi.Core.Tests.Unit.Cache;
+namespace HomeworkAi.Modules.OpenAi.Tests.Unit.Cache;
 
 public class ApplicationMemoryCacheTests
 {

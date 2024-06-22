@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using HomeworkAi.Core.Exercises;
-using HomeworkAi.Core.Services.OpenAi;
+using HomeworkAi.Modules.OpenAi.Exercises;
+using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 using HomeworkAi.Infrastructure.Attributes;
 using HomeworkAi.Modules.Contracts.Exercises;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +22,6 @@ public class ExerciseController(IOpenAiExerciseService openAiExerciseService) : 
     [HttpPost("/closed-answer")]
     [ProducesResponse(HttpStatusCode.OK, typeof(ExerciseResponseOld))]
     public async Task<ActionResult<ExerciseResponseOld>> ClosedAnswer(ClosedAnswerExercisePromptOld promptOld)
-    {
-        var response = await openAiExerciseService.PromptForExercise(promptOld);
-        return Ok(response);
-    }
-    
-    [HttpPost("/open-form")]
-    [ProducesResponse(HttpStatusCode.OK, typeof(ExerciseResponseOld))]
-    public async Task<ActionResult<ExerciseResponseOld>> OpenForm(OpenFormExercisePromptOld promptOld)
     {
         var response = await openAiExerciseService.PromptForExercise(promptOld);
         return Ok(response);

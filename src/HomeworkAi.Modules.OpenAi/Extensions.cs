@@ -1,18 +1,19 @@
 ﻿using System.Reflection;
-using HomeworkAi.Core.Cache;
-using HomeworkAi.Core.Services;
-using HomeworkAi.Core.Services.OpenAi;
+using HomeworkAi.Modules.OpenAi.Cache;
+using HomeworkAi.Modules.OpenAi.Services;
+using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 using HomeworkAi.Infrastructure;
+using HomeworkAi.Modules.OpenAi.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAI_API;
 
-namespace HomeworkAi.Core;
+namespace HomeworkAi.Modules.OpenAi;
 
 public static class Extensions
 {
-    public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration,
+    public static IServiceCollection AddOpenAi(this IServiceCollection services, IConfiguration configuration,
         IList<Assembly> assemblies)
     {
         //TODO: add configuration object
@@ -20,12 +21,11 @@ public static class Extensions
         services.AddScoped<IOpenAIAPI>(_ => new OpenAIAPI(apiKey));
         services.AddScoped<IOpenAiExerciseService, OpenAiExerciseService>();
 
-
         services.AddSingleton<IApplicationMemoryCache, ApplicationMemoryCache>();
         services.AddTransient<IObjectSamplerService, ObjectSamplerService>();
         services.AddTransient<IPromptFormatter, PromptFormatter>();
         services.AddTransient<IExerciseResponseFactory, ExerciseResponseFactory>();
-        services.AddScoped<IExerciseFormatService, ExerciseFormatService>();
+        services.AddScoped<IDeserializerService, DeserializerService>();
 
         services.AddInfrastructure(assemblies);
         
@@ -33,8 +33,11 @@ public static class Extensions
         return services;
     }
 
-    public static WebApplication UseCore(this WebApplication app)
+    public static WebApplication UseOpenAi(this WebApplication app)
     {
+        app
+            .AddOpenFormEndpoints()
+            .AddOpenAnswerEndpoints();
         app.UseInfrastructure();
 
         return app;

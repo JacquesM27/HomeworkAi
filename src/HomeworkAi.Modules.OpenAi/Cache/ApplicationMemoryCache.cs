@@ -2,7 +2,7 @@ using System.Collections.Frozen;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Contracts.ValueObjects;
 
-namespace HomeworkAi.Core.Cache;
+namespace HomeworkAi.Modules.OpenAi.Cache;
 
 public class ApplicationMemoryCache : IApplicationMemoryCache
 {

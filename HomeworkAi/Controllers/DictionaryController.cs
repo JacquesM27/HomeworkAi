@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using HomeworkAi.Core.Cache;
+using HomeworkAi.Modules.OpenAi.Cache;
 using HomeworkAi.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Mvc;
 

@@ -5,7 +5,7 @@ public abstract class OpenAnswerExercise : Exercise
 {
 }
 
-public class SentencesTranscription : OpenAnswerExercise
+public class SentencesTranslation : OpenAnswerExercise
 {
     public List<string> Sentences { get; set; }
 }

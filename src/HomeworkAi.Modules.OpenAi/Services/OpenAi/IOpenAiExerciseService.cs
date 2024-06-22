@@ -1,9 +1,9 @@
-﻿using HomeworkAi.Core.Exercises;
+﻿using HomeworkAi.Modules.OpenAi.Exercises;
 using HomeworkAi.Modules.Contracts;
 using HomeworkAi.Modules.Contracts.Exercises;
 using OpenAI_API.Completions;
 
-namespace HomeworkAi.Core.Services.OpenAi;
+namespace HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 public interface IOpenAiExerciseService
 {

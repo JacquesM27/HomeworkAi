@@ -1,4 +1,4 @@
-﻿namespace HomeworkAi.Core.Services;
+﻿namespace HomeworkAi.Modules.OpenAi.Services;
 
 public interface IObjectSamplerService
 {

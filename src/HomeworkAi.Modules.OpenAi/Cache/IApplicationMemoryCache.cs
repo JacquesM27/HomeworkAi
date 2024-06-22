@@ -1,4 +1,4 @@
-﻿namespace HomeworkAi.Core.Cache;
+﻿namespace HomeworkAi.Modules.OpenAi.Cache;
 
 public interface IApplicationMemoryCache
 {

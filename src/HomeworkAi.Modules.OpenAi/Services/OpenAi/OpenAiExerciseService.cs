@@ -1,5 +1,5 @@
-﻿using HomeworkAi.Core.Exceptions;
-using HomeworkAi.Core.Exercises;
+﻿using HomeworkAi.Modules.OpenAi.Exceptions;
+using HomeworkAi.Modules.OpenAi.Exercises;
 using HomeworkAi.Modules.Contracts;
 using HomeworkAi.Modules.Contracts.Exercises;
 using OpenAI_API;
@@ -7,12 +7,12 @@ using OpenAI_API.Chat;
 using OpenAI_API.Completions;
 using OpenAI_API.Models;
 
-namespace HomeworkAi.Core.Services.OpenAi;
+namespace HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 public class OpenAiExerciseService(
     IOpenAIAPI openAiApi, 
     IPromptFormatter promptFormatter,
-    IExerciseFormatService formatService,
+    IDeserializerService formatService,
     IObjectSamplerService objectSamplerService,
     IExerciseResponseFactory responseFactory
     ) : IOpenAiExerciseService

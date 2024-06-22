@@ -1,10 +1,10 @@
-﻿using HomeworkAi.Core.Commands;
+﻿using HomeworkAi.Modules.OpenAi.Commands;
 
-namespace HomeworkAi.Core.Services;
+namespace HomeworkAi.Modules.OpenAi.Services;
 
 public interface IPromptFormatter
 {
-    string FormatExercisePrompt(ExerciseCommandBase baseData);
+    string FormatExerciseBaseData(ExerciseQueryBase baseData);
     string FormatStartingSystemMessage(string motherLanguage, string targetLanguage);
     string FormatValidationSystemMessage();
     //TODO: add verification of the student's answers

@@ -13,13 +13,15 @@ public sealed class Language
 
     public Language(string value)
     {
-        if (!Languages.Contains(value))
+        var language = Languages.First(lang => lang.Equals(value, StringComparison.OrdinalIgnoreCase));
+        if (string.IsNullOrWhiteSpace(language))
             throw new ArgumentException($"Language must be selected from the range: {string.Join(",", Languages)}");
         
-        Value = value;
+        Value = language;
     }
 
     public override string ToString() => Value;
 
     public static implicit operator Language(string language) => new(language);
+    public static implicit operator string(Language language) => language.Value;
 }

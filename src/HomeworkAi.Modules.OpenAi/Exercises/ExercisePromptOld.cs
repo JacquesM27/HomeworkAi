@@ -1,6 +1,6 @@
 ﻿using HomeworkAi.Modules.Contracts.ValueObjects;
 
-namespace HomeworkAi.Core.Exercises;
+namespace HomeworkAi.Modules.OpenAi.Exercises;
 
 //TODO: to delete - replace it with service
 public abstract class ExercisePromptOld
@@ -54,30 +54,6 @@ public abstract class ExercisePromptOld
     }
 }
 
-public class OpenFormExercisePromptOld : ExercisePromptOld
-{
-    public string DescriptionOfExerciseContent { get; set; }
-    public bool QuestionsInMotherLanguage { get; set; }
-
-    public override string ToPrompt(string exerciseJsonFormat)
-    {
-        var prompt = "1. This is open form exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided.";
-        // I think it could be made in other way
-        prompt += ExerciseType switch
-        {
-            "MailExercise" => " You need to generate a short description of the email to be written by the student.",
-            "Essay" => " You need to generate a short essay topic to be written by the student.",
-            "SummaryOfText" => " You need to generate a story (about 10 sentences) to be summarized by the student.",
-            _ => throw new InvalidOperationException("type of exercise is not valid")
-        };
-
-        prompt += "\n";
-        prompt += base.ToPrompt(exerciseJsonFormat);
-
-        return prompt;
-    }
-}
-
 public class OpenAnswerExercisePromptOld : ExercisePromptOld
 {
     public int AmountOfSentences { get; set; }
@@ -92,7 +68,7 @@ public class OpenAnswerExercisePromptOld : ExercisePromptOld
         var prompt = "1. This is open answer exercise.";
         prompt += ExerciseType switch
         {
-            "SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. Sentences must be in {(AnswersInMotherLanguage ? TargetLanguage.Value : MotherLanguage.Value)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}.",
+            //"SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. Sentences must be in {(AnswersInMotherLanguage ? TargetLanguage.Value : MotherLanguage.Value)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}.",
             "SentenceWithVerbToCompleteBasedOnInfinitive" => $" You need to generate {AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with \"____\".",
             "IrregularVerbs" => $" You need to generate {AmountOfSentences} irregular verbs with translation in mother language.",
             "QuestionsToTextOpen" => $" You need to generate a text according to the following requirements and {AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " +

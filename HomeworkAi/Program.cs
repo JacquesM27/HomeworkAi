@@ -1,4 +1,4 @@
-using HomeworkAi.Core;
+using HomeworkAi.Modules.OpenAi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCore(builder.Configuration, AppDomain.CurrentDomain.GetAssemblies().ToList());
+builder.Services.AddOpenAi(builder.Configuration, AppDomain.CurrentDomain.GetAssemblies().ToList());
 
 var app = builder.Build();
 
@@ -24,7 +24,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCore();
+app.UseOpenAi();
 
 app.MapControllers();
 

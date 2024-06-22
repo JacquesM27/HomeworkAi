@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace HomeworkAi.Core.Services;
+namespace HomeworkAi.Modules.OpenAi.Services;
 
 public class ObjectSamplerService : IObjectSamplerService
 {
@@ -43,6 +43,11 @@ public class ObjectSamplerService : IObjectSamplerService
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Only for types with default constructor!
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     private static object GenerateSampleObject(Type type)
     {
         if (type == typeof(string))

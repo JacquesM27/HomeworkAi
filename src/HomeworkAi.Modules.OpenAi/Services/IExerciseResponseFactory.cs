@@ -1,7 +1,7 @@
-﻿using HomeworkAi.Core.Exercises;
+﻿using HomeworkAi.Modules.OpenAi.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 
-namespace HomeworkAi.Core.Services;
+namespace HomeworkAi.Modules.OpenAi.Services;
 
 public interface IExerciseResponseFactory
 {

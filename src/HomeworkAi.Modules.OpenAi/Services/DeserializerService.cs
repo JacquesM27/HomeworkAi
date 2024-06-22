@@ -1,18 +1,19 @@
 using System.Collections.Concurrent;
 using System.Text.Json;
-using HomeworkAi.Core.Cache;
-using HomeworkAi.Core.Exceptions;
+using HomeworkAi.Modules.OpenAi.Cache;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.Contracts;
 using HomeworkAi.Modules.Contracts.Exercises;
 
-namespace HomeworkAi.Core.Services;
+namespace HomeworkAi.Modules.OpenAi.Services;
 
-public class ExerciseFormatService(
+public class DeserializerService(
     IObjectSamplerService objectSamplerService,
-    IApplicationMemoryCache applicationMemoryCache) : IExerciseFormatService
+    IApplicationMemoryCache applicationMemoryCache) : IDeserializerService
 {
     private static readonly ConcurrentDictionary<string, string> ExerciseTypes = [];
     
+    //TODO: remove
     public string FormatType(string exerciseType)
     {
         if (ExerciseTypes.TryGetValue(exerciseType, out var json))
@@ -26,6 +27,7 @@ public class ExerciseFormatService(
         return sample;
     }
 
+    //TODO: remove
     public Exercise DeserializeExercise(string json, string exerciseType)
     {
         var type = applicationMemoryCache.GetExerciseType(exerciseType)
@@ -39,8 +41,14 @@ public class ExerciseFormatService(
 
     public SuspiciousPrompt DeserializeSuspiciousPrompt(string json)
     {
-        var response = JsonSerializer.Deserialize<SuspiciousPrompt>(json)
-                       ?? throw new DeserializationException(json);
-        return response;
+        var result = Deserialize<SuspiciousPrompt>(json);
+        return result;
+    }
+
+    public T Deserialize<T>(string json)
+    {
+        var result = JsonSerializer.Deserialize<T>(json)
+                     ?? throw new DeserializationException(json);
+        return result;
     }
 }

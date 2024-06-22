@@ -13,9 +13,15 @@ public abstract class ExerciseResponse<TExercise>
     public string? GrammarSection { get; set; }
 }
 
-public sealed class OpenFormExerciseResponse<TExercise> : ExerciseResponse<TExercise>
+public class OpenFormExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     where TExercise : OpenFormExercise
 {
-    public string DescriptionOfExerciseContent { get; set; }
-    public bool QuestionsInMotherLanguage { get; set; }
+    
+}
+
+public class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
+    where TExercise : OpenAnswerExercise
+{
+    public int AmountOfSentences { get; set; }
+    public bool TranslateFromMotherLanguage { get; set; }
 }

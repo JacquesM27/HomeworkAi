@@ -4,7 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>HomeworkAi.Core</RootNamespace>
+        <RootNamespace>HomeworkAi.Modules.OpenAi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,7 +18,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <InternalsVisibleTo Include="HomeworkAi.Core.Tests.Unit" />
+        <InternalsVisibleTo Include="HomeworkAi.Modules.OpenAi.Tests.Unit" />
     </ItemGroup>
 
     

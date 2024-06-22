@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using HomeworkAi.Core.Services;
+using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.Contracts.Exercises;
 using Shouldly;
 
-namespace HomeworkAi.Core.Tests.Unit.Services;
+namespace HomeworkAi.Modules.OpenAi.Tests.Unit.Services;
 
 public class ObjectSamplerServiceTests
 {

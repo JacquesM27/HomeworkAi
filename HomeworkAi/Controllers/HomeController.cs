@@ -1,6 +1,5 @@
-﻿using HomeworkAi.Core.Exercises;
-using HomeworkAi.Core.Services.OpenAi;
-using HomeworkAi.Modules.Contracts.Exercises;
+﻿using HomeworkAi.Modules.OpenAi.Exercises;
+using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeworkAi.Controllers;
