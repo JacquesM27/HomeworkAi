@@ -1,5 +1,5 @@
-﻿using HomeworkAi.Modules.OpenAi.Commands.OpenForm;
-using HomeworkAi.Modules.Contracts.Exercises;
+﻿using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Queries.OpenForm;
 using Microsoft.AspNetCore.Builder;
 
 namespace HomeworkAi.Modules.OpenAi.Endpoints;

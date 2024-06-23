@@ -1,4 +1,4 @@
-﻿using HomeworkAi.Modules.OpenAi.Commands;
+﻿using HomeworkAi.Modules.OpenAi.Queries;
 
 namespace HomeworkAi.Modules.OpenAi.Services;
 

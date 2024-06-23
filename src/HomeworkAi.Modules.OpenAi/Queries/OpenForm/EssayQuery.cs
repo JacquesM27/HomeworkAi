@@ -3,7 +3,7 @@ using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
-namespace HomeworkAi.Modules.OpenAi.Commands.OpenForm;
+namespace HomeworkAi.Modules.OpenAi.Queries.OpenForm;
 
 public sealed record EssayQuery(int MinimumNumberOfWords) : ExerciseQueryBase, IQuery<OpenFormExerciseResponse<Essay>>;
 

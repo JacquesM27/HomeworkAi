@@ -1,6 +1,6 @@
 ﻿using HomeworkAi.Modules.Contracts.ValueObjects;
 
-namespace HomeworkAi.Modules.OpenAi.Commands;
+namespace HomeworkAi.Modules.OpenAi.Queries;
 
 public abstract record ExerciseQueryBase
 {

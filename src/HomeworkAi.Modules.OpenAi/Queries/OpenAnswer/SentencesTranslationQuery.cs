@@ -3,7 +3,7 @@ using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
-namespace HomeworkAi.Modules.OpenAi.Commands.OpenAnswer;
+namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record SentencesTranslationQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<SentencesTranslation>>;
 

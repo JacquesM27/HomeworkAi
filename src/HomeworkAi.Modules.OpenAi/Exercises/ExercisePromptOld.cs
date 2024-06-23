@@ -69,8 +69,8 @@ public class OpenAnswerExercisePromptOld : ExercisePromptOld
         prompt += ExerciseType switch
         {
             //"SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. Sentences must be in {(AnswersInMotherLanguage ? TargetLanguage.Value : MotherLanguage.Value)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}.",
-            "SentenceWithVerbToCompleteBasedOnInfinitive" => $" You need to generate {AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with \"____\".",
-            "IrregularVerbs" => $" You need to generate {AmountOfSentences} irregular verbs with translation in mother language.",
+            //"SentenceWithVerbToCompleteBasedOnInfinitive" => $" You need to generate {AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with \"____\".",
+            "IrregularVerbs" => $" You need to generate {AmountOfSentences} irregular verbs with translation in mother language.",//what with language side
             "QuestionsToTextOpen" => $" You need to generate a text according to the following requirements and {AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " +
                                      $"Questions for the text have to be in {(AnswersInMotherLanguage ? "the student's mother language" : "a language consistent with the language of the task")}.",
             "PassiveSideOpen" => $" You need to generate {AmountOfSentences} sentences in {MotherLanguage.Value} in the passive side so that the student can translate them into {TargetLanguage.Value} independently.",
