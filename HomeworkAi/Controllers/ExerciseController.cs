@@ -11,13 +11,6 @@ namespace HomeworkAi.Controllers;
 [Route("[controller]")]
 public class ExerciseController(IOpenAiExerciseService openAiExerciseService) : ControllerBase
 {
-    [HttpPost("/open-answer")]
-    [ProducesResponse(HttpStatusCode.OK, typeof(ExerciseResponseOld))]
-    public async Task<ActionResult<ExerciseResponseOld>> OpenAnswer(OpenAnswerExercisePromptOld promptOld)
-    {
-        var response = await openAiExerciseService.PromptForExercise(promptOld);
-        return Ok(response);
-    }
     
     [HttpPost("/closed-answer")]
     [ProducesResponse(HttpStatusCode.OK, typeof(ExerciseResponseOld))]

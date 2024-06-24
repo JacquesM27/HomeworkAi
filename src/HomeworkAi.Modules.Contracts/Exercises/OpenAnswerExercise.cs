@@ -36,8 +36,8 @@ public class SentenceWithVerbToComplete : OpenAnswerExercise
 public class IrregularVerbs : OpenAnswerExercise
 {
     public List<Verb> Verbs { get; set; }
-    public bool ShowMotherLanguage { get; set; }
-    public bool ShowFirstForm { get; set; }
+    public bool ShowMotherLanguage { get; set; } = false;
+    public bool ShowFirstForm { get; set; } = false;
     
     public class Verb
     {
@@ -51,6 +51,7 @@ public class IrregularVerbs : OpenAnswerExercise
 public class QuestionsToTextOpen : OpenAnswerExercise
 {
     public string Text { get; set; }
+    public bool TextInMotherLanguage { get; set; }
     public List<string> Questions { get; set; }
 }
 
@@ -83,7 +84,7 @@ public class ConditionalOpen : OpenAnswerExercise
     public List<string> ThirdConditionalSentences { get; set; }
 }
 
-public class MissingPhrasalVerbsOpen : OpenAnswerExercise
+public class MissingPhrasalVerbOpen : OpenAnswerExercise
 {
     public List<SentenceWithPhrasalVerb> SentencesWithPhrasalVerb { get; set; }
     public class SentenceWithPhrasalVerb

@@ -5,18 +5,18 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
-public sealed record IrregularVerbsQuery(int AmountOfSentences, bool ShowMotherLanguage, bool ShowFirstForm)
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<IrregularVerbs>>;
-    
-public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
+public sealed record MissingPhrasalVerbOpenQuery(int AmountOfSentences) 
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>>;
+
+public sealed class MissingPhrasalVerbOpenQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
-    : IQueryHandler<IrregularVerbsQuery, OpenAnswerExerciseResponse<IrregularVerbs>>
+    : IQueryHandler<MissingPhrasalVerbOpenQuery, OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>>
 {
-    public async Task<OpenAnswerExerciseResponse<IrregularVerbs>> HandleAsync(IrregularVerbsQuery query)
+    public async Task<OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>> HandleAsync(MissingPhrasalVerbOpenQuery query)
     {
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(IrregularVerbs));
+        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(MissingPhrasalVerbOpen));
         
-        var prompt = $"1. This is open answer - irregular verbs exercise. This means that need to generate {query.AmountOfSentences} irregular verbs. Fill all forms in target language ({query.TargetLanguage}) and add translation in mother language ({query.MotherLanguage}). Ignore fields ShowMotherLanguage and ShowFirstForm do not fill them in JSON.";
+        var prompt = $"1. This is open answer - missing phrasal verbs exercise. This means that need to generate {query.AmountOfSentences} sentences with phrasal verbs. Write the sentences in the CorrectSentence field. Record the correct phrasal verb in the CorrectPhrasalVerb field. In addition, in the SentenceWithUnderscoreInsteadOfPhrasalVerb field, write a sentence in which you replace phrasal verbs with ___. ";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
@@ -25,11 +25,9 @@ public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter,
         
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
-        var exercise = deserializerService.Deserialize<IrregularVerbs>(response);
-        exercise.ShowMotherLanguage = query.ShowMotherLanguage;
-        exercise.ShowFirstForm = query.ShowFirstForm;
+        var exercise = deserializerService.Deserialize<MissingPhrasalVerbOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<IrregularVerbs>()
+        var result = new OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -45,3 +43,5 @@ public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter,
         return result;
     }
 }
+
+

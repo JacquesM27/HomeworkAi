@@ -13,25 +13,4 @@ public class HomeController(IOpenAiExerciseService openAiExerciseService) : Cont
     {
         return Ok("test");
     }
-    
-    [HttpPost("/gpt")]
-    public async Task<ActionResult> HelloGpt(OpenAnswerExercisePromptOld text)
-    {
-        try
-        {
-            //TODO: add normal methods and prompt injection validation
-            var response = await openAiExerciseService.PromptForExercise(text);
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex);
-        }
-    }
-
-    [HttpGet("test")]
-    public async Task<ActionResult> Hello(OpenAnswerExercisePromptOld promptOld)
-    {
-        return Ok();
-    }
 }

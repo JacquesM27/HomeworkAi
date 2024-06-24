@@ -59,7 +59,7 @@ public class PhrasalVerbsTranslating : ClosedAnswerExercise
     public List<ClosedQuestion> SentenceWithPhrasalVerb { get; set; }
 }
 
-public class MissingPhrasalVerbsClosed : ClosedAnswerExercise
+public class MissingPhrasalVerbClosed : ClosedAnswerExercise
 {
     public List<SentenceWithPhrasalVerb> SentencesWithPhrasalVerb { get; set; }
     public class SentenceWithPhrasalVerb

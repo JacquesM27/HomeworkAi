@@ -54,37 +54,6 @@ public abstract class ExercisePromptOld
     }
 }
 
-public class OpenAnswerExercisePromptOld : ExercisePromptOld
-{
-    public int AmountOfSentences { get; set; }
-    public bool AnswersInMotherLanguage { get; set; } = false;
-    
-    public override string ToPrompt(string exerciseJsonFormat)
-    {
-        const int conditionalDenominator = 4;
-        var result = (double)AmountOfSentences / conditionalDenominator;
-        var roundedResult = (int)Math.Ceiling(result);
-        
-        var prompt = "1. This is open answer exercise.";
-        prompt += ExerciseType switch
-        {
-            //"SentencesTranscription" => $" You need to generate {AmountOfSentences} for the student to translate. Sentences must be in {(AnswersInMotherLanguage ? TargetLanguage.Value : MotherLanguage.Value)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}.",
-            //"SentenceWithVerbToCompleteBasedOnInfinitive" => $" You need to generate {AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with \"____\".",
-            "IrregularVerbs" => $" You need to generate {AmountOfSentences} irregular verbs with translation in mother language.",//what with language side
-            "QuestionsToTextOpen" => $" You need to generate a text according to the following requirements and {AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " +
-                                     $"Questions for the text have to be in {(AnswersInMotherLanguage ? "the student's mother language" : "a language consistent with the language of the task")}.",
-            "PassiveSideOpen" => $" You need to generate {AmountOfSentences} sentences in {MotherLanguage.Value} in the passive side so that the student can translate them into {TargetLanguage.Value} independently.",
-            "ParaphrasingOpen" => $" You need to generate {AmountOfSentences} sentences in {TargetLanguage.Value} so that they can be paraphrased. Transformations involve transforming sentences, that is, expressing the same thought in a different way. You need to create a sentence and add a phrasal verb to it, with the help of which the student will make the transformation.",
-            "AnswerToQuestionOpen" => $" You need to generate {AmountOfSentences} questions in {TargetLanguage.Value}. According to other guidelines, the student must be able to answer them independently.",
-            "ConditionalOpen" => $" You need to generate {roundedResult} sentences each in {(AnswersInMotherLanguage ? TargetLanguage.Value : MotherLanguage.Value)} so that they are translatable by the student into {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}. The sentences must be in each conditional mode (zero, first, second, third) - in JSON you have list for each mode.",
-            "MissingPhrasalVerbsOpen" => $" You need to generate {AmountOfSentences} sentences with phrasal verbs. Write the sentences in the CorrectSentence field. Record the correct phrasal verb in the CorrectPhrasalVerb field. In addition, in the SentenceWithUnderscoreInsteadOfPhrasalVerb field, write a sentence in which you replace phrasal verbs with ___. ",
-            "MissingWordOrExpressionOpen" => $" You need to generate {AmountOfSentences} sentences in which to cut out a word or expression. Record the sentence in the CorrectSentence field. Record the correct word or phrase that will be cut in the CorrectWordOrExpression field. In addition, in the SentenceWithUnderscoreInsteadOfWordOrExpression field, write a sentence in which you will replace the word or phrase with ___. ",
-            _ => throw new InvalidOperationException("type of exercise is not valid")
-        };
-        return prompt + base.ToPrompt(exerciseJsonFormat);
-    }
-}
-
 public class ClosedAnswerExercisePromptOld : ExercisePromptOld
 {
     public int AmountOfSentences { get; set; }
@@ -113,7 +82,7 @@ public class ClosedAnswerExercisePromptOld : ExercisePromptOld
             "ConditionalClosed" => $" You need to generate {roundedResult} sentences each in {(QuestionsInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}. Answers for the text have to be in {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}. The sentences must be in each conditional mode (zero, first, second, third) - in JSON you have list for each mode. Remember - only one answer must be correct.",
             "WordMeaning" => $" You need to generate {roundedResult} words in {(QuestionsInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)} and their correct meanings in {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)}. Remember - only one answer must be correct.",
             "PhrasalVerbsTranslating" => $" You need to generate {AmountOfSentences} sentences in {(QuestionsInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)} with the phrasal verb so that the student can select answer in {(AnswersInMotherLanguage ? MotherLanguage.Value : TargetLanguage.Value)} independently. Remember - only one answer must be correct.",
-            "MissingPhrasalVerbsClosed" => $" You need to generate {AmountOfSentences} sentences with phrasal verbs. Replace phrasal verb with \"___\". Then generate 3 or 4 answers (one answer must be a cut phrasal verb from the original sentence), remember that only one of the answers must be correct.",
+            "MissingPhrasalVerbClosed" => $" You need to generate {AmountOfSentences} sentences with phrasal verbs. Replace phrasal verb with \"___\". Then generate 3 or 4 answers (one answer must be a cut phrasal verb from the original sentence), remember that only one of the answers must be correct.",
             "MissingWordOrExpressionClosed" => $" You need to generate {AmountOfSentences} sentences in which to cut out a word or expression. Replace word or expression with \"___\". Then generate 3 or 4 answers (one answer must be a cut word or expression from the original sentence), remember that only one of the answers must be correct.",
             _ => throw new InvalidOperationException("type of exercise is not valid")
         };
