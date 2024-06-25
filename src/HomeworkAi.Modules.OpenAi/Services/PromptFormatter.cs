@@ -9,7 +9,7 @@ public class PromptFormatter : IPromptFormatter
    {
       var prompt =
             $"2. The mother's language of the student solving the exercise is {baseData.MotherLanguage}.\n" +
-            $"3. The exercise header (with information about exercise - not the exercise.) must be in {(baseData.ExerciseHeaderInMotherLanguage ? baseData.MotherLanguage : baseData.TargetLanguage)}. The header is just basic information about the exercise. Don't confuse the language of the header with the language of the sentences generated. " +
+            $"3. The exercise header (with information about exercise - not the exercise.) must be in {(baseData.ExerciseHeaderInMotherLanguage ? baseData.MotherLanguage : baseData.TargetLanguage)}. " +
             $" Also include instructions in {(baseData.ExerciseHeaderInMotherLanguage ? baseData.MotherLanguage : baseData.TargetLanguage)} on how to perform the task correctly in the exercise header.\n" +
             $"4. Language proficiency level is {baseData.TargetLanguageLevel}. The level of difficulty must be adapted to the exercise being generated. Based on level use appropriately difficult words in sentences." +
             $" Language levels: A1- Beginner, A2- Elementary, B1- Intermediate, B2- Upper-intermediate, C1- Advanced, C2- Proficiency.\n";

@@ -22,6 +22,29 @@ public class OpenFormExerciseResponse<TExercise> : ExerciseResponse<TExercise>
 public class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     where TExercise : OpenAnswerExercise
 {
-    public int AmountOfSentences { get; set; }
-    public bool TranslateFromMotherLanguage { get; set; }
+    public int? AmountOfSentences { get; set; }
+    public bool? TranslateFromMotherLanguage { get; set; }
+    public bool? QuestionsInMotherLanguage { get; set; }
+    
+    public bool? ZeroConditional { get; set; }
+    public bool? FirstConditional { get; set; }
+    public bool? SecondConditional { get; set; }
+    public bool? ThirdConditional { get; set; }
+
+    public bool? ShowMotherLanguage { get; set; }
+    public bool? ShowFirstForm { get; set; }
+}
+
+public class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
+    where TExercise : ClosedAnswerExercise
+{
+    public int? AmountOfSentences { get; set; }
+    
+    public bool? TranslateFromMotherLanguage { get; set; }
+    public bool? QuestionsInMotherLanguage { get; set; }
+    
+    public bool? ZeroConditional { get; set; }
+    public bool? FirstConditional { get; set; }
+    public bool? SecondConditional { get; set; }
+    public bool? ThirdConditional { get; set; }
 }

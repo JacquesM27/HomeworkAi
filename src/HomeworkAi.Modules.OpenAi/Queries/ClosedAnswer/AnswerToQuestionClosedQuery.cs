@@ -3,23 +3,26 @@ using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
-namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
+namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
-public sealed record QuestionsToTextOpenQuery(int AmountOfSentences, bool QuestionsInMotherLanguage)
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<QuestionsToTextOpen>>;
+public sealed record AnswerToQuestionClosedQuery(int AmountOfSentences)
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>>;
 
-public sealed class QuestionsToTextOpenQueryHandler(
+
+public sealed class AnswerToQuestionClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService)
-    : IQueryHandler<QuestionsToTextOpenQuery, OpenAnswerExerciseResponse<QuestionsToTextOpen>>
+    : IQueryHandler<AnswerToQuestionClosedQuery, ClosedAnswerExerciseResponse<AnswerToQuestionClosed>>
 {
-    public async Task<OpenAnswerExerciseResponse<QuestionsToTextOpen>> HandleAsync(QuestionsToTextOpenQuery query)
+    public async Task<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>> HandleAsync(AnswerToQuestionClosedQuery query)
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextOpen));
+
+        var prompt =
+            $"1. This is closed answer - answer to question exercise. This means that you need to generate {query.AmountOfSentences} questions and 3-4 answers to those questions, where only one answer is correct. Questions and answers language is {query.TargetLanguage}.";
         
-        var prompt = $"1. This is open answer - questions to text exercise. Your task is to generate a text (about 10 sentences) in {query.TargetLanguage} and questions to this text in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}. ";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
@@ -28,9 +31,9 @@ public sealed class QuestionsToTextOpenQueryHandler(
         
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
-        var exercise = deserializerService.Deserialize<QuestionsToTextOpen>(response);
+        var exercise = deserializerService.Deserialize<AnswerToQuestionClosed>(response);
 
-        var result = new OpenAnswerExerciseResponse<QuestionsToTextOpen>()
+        var result = new ClosedAnswerExerciseResponse<AnswerToQuestionClosed>()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -39,8 +42,7 @@ public sealed class QuestionsToTextOpenQueryHandler(
             TargetLanguageLevel = query.TargetLanguageLevel,
             TopicsOfSentences = query.TopicsOfSentences,
             GrammarSection = query.GrammarSection,
-            AmountOfSentences = query.AmountOfSentences,
-            QuestionsInMotherLanguage = query.QuestionsInMotherLanguage
+            AmountOfSentences = query.AmountOfSentences
         };
         
         //TODO: add event/rabbit with exercise.

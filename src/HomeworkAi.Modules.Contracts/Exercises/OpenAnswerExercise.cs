@@ -36,8 +36,6 @@ public class SentenceWithVerbToComplete : OpenAnswerExercise
 public class IrregularVerbs : OpenAnswerExercise
 {
     public List<Verb> Verbs { get; set; }
-    public bool ShowMotherLanguage { get; set; } = false;
-    public bool ShowFirstForm { get; set; } = false;
     
     public class Verb
     {
@@ -51,7 +49,6 @@ public class IrregularVerbs : OpenAnswerExercise
 public class QuestionsToTextOpen : OpenAnswerExercise
 {
     public string Text { get; set; }
-    public bool TextInMotherLanguage { get; set; }
     public List<string> Questions { get; set; }
 }
 

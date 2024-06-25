@@ -15,11 +15,6 @@ public abstract class ExerciseResponseOld
     public string? GrammarSection { get; set; }
     public string SupportMaterial { get; set; }
 }
-public sealed class OpenAnswerExerciseResponseOld : ExerciseResponseOld
-{
-    public int AmountOfSentences { get; set; }
-    public bool AnswersInMotherLanguage { get; set; }
-}
 
 public sealed class ClosedAnswerExerciseResponseOld : ExerciseResponseOld
 {

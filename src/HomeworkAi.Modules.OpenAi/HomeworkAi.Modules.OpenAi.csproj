@@ -27,10 +27,5 @@
       <ProjectReference Include="..\HomeworkAi.Modules.Contracts\HomeworkAi.Modules.Contracts.csproj" />
     </ItemGroup>
 
-    
-    <ItemGroup>
-      <Folder Include="DTO\" />
-    </ItemGroup>
-
 </Project>
  

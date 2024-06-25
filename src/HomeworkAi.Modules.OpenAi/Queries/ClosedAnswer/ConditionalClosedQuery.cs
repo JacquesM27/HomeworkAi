@@ -3,23 +3,29 @@ using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
-namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
+namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
-public sealed record ConditionalOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage, bool ZeroConditional,
+public sealed record ConditionalClosedQuery(int AmountOfSentences, bool TranslateFromMotherLanguage, bool ZeroConditional,
     bool FirstConditional, bool SecondConditional, bool ThirdConditional) 
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<ConditionalOpen>>;
-    
-public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
-    : IQueryHandler<ConditionalOpenQuery, OpenAnswerExerciseResponse<ConditionalOpen>>
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<ConditionalClosed>>;
+
+
+public sealed class ConditionalClosedQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService,
+    IDeserializerService deserializerService)
+    : IQueryHandler<ConditionalClosedQuery, ClosedAnswerExerciseResponse<ConditionalClosed>>
 {
-    public async Task<OpenAnswerExerciseResponse<ConditionalOpen>> HandleAsync(ConditionalOpenQuery query)
+    public async Task<ClosedAnswerExerciseResponse<ConditionalClosed>> HandleAsync(ConditionalClosedQuery query)
     {
         var roundedAmountOfSentences = RoundedAmountOfSentences(query);
-
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ConditionalOpen));
         
-        var prompt = $"1. This is open answer - conditional exercise. This means that need to generate {roundedAmountOfSentences} sentences each in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} so that they are translatable by the student into {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)}. Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third": "")} - in JSON you have list for each mode, complete only those lists that were mentioned in the previous sentence.";
+        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextOpen));
+
+        var prompt =
+            $"1. This is closed answer - conditional exercise. This means that you need to generate {roundedAmountOfSentences} sentences in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} and for every sentence 3-4 translations in {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)} but only one correct. Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third": "")} - in JSON you have list for each mode, complete only those lists that were mentioned in the previous sentence.";
+        
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
@@ -28,9 +34,9 @@ public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter
         
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
-        var exercise = deserializerService.Deserialize<ConditionalOpen>(response);
+        var exercise = deserializerService.Deserialize<ConditionalClosed>(response);
 
-        var result = new OpenAnswerExerciseResponse<ConditionalOpen>()
+        var result = new ClosedAnswerExerciseResponse<ConditionalClosed>()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -39,8 +45,8 @@ public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter
             TargetLanguageLevel = query.TargetLanguageLevel,
             TopicsOfSentences = query.TopicsOfSentences,
             GrammarSection = query.GrammarSection,
-            TranslateFromMotherLanguage = query.TranslateFromMotherLanguage,
             AmountOfSentences = query.AmountOfSentences,
+            TranslateFromMotherLanguage = query.TranslateFromMotherLanguage,
             ZeroConditional = query.ZeroConditional,
             FirstConditional = query.FirstConditional,
             SecondConditional = query.SecondConditional,
@@ -50,8 +56,8 @@ public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter
         //TODO: add event/rabbit with exercise.
         return result;
     }
-
-    private static int RoundedAmountOfSentences(ConditionalOpenQuery query)
+    
+    private static int RoundedAmountOfSentences(ConditionalClosedQuery query)
     {
         bool[] conditions = [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
         var conditionalDenominator = conditions.Count(c => c);

@@ -29,7 +29,6 @@ public static class Extensions
 
         services.AddInfrastructure(assemblies);
         
-        
         return services;
     }
 

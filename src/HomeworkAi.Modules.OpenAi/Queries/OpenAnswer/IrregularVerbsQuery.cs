@@ -26,8 +26,6 @@ public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter,
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<IrregularVerbs>(response);
-        exercise.ShowMotherLanguage = query.ShowMotherLanguage;
-        exercise.ShowFirstForm = query.ShowFirstForm;
 
         var result = new OpenAnswerExerciseResponse<IrregularVerbs>()
         {
@@ -38,7 +36,9 @@ public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter,
             TargetLanguageLevel = query.TargetLanguageLevel,
             TopicsOfSentences = query.TopicsOfSentences,
             GrammarSection = query.GrammarSection,
-            AmountOfSentences = query.AmountOfSentences
+            AmountOfSentences = query.AmountOfSentences,
+            ShowFirstForm = query.ShowFirstForm,
+            ShowMotherLanguage = query.ShowMotherLanguage
         };
         
         //TODO: add event/rabbit with exercise.
