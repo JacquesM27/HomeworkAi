@@ -102,3 +102,5 @@ public class MissingWordOrExpressionOpen : OpenAnswerExercise
         public string CorrectSentence { get; set; }
     }
 }
+
+//TODO: add word meaning open exercise

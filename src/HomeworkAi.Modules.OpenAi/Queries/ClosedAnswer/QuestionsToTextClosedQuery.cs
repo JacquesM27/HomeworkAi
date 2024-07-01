@@ -17,12 +17,15 @@ public sealed class QuestionsToTextClosedQueryHandler(
 {
     public async Task<ClosedAnswerExerciseResponse<QuestionsToTextClosed>> HandleAsync(QuestionsToTextClosedQuery query)
     {
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextOpen));
+        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextClosed));
 
-        var prompt =
-            "1. This is closed answer exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). " +
-            $"You need to generate a text according to the following requirements and {query.AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " +
-            $"Questions and answers for the text have to be in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}.";
+       // var prompt =
+        //    "1. This is closed answer - questions to text exercise. This means that you need to generate responses to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). " +
+            //$"You need to generate a text according to the following requirements (5-8 sentences) and {query.AmountOfSentences} questions for this text. The questions are to be about things in the text or derived from the context of the text. " +
+        //    $"Questions and answers for the text have to be in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}.";
+
+        var prompt = $"1. This is closed answer - questions to text exercise. This means you need to generate a text according to the following requirements (5-8 sentences) and {query.AmountOfSentences} questions for this text. For questions you need to generate responses to them from 3 to 4 according to the json format provided." +
+                 $"Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). Questions and answers for the text have to be in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}.";
         
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""

@@ -24,7 +24,6 @@ public static class Extensions
         services.AddSingleton<IApplicationMemoryCache, ApplicationMemoryCache>();
         services.AddTransient<IObjectSamplerService, ObjectSamplerService>();
         services.AddTransient<IPromptFormatter, PromptFormatter>();
-        services.AddTransient<IExerciseResponseFactory, ExerciseResponseFactory>();
         services.AddScoped<IDeserializerService, DeserializerService>();
 
         services.AddInfrastructure(assemblies);
@@ -36,7 +35,8 @@ public static class Extensions
     {
         app
             .AddOpenFormEndpoints()
-            .AddOpenAnswerEndpoints();
+            .AddOpenAnswerEndpoints()
+            .AddClosedAnswerEndpoints();
         app.UseInfrastructure();
 
         return app;

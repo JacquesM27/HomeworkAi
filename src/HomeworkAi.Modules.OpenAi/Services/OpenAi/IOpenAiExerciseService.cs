@@ -1,21 +1,9 @@
-﻿using HomeworkAi.Modules.OpenAi.Exercises;
-using HomeworkAi.Modules.Contracts;
-using HomeworkAi.Modules.Contracts.Exercises;
-using OpenAI_API.Completions;
+﻿using HomeworkAi.Modules.Contracts;
 
 namespace HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 public interface IOpenAiExerciseService
 {
-    //TODO: remove
-    Task<CompletionResult> CompleteSentence(string text);
-    
-    //TODO: remove
-    Task<string> GetChatConversations(string text);
-    
-    //TODO: remove
-    Task<ExerciseResponseOld> PromptForExercise(ExercisePromptOld exercisePromptOld);
-
     /// <summary>
     /// It does not validate prompt.
     /// </summary>
@@ -32,6 +20,4 @@ public interface IOpenAiExerciseService
     /// <returns>Object with bool flag and reasons of suspicious (if any).</returns>
     Task<SuspiciousPrompt> ValidateAvoidingOriginTopic(string prompt);
     
-    //TODO: remove
-    Task<bool> IsUserPromptAvoidOriginTopic(ExercisePromptOld exercisePromptOld);
 }

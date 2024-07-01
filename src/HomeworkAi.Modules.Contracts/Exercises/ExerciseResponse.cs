@@ -47,4 +47,7 @@ public class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercis
     public bool? FirstConditional { get; set; }
     public bool? SecondConditional { get; set; }
     public bool? ThirdConditional { get; set; }
+
+    public bool? DescriptionInMotherLanguage { get; set; }
+    public bool? AnswersInMotherLanguage { get; set; }
 }

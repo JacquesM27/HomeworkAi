@@ -5,23 +5,22 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
-public sealed record PassiveSideClosedQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<PassiveSideClosed>>;
-
-
-public sealed class PassiveSideClosedQueryHandler(
+public sealed record MissingWordOrExpressionClosedQuery(int AmountOfSentences)
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>>;
+    
+public sealed class MissingWordOrExpressionClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService)
-    : IQueryHandler<PassiveSideClosedQuery, ClosedAnswerExerciseResponse<PassiveSideClosed>>
+    : IQueryHandler<MissingWordOrExpressionClosedQuery, ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>>
 {
-    public async Task<ClosedAnswerExerciseResponse<PassiveSideClosed>> HandleAsync(PassiveSideClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>> HandleAsync(MissingWordOrExpressionClosedQuery query)
     {
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(PassiveSideClosed));
+        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(MissingWordOrExpressionClosed));
 
         var prompt =
-            $"1. This is closed answer - passive side exercise. This means that you need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} in the passive side and answers to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). ";
+            $"1. This is closed answer - missing word or expression exercise. This means that you need to generate {query.AmountOfSentences} sentences in which to cut out a word or expression. Replace word or expression with \"___\". Then generate 3 or 4 answers (one answer must be a cut word or expression from the original sentence), remember that only one of the answers must be correct.";
         
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
@@ -31,9 +30,9 @@ public sealed class PassiveSideClosedQueryHandler(
         
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
-        var exercise = deserializerService.Deserialize<PassiveSideClosed>(response);
+        var exercise = deserializerService.Deserialize<MissingWordOrExpressionClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<PassiveSideClosed>()
+        var result = new ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -51,4 +50,3 @@ public sealed class PassiveSideClosedQueryHandler(
 }
 
 
-    

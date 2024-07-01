@@ -18,10 +18,10 @@ public sealed class AnswerToQuestionClosedQueryHandler(
 {
     public async Task<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>> HandleAsync(AnswerToQuestionClosedQuery query)
     {
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextOpen));
+        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(AnswerToQuestionClosed));
 
         var prompt =
-            $"1. This is closed answer - answer to question exercise. This means that you need to generate {query.AmountOfSentences} questions and 3-4 answers to those questions, where only one answer is correct. Questions and answers language is {query.TargetLanguage}.";
+            $"1. This is closed answer - answer to question exercise. This means that you need to generate {query.AmountOfSentences} questions and 3-4 answers to those questions, where only one answer is grammatically correct (other answers must have grammatical errors) . Questions and answers language is {query.TargetLanguage}.";
         
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""

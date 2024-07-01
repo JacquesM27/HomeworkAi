@@ -17,7 +17,7 @@ public sealed class ParaphrasingClosedQueryHandler(
 {
     public async Task<ClosedAnswerExerciseResponse<ParaphrasingClosed>> HandleAsync(ParaphrasingClosedQuery query)
     {
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextOpen));
+        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ParaphrasingClosed));
 
         var prompt =
             $"1. This is closed answer - paraphrasing exercise. This means that you need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} and 3 to 4 paraphrases but only 1 can be correct.";
@@ -30,6 +30,7 @@ public sealed class ParaphrasingClosedQueryHandler(
         
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
+        //TODO: if deserialization ends with exception add json fixing method
         var exercise = deserializerService.Deserialize<ParaphrasingClosed>(response);
 
         var result = new ClosedAnswerExerciseResponse<ParaphrasingClosed>()

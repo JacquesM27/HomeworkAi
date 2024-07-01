@@ -1,9 +1,9 @@
-﻿using HomeworkAi.Modules.OpenAi.Cache;
-using HomeworkAi.Modules.Contracts.Exercises;
+﻿using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Contracts.ValueObjects;
+using HomeworkAi.Modules.OpenAi.Cache;
 using Shouldly;
 
-namespace HomeworkAi.Modules.OpenAi.Tests.Unit.Cache;
+namespace HomeworkAi.Core.Tests.Unit.Cache;
 
 public class ApplicationMemoryCacheTests
 {
@@ -49,7 +49,7 @@ public class ApplicationMemoryCacheTests
             nameof(SentenceFormationClosed),
             nameof(WordMeaning),
             nameof(PhrasalVerbsTranslating),
-            nameof(MissingPhrasalVerbsClosed),
+            nameof(MissingPhrasalVerbClosed),
             nameof(MissingWordOrExpressionClosed)
         ];
         
@@ -70,17 +70,17 @@ public class ApplicationMemoryCacheTests
         // Arrange
         List<string> exercises =
         [
-            nameof(SentencesTranscription),
             nameof(SentenceWithVerbToCompleteBasedOnInfinitive),
             nameof(SentenceWithVerbToComplete),
+            nameof(SentencesTranslation),
             nameof(IrregularVerbs),
             nameof(QuestionsToTextOpen),
             nameof(PassiveSideOpen),
             nameof(ParaphrasingOpen),
             nameof(AnswerToQuestionOpen),
             nameof(ConditionalOpen),
-            nameof(MissingPhrasalVerbsOpen),
-            nameof(MissingWordOrExpressionOpen)
+            nameof(MissingWordOrExpressionOpen),
+            nameof(MissingPhrasalVerbOpen)
         ];
         
         // Act

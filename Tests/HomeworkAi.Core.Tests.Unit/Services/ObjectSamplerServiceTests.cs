@@ -1,9 +1,8 @@
-﻿using FluentAssertions;
+﻿using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
-using HomeworkAi.Modules.Contracts.Exercises;
 using Shouldly;
 
-namespace HomeworkAi.Modules.OpenAi.Tests.Unit.Services;
+namespace HomeworkAi.Core.Tests.Unit.Services;
 
 public class ObjectSamplerServiceTests
 {
@@ -86,7 +85,7 @@ public class ObjectSamplerServiceTests
         Action act = () => _service.GetStringValues(obj);
 
         // Assert
-        act.Should().Throw<ArgumentNullException>();
+        act.ShouldThrow<ArgumentNullException>();
     }
 
     [Fact]
@@ -99,7 +98,7 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(obj);
 
         // Assert
-        result.Should().BeEmpty();
+        result.ShouldBeEmpty();
     }
 
     [Fact]
@@ -117,7 +116,7 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(obj);
 
         // Assert
-        result.Should().BeEmpty();
+        result.ShouldBeEmpty();
     }
 
     [Fact]
@@ -135,7 +134,7 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(obj);
 
         // Assert
-        result.Should().Be("Value1" + Environment.NewLine + "Value3" + Environment.NewLine);
+        result.ShouldBe("Value1" + Environment.NewLine + "Value3" + Environment.NewLine);
     }
 
     [Fact]
@@ -153,7 +152,7 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(obj);
 
         // Assert
-        result.Should().Be("Value1" + Environment.NewLine + "Value2" + Environment.NewLine + "Value3" + Environment.NewLine);
+        result.ShouldBe("Value1" + Environment.NewLine + "Value2" + Environment.NewLine + "Value3" + Environment.NewLine);
     }
 
     [Fact]
@@ -172,7 +171,7 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(obj);
 
         // Assert
-        result.Should().Be("StringValue" + Environment.NewLine);
+        result.ShouldBe("StringValue" + Environment.NewLine);
     }
 
     [Fact]
@@ -185,7 +184,7 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(record);
 
         // Assert
-        result.Should().Be("Value1" + Environment.NewLine + "Value2" + Environment.NewLine);
+        result.ShouldBe("Value1" + Environment.NewLine + "Value2" + Environment.NewLine);
     } 
     
     

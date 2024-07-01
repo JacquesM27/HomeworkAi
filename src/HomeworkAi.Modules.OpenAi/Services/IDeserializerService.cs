@@ -9,4 +9,5 @@ public interface IDeserializerService
     public Exercise DeserializeExercise(string json, string exerciseType);
     public SuspiciousPrompt DeserializeSuspiciousPrompt(string json);
     public T Deserialize<T>(string json);
+    public string FixJson(string json);
 }
