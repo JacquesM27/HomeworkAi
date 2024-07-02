@@ -32,26 +32,22 @@ public class ConditionalClosed : ClosedAnswerExercise
     public List<ClosedQuestion> ThirdConditionalSentences { get; set; }
 }
 
-public class SentenceFormationClosed : ClosedAnswerExercise
+public class WordMeaningClosed : ClosedAnswerExercise
 {
-    public List<Sentence> Sentences { get; set; }
+    public List<WordMeaning> WordMeanings { get; set; }
     
-    public class Sentence
-    {
-        public List<string> Words { get; set; }
-        public string CorrectAnswer { get; set; }
-    }
-}
-
-public class WordMeaning : ClosedAnswerExercise
-{
-    public List<CorrectMeaning> CorrectMeanings { get; set; }
-
-    public class CorrectMeaning
+    public class WordMeaning
     {
         public string Word { get; set; }
-        public string CorrectWordMeaning { get; set; }
+        public List<MeaningAnswer> MeaningAnswers { get; set; }
     }
+
+    public class MeaningAnswer
+    {
+        public string ShortDescription { get; set; }
+        public bool Correct { get; set; }
+    }
+
 }
 
 public class PhrasalVerbsTranslating : ClosedAnswerExercise

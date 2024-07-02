@@ -18,7 +18,7 @@ internal static class ClosedAnswerEndpoints
         app.MapPostEndpoint<ParaphrasingClosedQuery, ClosedAnswerExerciseResponse<ParaphrasingClosed>, ParaphrasingClosed>(route, "paraphrasing", tag);
         app.MapPostEndpoint<PassiveSideClosedQuery, ClosedAnswerExerciseResponse<PassiveSideClosed>, PassiveSideClosed>(route, "passive-side", tag);
         app.MapPostEndpoint<QuestionsToTextClosedQuery, ClosedAnswerExerciseResponse<QuestionsToTextClosed>, QuestionsToTextClosed>(route, "questions-to-text", tag);
-        app.MapPostEndpoint<WordMeaningQuery, ClosedAnswerExerciseResponse<WordMeaning>, WordMeaning>(route, "word-meaning", tag);
+        app.MapPostEndpoint<WordMeaningClosedQuery, ClosedAnswerExerciseResponse<WordMeaningClosed>, WordMeaningClosed>(route, "word-meaning", tag);
 
         return app;
     }

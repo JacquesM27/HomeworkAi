@@ -1,16 +1,4 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=22e8de9a_002D0985_002D4c8e_002Db617_002D2d77e581e7cb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetSampleJson_ReturnsCorrectJson" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\Projekty\HomeworkAi" Presentation="&amp;lt;Tests&amp;gt;" /&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e02023a0_002Dbca3_002D47a7_002D889e_002Dddf4f46350e0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FixJson_ShouldAddCommaBetweenObjects" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaBetweenObjects&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaBetweenNestedObjects&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaBetweenObjectsInArray&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaBetweenMoreThanTwoObjects&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaInArrays&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaInArray&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaBetweenObjectsMixed&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::59FC9976-ABA3-4303-B17F-EC402D34A256::net8.0::DeserializerServiceTests.FixJson_ShouldAddCommaBetweenMoreThanTwoObjectsMixed&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ec9c155e_002De50a_002D465e_002Db3ab_002D94b3a70540fa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

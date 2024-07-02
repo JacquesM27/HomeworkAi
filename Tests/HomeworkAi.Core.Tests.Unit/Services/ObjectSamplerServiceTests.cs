@@ -14,10 +14,15 @@ public class ObjectSamplerServiceTests
         // Arrange
         var expectedJson = @"
         {
-            ""CorrectMeanings"": [
+            ""WordMeanings"": [
                 {
                     ""Word"": ""string"",
-                    ""CorrectWordMeaning"": ""string""
+                    ""MeaningAnswers"": [
+                        {
+                            ""ShortDescription"": ""string"",
+                            ""Correct"": false
+                        }
+                    ]
                 }
             ],
             ""Header"": {
@@ -30,7 +35,7 @@ public class ObjectSamplerServiceTests
         }".Replace(" ", "").Replace("\n", "").Replace("\r", "");
 
         // Act
-        var json = _service.GetSampleJson(typeof(WordMeaning)).Replace(" ", "").Replace("\n", "").Replace("\r", "");
+        var json = _service.GetSampleJson(typeof(WordMeaningClosed)).Replace(" ", "").Replace("\n", "").Replace("\r", "");
 
         // Assert
         json.ShouldBe(expectedJson);
@@ -40,32 +45,32 @@ public class ObjectSamplerServiceTests
     public void GetSampleObject_ReturnsCorrectObject()
     {
         // Arrange
-        var type = typeof(WordMeaning);
+        var type = typeof(WordMeaningClosed);
 
         // Act
         var sample = _service.GetSampleObject(type);
 
         // Assert
         sample.ShouldNotBeNull();
-        sample.ShouldBeOfType<WordMeaning>();
+        sample.ShouldBeOfType<WordMeaningClosed>();
 
-        var wordMeaning = (WordMeaning)sample;
+        var wordMeaning = (WordMeaningClosed)sample;
         wordMeaning.Header.ShouldNotBeNull();
         wordMeaning.Header.Title.ShouldBe("string");
         wordMeaning.Header.TaskDescription.ShouldBe("string");
         wordMeaning.Header.Instruction.ShouldBe("string");
         wordMeaning.Header.Example.ShouldBe("string");
         wordMeaning.Header.SupportMaterial.ShouldBe("string");
-        wordMeaning.CorrectMeanings.ShouldHaveSingleItem();
-        wordMeaning.CorrectMeanings.ToList()[0].Word.ShouldBe("string");
-        wordMeaning.CorrectMeanings.ToList()[0].CorrectWordMeaning.ShouldBe("string");
+        wordMeaning.WordMeanings.ShouldHaveSingleItem();
+        wordMeaning.WordMeanings.ToList()[0].Word.ShouldBe("string");
+        wordMeaning.WordMeanings.ToList()[0].MeaningAnswers.ToList()[0].ShortDescription.ShouldBe("string");
     }
 
     [Fact]
     public void GetSampleJson_CachesResult()
     {
         // Arrange
-        var type = typeof(WordMeaning);
+        var type = typeof(WordMeaningClosed);
 
         // Act
         var json1 = _service.GetSampleJson(type);

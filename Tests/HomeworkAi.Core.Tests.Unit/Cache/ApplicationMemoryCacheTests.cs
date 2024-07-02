@@ -46,8 +46,7 @@ public class ApplicationMemoryCacheTests
             nameof(ParaphrasingClosed),
             nameof(AnswerToQuestionClosed),
             nameof(ConditionalClosed),
-            nameof(SentenceFormationClosed),
-            nameof(WordMeaning),
+            nameof(WordMeaningClosed),
             nameof(PhrasalVerbsTranslating),
             nameof(MissingPhrasalVerbClosed),
             nameof(MissingWordOrExpressionClosed)
@@ -80,7 +79,8 @@ public class ApplicationMemoryCacheTests
             nameof(AnswerToQuestionOpen),
             nameof(ConditionalOpen),
             nameof(MissingWordOrExpressionOpen),
-            nameof(MissingPhrasalVerbOpen)
+            nameof(MissingPhrasalVerbOpen),
+            nameof(WordMeaningOpen)
         ];
         
         // Act

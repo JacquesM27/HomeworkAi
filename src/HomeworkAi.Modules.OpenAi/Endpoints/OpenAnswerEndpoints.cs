@@ -21,7 +21,8 @@ internal static class OpenAnswerEndpoints
         app.MapPostEndpoint<QuestionsToTextOpenQuery, OpenAnswerExerciseResponse<QuestionsToTextOpen>, QuestionsToTextOpen>(route, "questions-to-text", tag);
         app.MapPostEndpoint<SentencesTranslationQuery, OpenAnswerExerciseResponse<SentencesTranslation>, SentencesTranslation>(route, "sentences-translation", tag);
         app.MapPostEndpoint<SentenceWithVerbToCompleteBasedOnInfinitiveQuery, OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>, SentenceWithVerbToCompleteBasedOnInfinitive>(route, "sentences-with-verb-to-complete-based-on-infinitive", tag);
-
+        app.MapPostEndpoint<WordMeaningOpenQuery, OpenAnswerExerciseResponse<WordMeaningOpen>, WordMeaningOpen>(route, "word-meaning", tag);
+        
         return app;
     }
 }
