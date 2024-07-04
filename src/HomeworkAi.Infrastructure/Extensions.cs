@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using HomeworkAi.Infrastructure.Commands;
+using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Exceptions;
 using HomeworkAi.Infrastructure.Queries;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ public static class Extensions
         services.AddErrorHandling();
         services.AddCommands(assemblies);
         services.AddQueries(assemblies);
+        services.AddEvents(assemblies);
         
         return services;
     }

@@ -15,7 +15,7 @@ internal sealed class SentencesTranslationQueryHandler(IPromptFormatter promptFo
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(SentencesTranslation));
         
-        var prompt = $"1. This is open answer - sentences translation exercise. This means that need to generate {query.AmountOfSentences} for the student to translate. Sentences must be in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} so that they are translatable by the student into {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)}.";
+        var prompt = $"1. This is open answer - sentences translation exercise. This means that need to generate {query.AmountOfSentences} sentences for the student to translate. Sentences must be in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:

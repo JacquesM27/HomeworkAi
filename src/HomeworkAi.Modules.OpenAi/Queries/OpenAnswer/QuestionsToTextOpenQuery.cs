@@ -19,7 +19,7 @@ public sealed class QuestionsToTextOpenQueryHandler(
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextOpen));
         
-        var prompt = $"1. This is open answer - questions to text exercise. Your task is to generate a text (about 10 sentences) in {query.TargetLanguage} and questions to this text in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}. ";
+        var prompt = $"1. This is open answer - questions to text exercise. Your task is to generate a text (10 sentences - do not enumerate them) in {query.TargetLanguage} and questions to this text in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}. ";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:

@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json;
+using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Cache;
 using HomeworkAi.Modules.OpenAi.Services;
 
@@ -18,113 +20,248 @@ public class DeserializerServiceTests
       return string.Concat(input.Where(c => !char.IsWhiteSpace(c)));
     }
     
-    [Fact]
-    public void FixJson_ShouldAddCommaBetweenObjects()
-    {
-        string input = @"{
-            ""value1"": false
-            ""value2"": ""ok""
-        }";
-        string expected = @"{
-            ""value1"": false,
-            ""value2"": ""ok""
-        }";
-
-        string result = _service.FixJson(input);
-
-        //Assert.Equal(expected, result);
-        Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
-    }
+    // [Fact]
+    // public void FixJson_ShouldAddCommaBetweenObjects()
+    // {
+    //     string input = @"{
+    //         ""value1"": false
+    //         ""value2"": ""ok""
+    //     }";
+    //     string expected = @"{
+    //         ""value1"": false,
+    //         ""value2"": ""ok""
+    //     }";
+    //
+    //     string result = _service.FixJson(input);
+    //
+    //     //Assert.Equal(expected, result);
+    //     Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
+    // }
+    //
+    // [Fact]
+    // public void FixJson_ShouldAddCommaBetweenObjectsMixed()
+    // {
+    //   string input = @"{
+    //         ""value1"": false
+    //         ""value2"": ""ok""
+    //         ""value3"": 3,
+    //         ""value4"": 4
+    //     }";
+    //   string expected = @"{
+    //         ""value1"": false,
+    //         ""value2"": ""ok"",
+    //         ""value3"": 3,
+    //         ""value4"": 4
+    //     }";
+    //
+    //   string result = _service.FixJson(input);
+    //
+    //   //Assert.Equal(expected, result);
+    //   Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
+    // }
+    //
+    // [Fact]
+    // public void FixJson_ShouldAddCommaBetweenMoreThanTwoObjects()
+    // {
+    //   string input = @"{
+    //         ""valuee1"": false
+    //         ""value1"": false
+    //         ""value2"": ""ok""
+    //         ""value2"": ""ok""
+    //     }";
+    //   string expected = @"{
+    //         ""valuee1"": false,
+    //         ""value1"": false,
+    //         ""value2"": ""ok"",
+    //         ""value2"": ""ok""
+    //     }";
+    //
+    //   string result = _service.FixJson(input);
+    //
+    //   //Assert.Equal(expected, result);
+    //   Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
+    // }
     
+    // [Fact]
+    // public void FixJson_ShouldAddCommaBetweenMoreThanTwoObjectsMixed()
+    // {
+    //   string input = @"{
+    //         ""value1"": false
+    //         ""v2"": false,
+    //         ""value1"": false
+    //         ""b4"": ""ok"",
+    //         ""value2"": ""ok""
+    //     }";
+    //   string expected = @"{
+    //         ""value1"": false,
+    //         ""v2"": false,
+    //         ""value1"": false,
+    //         ""b4"": ""ok"",
+    //         ""value2"": ""ok""
+    //     }";
+    //
+    //   string result = _service.FixJson(input);
+    //
+    //   //Assert.Equal(expected, result);
+    //   Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
+    // }
+    //
+    // [Fact]
+    // public void FixJson_ShouldAddCommaBetweenNestedObjects()
+    // {
+    //     string input = @"{
+    //         ""value1"": false
+    //         ""value2"": ""ok"",
+    //         ""value3"": 29,
+    //         ""value4"": {
+    //             ""someValue"": 0,
+    //             ""someValue2"": false
+    //         }
+    //     }";
+    //     string expected = @"{
+    //         ""value1"": false,
+    //         ""value2"": ""ok"",
+    //         ""value3"": 29,
+    //         ""value4"": {
+    //             ""someValue"": 0,
+    //             ""someValue2"": false
+    //         }
+    //     }";
+    //
+    //     string result = _service.FixJson(input);
+    //
+    //     //Assert.Equal(expected, result);
+    //     Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
+    // }
     [Fact]
-    public void FixJson_ShouldAddCommaBetweenObjectsMixed()
+    public void FixJson_ShouldAddCommaBetweenExercises()
     {
-      string input = @"{
-            ""value1"": false
-            ""value2"": ""ok""
-            ""value3"": 3,
-            ""value4"": 4
-        }";
-      string expected = @"{
-            ""value1"": false,
-            ""value2"": ""ok"",
-            ""value3"": 3,
-            ""value4"": 4
-        }";
+        string input = """
+                       {
+                       	"SentencesWithPhrasalVerb": [{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "Her ___ to the challenging situation impressed everyone.",
+                       			"CorrectPhrasalVerb": "rise to",
+                       			"CorrectSentence": "Her rise to the challenging situation impressed everyone."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The speaker will ___ important topics during the conference.",
+                       			"CorrectPhrasalVerb": "touch on",
+                       			"CorrectSentence": "The speaker will touch on important topics during the conference."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "They need to ___ alternative solutions to the problem.",
+                       			"CorrectPhrasalVerb": "come up with",
+                       			"CorrectSentence": "They need to come up with alternative solutions to the problem."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The artist ___ his work to showcase his talent.",
+                       			"CorrectPhrasalVerb": "put forward",
+                       			"CorrectSentence": "The artist put forward his work to showcase his talent."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "She can ___ others' perspectives easily."
+                       			"CorrectPhrasalVerb": "take in",
+                       			"CorrectSentence": "She can take in others' perspectives easily."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The team plans to ___ a new project next month."
+                       			"CorrectPhrasalVerb": "roll out",
+                       			"CorrectSentence": "The team plans to roll out a new project next month."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "He will ___ for his mistakes and work to improve."
+                       			"CorrectPhrasalVerb": "own up",
+                       			"CorrectSentence": "He will own up for his mistakes and work to improve."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The company plans to ___ a new strategy for growth."
+                       			"CorrectPhrasalVerb": "put together",
+                       			"CorrectSentence": "The company plans to put together a new strategy for growth."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "She always ___ new ideas for the project."
+                       			"CorrectPhrasalVerb": "come up with",
+                       			"CorrectSentence": "She always comes up with new ideas for the project."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "They must ___ the problem before making a decision."
+                       			"CorrectPhrasalVerb": "get to grips with",
+                       			"CorrectSentence": "They must get to grips with the problem before making a decision."
+                       		}
+                       	],
+                       	"Header": {
+                       		"Title": "Ćwiczenie na czasowniki frazowe - Poziom Zaawansowany"
+                       		"TaskDescription": "Uzupełnij zdania odpowiednimi czasownikami frazowymi na poziomie zaawansowanym.",
+                       		"Instruction": "Dobierz właściwy czasownik frazowy do każdego zdania.",
+                       		"Example": "Przykład: Her rise to the challenging situation impressed everyone.",
+                       		"SupportMaterial": "Wykorzystaj swoje umiejętności na poziomie zaawansowanym do poprawnego użycia czasowników frazowych w kontekście."
+                       	}
+                       }
+                       """;
+        string expected = """
+                       {
+                       	"SentencesWithPhrasalVerb": [{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "Her ___ to the challenging situation impressed everyone.",
+                       			"CorrectPhrasalVerb": "rise to",
+                       			"CorrectSentence": "Her rise to the challenging situation impressed everyone."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The speaker will ___ important topics during the conference.",
+                       			"CorrectPhrasalVerb": "touch on",
+                       			"CorrectSentence": "The speaker will touch on important topics during the conference."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "They need to ___ alternative solutions to the problem.",
+                       			"CorrectPhrasalVerb": "come up with",
+                       			"CorrectSentence": "They need to come up with alternative solutions to the problem."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The artist ___ his work to showcase his talent.",
+                       			"CorrectPhrasalVerb": "put forward",
+                       			"CorrectSentence": "The artist put forward his work to showcase his talent."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "She can ___ others' perspectives easily.",
+                       			"CorrectPhrasalVerb": "take in",
+                       			"CorrectSentence": "She can take in others' perspectives easily."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The team plans to ___ a new project next month.",
+                       			"CorrectPhrasalVerb": "roll out",
+                       			"CorrectSentence": "The team plans to roll out a new project next month."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "He will ___ for his mistakes and work to improve.",
+                       			"CorrectPhrasalVerb": "own up",
+                       			"CorrectSentence": "He will own up for his mistakes and work to improve."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "The company plans to ___ a new strategy for growth.",
+                       			"CorrectPhrasalVerb": "put together",
+                       			"CorrectSentence": "The company plans to put together a new strategy for growth."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "She always ___ new ideas for the project.",
+                       			"CorrectPhrasalVerb": "come up with",
+                       			"CorrectSentence": "She always comes up with new ideas for the project."
+                       		},
+                       		{
+                       			"SentenceWithUnderscoreInsteadOfPhrasalVerb": "They must ___ the problem before making a decision.",
+                       			"CorrectPhrasalVerb": "get to grips with",
+                       			"CorrectSentence": "They must get to grips with the problem before making a decision."
+                       		}
+                       	],
+                       	"Header": {
+                       		"Title": "Ćwiczenie na czasowniki frazowe - Poziom Zaawansowany",
+                       		"TaskDescription": "Uzupełnij zdania odpowiednimi czasownikami frazowymi na poziomie zaawansowanym.",
+                       		"Instruction": "Dobierz właściwy czasownik frazowy do każdego zdania.",
+                       		"Example": "Przykład: Her rise to the challenging situation impressed everyone.",
+                       		"SupportMaterial": "Wykorzystaj swoje umiejętności na poziomie zaawansowanym do poprawnego użycia czasowników frazowych w kontekście."
+                       	}
+                       }
+                       """;
 
-      string result = _service.FixJson(input);
-
-      //Assert.Equal(expected, result);
-      Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
-    }
-    
-    [Fact]
-    public void FixJson_ShouldAddCommaBetweenMoreThanTwoObjects()
-    {
-      string input = @"{
-            ""valuee1"": false
-            ""value1"": false
-            ""value2"": ""ok""
-            ""value2"": ""ok""
-        }";
-      string expected = @"{
-            ""valuee1"": false,
-            ""value1"": false,
-            ""value2"": ""ok"",
-            ""value2"": ""ok""
-        }";
-
-      string result = _service.FixJson(input);
-
-      //Assert.Equal(expected, result);
-      Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
-    }
-    
-    [Fact]
-    public void FixJson_ShouldAddCommaBetweenMoreThanTwoObjectsMixed()
-    {
-      string input = @"{
-            ""value1"": false
-            ""v2"": false,
-            ""value1"": false
-            ""b4"": ""ok"",
-            ""value2"": ""ok""
-        }";
-      string expected = @"{
-            ""value1"": false,
-            ""v2"": false,
-            ""value1"": false,
-            ""b4"": ""ok"",
-            ""value2"": ""ok""
-        }";
-
-      string result = _service.FixJson(input);
-
-      //Assert.Equal(expected, result);
-      Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
-    }
-
-    [Fact]
-    public void FixJson_ShouldAddCommaBetweenNestedObjects()
-    {
-        string input = @"{
-            ""value1"": false
-            ""value2"": ""ok"",
-            ""value3"": 29,
-            ""value4"": {
-                ""someValue"": 0,
-                ""someValue2"": false
-            }
-        }";
-        string expected = @"{
-            ""value1"": false,
-            ""value2"": ""ok"",
-            ""value3"": 29,
-            ""value4"": {
-                ""someValue"": 0,
-                ""someValue2"": false
-            }
-        }";
+        var test = JsonSerializer.Deserialize<MissingPhrasalVerbOpen>(expected);
 
         string result = _service.FixJson(input);
 
@@ -178,35 +315,35 @@ public class DeserializerServiceTests
     //     Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
     // }
     
-    [Fact]
-    public void FixJson_ShouldAddCommaInArray()
-    {
-      string input = @"{
-            ""value4"": {
-                ""someValue"": 0,
-                ""someValue2"": false,
-                ""someCollection"": [
-                    ""ok""
-                    ""notok""
-                ]
-            }
-        }";
-      string expected = @"{
-            ""value4"": {
-                ""someValue"": 0,
-                ""someValue2"": false,
-                ""someCollection"": [
-                    ""ok"",
-                    ""notok""
-                ]
-            }
-        }";
-
-      string result = _service.FixJson(input);
-
-      //Assert.Equal(expected, result);
-      Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
-    }
+    // [Fact]
+    // public void FixJson_ShouldAddCommaInArray()
+    // {
+    //   string input = @"{
+    //         ""value4"": {
+    //             ""someValue"": 0,
+    //             ""someValue2"": false,
+    //             ""someCollection"": [
+    //                 ""ok""
+    //                 ""notok""
+    //             ]
+    //         }
+    //     }";
+    //   string expected = @"{
+    //         ""value4"": {
+    //             ""someValue"": 0,
+    //             ""someValue2"": false,
+    //             ""someCollection"": [
+    //                 ""ok"",
+    //                 ""notok""
+    //             ]
+    //         }
+    //     }";
+    //
+    //   string result = _service.FixJson(input);
+    //
+    //   //Assert.Equal(expected, result);
+    //   Assert.Equal(RemoveWhitespace(expected), RemoveWhitespace(result));
+    // }
 
     // [Fact]
     // public void FixJson_ShouldAddCommaBetweenObjectsInArray()

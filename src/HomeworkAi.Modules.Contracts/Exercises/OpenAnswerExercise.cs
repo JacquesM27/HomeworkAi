@@ -39,10 +39,20 @@ public class IrregularVerbs : OpenAnswerExercise
     
     public class Verb
     {
-        public string MotherLanguage { get; set; }
-        public string FirstForm { get; set; }
-        public string SecondForm { get; set; }
-        public string ThirdForm { get; set; }
+        public MotherLanguage MotherLanguageVerb { get; set; }
+        public TargetLanguage TargetLanguageVerbForms { get; set; }
+        
+        public class MotherLanguage
+        {
+            public string VerbInMotherLanguage { get; set; }
+        }
+        
+        public class TargetLanguage
+        {
+            public string FirstForm { get; set; }
+            public string SecondForm { get; set; }
+            public string ThirdForm { get; set; }
+        }
     }
 }
 
@@ -64,7 +74,6 @@ public class ParaphrasingOpen : OpenAnswerExercise
     public class SentenceWithParaphrasing
     {
         public string Sentence { get; set; }
-        public string PhrasalVerb { get; set; }
     }
 }
 
@@ -88,7 +97,6 @@ public class MissingPhrasalVerbOpen : OpenAnswerExercise
     {
         public string SentenceWithUnderscoreInsteadOfPhrasalVerb { get; set; }
         public string CorrectPhrasalVerb { get; set; }
-        public string CorrectSentence { get; set; }
     }
 }
 
@@ -99,7 +107,6 @@ public class MissingWordOrExpressionOpen : OpenAnswerExercise
     {
         public string SentenceWithUnderscoreInsteadOfWordOrExpression { get; set; }
         public string CorrectWordOrExpression { get; set; }
-        public string CorrectSentence { get; set; }
     }
 }
 

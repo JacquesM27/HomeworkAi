@@ -19,7 +19,7 @@ public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter
 
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ConditionalOpen));
         
-        var prompt = $"1. This is open answer - conditional exercise. This means that need to generate {roundedAmountOfSentences} sentences each in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} so that they are translatable by the student into {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)}. Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third": "")} - in JSON you have list for each mode, complete only those lists that were mentioned in the previous sentence.";
+        var prompt = $"1. This is open answer - conditional exercise. This means that need to generate {TotalAmountOfSentences(query)} sentences ({roundedAmountOfSentences} per conditional list) in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}. Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third": "")} - in JSON format you have list for each mode.";// - in JSON you have list for each mode, complete only those lists that were mentioned in the previous sentence.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
@@ -58,5 +58,14 @@ public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter
         var amountOfSentences = (double)query.AmountOfSentences / conditionalDenominator;
         var roundedAmountOfSentences = (int)Math.Ceiling(amountOfSentences);
         return roundedAmountOfSentences;
+    }
+    
+    private static int TotalAmountOfSentences(ConditionalOpenQuery query)
+    {
+        bool[] conditions = [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
+        var conditionalDenominator = conditions.Count(c => c);
+        var amountOfSentences = (double)query.AmountOfSentences / conditionalDenominator;
+        var roundedAmountOfSentences = (int)Math.Ceiling(amountOfSentences);
+        return roundedAmountOfSentences * conditionalDenominator;
     }
 }

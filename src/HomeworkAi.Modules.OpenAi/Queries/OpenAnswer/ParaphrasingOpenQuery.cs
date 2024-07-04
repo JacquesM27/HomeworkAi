@@ -15,7 +15,7 @@ public sealed class ParaphrasingOpenQueryHandler(IPromptFormatter promptFormatte
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ParaphrasingOpen));
         
-        var prompt = $"1. This is open answer - paraphrasing exercise. This means that need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} so that they can be paraphrased. Transformations involve transforming sentences, that is, expressing the same thought in a different way. You need to create a sentence and add a phrasal verb to it, with the help of which the student will make the transformation.";
+        var prompt = $"1. This is open answer - paraphrasing exercise. This means that need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} so that they can be paraphrased. Transformations involve transforming sentences, that is, expressing the same thought in a different way.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:

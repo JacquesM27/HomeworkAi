@@ -16,7 +16,7 @@ public sealed class MissingPhrasalVerbOpenQueryHandler(IPromptFormatter promptFo
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(MissingPhrasalVerbOpen));
         
-        var prompt = $"1. This is open answer - missing phrasal verbs exercise. This means that need to generate {query.AmountOfSentences} sentences with phrasal verbs. Write the sentences in the CorrectSentence field. Record the correct phrasal verb in the CorrectPhrasalVerb field. In addition, in the SentenceWithUnderscoreInsteadOfPhrasalVerb field, write a sentence in which you replace phrasal verbs with ___. ";
+        var prompt = $"1. This is open answer - missing phrasal verbs exercise. This means that need to generate {query.AmountOfSentences} sentences with phrasal verbs. Record the correct phrasal verb in the CorrectPhrasalVerb field. In addition, in the SentenceWithUnderscoreInsteadOfPhrasalVerb field, write a sentence in which you replace phrasal verbs with ___. ";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:

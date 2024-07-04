@@ -16,7 +16,7 @@ internal sealed class AnswerToQuestionOpenQueryHandler(IPromptFormatter promptFo
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(AnswerToQuestionOpen));
         
-        var prompt = $"1. This is open answer - question to answer exercise. This means that need to generate {query.AmountOfSentences} questions in {query.TargetLanguage}. According to other guidelines, the student must be able to answer them independently.";
+        var prompt = $"1. This is open answer exercise. This means that need to generate {query.AmountOfSentences} questions in {query.TargetLanguage} (questions, not answers) according to the following grammatical requirements. The generated questions are for students to answer.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:

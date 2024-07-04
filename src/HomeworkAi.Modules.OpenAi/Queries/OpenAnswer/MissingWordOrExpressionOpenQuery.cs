@@ -16,7 +16,7 @@ public sealed class MissingWordOrExpressionOpenQueryHandler(IPromptFormatter pro
     {
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(MissingWordOrExpressionOpen));
         
-        var prompt = $"1. This is open answer - missing phrasal word or expression exercise. This means that need to generate {query.AmountOfSentences} sentences in which to cut out a word or expression. Record the sentence in the CorrectSentence field. Record the correct word or phrase that will be cut in the CorrectWordOrExpression field. In addition, in the SentenceWithUnderscoreInsteadOfWordOrExpression field, write a sentence in which you will replace the word or phrase with ___. ";
+        var prompt = $"1. This is open answer - missing phrasal word or expression exercise. This means that need to generate {query.AmountOfSentences} sentences in which to cut out a word or expression. Record the correct word or phrase that will be cut in the CorrectWordOrExpression field. In addition, in the SentenceWithUnderscoreInsteadOfWordOrExpression field, write a sentence in which you will replace the word or phrase with ___. Pay attention to languages, sentences must be in {query.TargetLanguage}. ";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:

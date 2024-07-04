@@ -50,19 +50,70 @@ public class DeserializerService(
 
     public T Deserialize<T>(string json)
     {
-        var result = JsonSerializer.Deserialize<T>(json)
-                     ?? throw new DeserializationException(json);
+        
+        var result = JsonSerializer.Deserialize<T>(json);
+
+        if (result is not null) 
+            return result;
+        
+        var fixedJson = FixJson(json);
+        result = JsonSerializer.Deserialize<T>(json) 
+                 ?? throw new DeserializationException(fixedJson);
+        
         return result;
     }
     
-    public string FixJson(string json)//not working :c
+    public string FixJson(string json)
     {
-        var fixedValues = FixValues(json);
-        var fixedBrackets = FixBrackets(fixedValues);
-        var fixCollections = FixCollections(fixedBrackets);
-        return fixCollections;
+        //it works only for string values xD
+        var fixedValues = FixValues2(json);
+        //var fixedBrackets = FixBrackets(fixedValues);
+        //var fixCollections = FixCollections(fixedBrackets);
+        //var fixCollections = FixCollections(json);
+        return fixedValues;
+    }
+    
+    const string Pattern = @"(?<=\""\w+\"":\s*)""[\w\s\d\.\'\-ĄąĆćĘęŁłŃńÓóŚśŹźŻż:]*""(?![\}\]])";
+    public string FixValues2(string json)
+    {
+        // Compile the regex pattern
+        var regex = new Regex(Pattern, RegexOptions.Compiled);
+
+        // Use the Regex to find all matches
+        var matches = regex.Matches(json);
+
+        // Initialize a string to build the fixed JSON
+        string fixedJson = json;
+
+        // Iterate through the matches in reverse order to avoid altering indices of remaining matches
+        for (int i = matches.Count - 1; i >= 0; i--)
+        {
+            var match = matches[i];
+
+            // Check if the character after the matched value is not a comma, closing brace, or closing bracket
+            if (match.Index + match.Length < json.Length && json[match.Index + match.Length] != ',' &&
+                json[match.Index + match.Length] != '}' && json[match.Index + match.Length] != ']')
+            {
+                // Add a comma after the match if it's not followed by a closing brace or bracket
+                fixedJson = fixedJson.Insert(match.Index + match.Length, ",");
+            }
+        }
+
+        // Handle edge cases to remove trailing commas before closing braces or brackets
+        fixedJson = RemoveTrailingComma(fixedJson);
+
+        return fixedJson;
     }
 
+    private string RemoveTrailingComma(string json)
+    {
+        // Pattern to find trailing commas before closing braces or brackets
+        var pattern = @",(\s*[}\]])";
+
+        // Remove trailing commas before closing braces or brackets
+        return Regex.Replace(json, pattern, "$1");
+    }
+    
     private string FixValues(string json)
     {
         var valuePattern = @"{?\s+\""\w+\"":\s*""?\w*""?,?{?\[?";
