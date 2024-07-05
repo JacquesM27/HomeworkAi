@@ -1,3 +1,4 @@
+using HomeworkAi.Infrastructure;
 using HomeworkAi.Modules.OpenAi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,9 @@ builder.Services.AddSwaggerGen(c =>
     c.CustomSchemaIds(type => type.FullName);
 });
 
-builder.Services.AddOpenAi(builder.Configuration, AppDomain.CurrentDomain.GetAssemblies().ToList());
+builder.Services.AddInfrastructure(AppDomain.CurrentDomain.GetAssemblies().ToList(), builder.Configuration);
+
+builder.Services.AddOpenAi(builder.Configuration);
 
 var app = builder.Build();
 
@@ -27,6 +30,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseInfrastructure();
 app.UseOpenAi();
 
 app.MapControllers();

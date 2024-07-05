@@ -3,6 +3,7 @@ using HomeworkAi.Modules.OpenAi.Cache;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 using HomeworkAi.Infrastructure;
+using HomeworkAi.Infrastructure.Settings;
 using HomeworkAi.Modules.OpenAi.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -13,12 +14,10 @@ namespace HomeworkAi.Modules.OpenAi;
 
 public static class Extensions
 {
-    public static IServiceCollection AddOpenAi(this IServiceCollection services, IConfiguration configuration,
-        IList<Assembly> assemblies)
+    public static IServiceCollection AddOpenAi(this IServiceCollection services, IConfiguration configuration)
     {
-        //TODO: add configuration object
-        var apiKey = configuration["gptApiKey"];
-        services.AddScoped<IOpenAIAPI>(_ => new OpenAIAPI(apiKey));
+        var openAiSettings = configuration.GetConfiguredOptions<OpenAiSettings>(OpenAiSettings.SectionName);
+        services.AddScoped<IOpenAIAPI>(_ => new OpenAIAPI(openAiSettings.ApiKey));
         services.AddScoped<IOpenAiExerciseService, OpenAiExerciseService>();
 
         services.AddSingleton<IApplicationMemoryCache, ApplicationMemoryCache>();
@@ -26,8 +25,6 @@ public static class Extensions
         services.AddTransient<IPromptFormatter, PromptFormatter>();
         services.AddScoped<IDeserializerService, DeserializerService>();
 
-        services.AddInfrastructure(assemblies);
-        
         return services;
     }
 
@@ -37,7 +34,6 @@ public static class Extensions
             .AddOpenFormEndpoints()
             .AddOpenAnswerEndpoints()
             .AddClosedAnswerEndpoints();
-        app.UseInfrastructure();
 
         return app;
     }

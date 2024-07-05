@@ -1,0 +1,8 @@
+{
+  "persistence": {
+    "module": {
+      "name": "Persistence",
+      "enabled": true
+    }
+  }
+}

@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Modules.Contract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Core.Tests.Unit", "Tests\HomeworkAi.Core.Tests.Unit\HomeworkAi.Core.Tests.Unit.csproj", "{59FC9976-ABA3-4303-B17F-EC402D34A256}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkAi.Modules.Persistence", "src\HomeworkAi.Modules.Persistence\HomeworkAi.Modules.Persistence.csproj", "{34E2A06D-38C8-499A-835A-650BD06BDD0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,11 +42,16 @@ Global
 		{59FC9976-ABA3-4303-B17F-EC402D34A256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59FC9976-ABA3-4303-B17F-EC402D34A256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59FC9976-ABA3-4303-B17F-EC402D34A256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E2A06D-38C8-499A-835A-650BD06BDD0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E2A06D-38C8-499A-835A-650BD06BDD0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E2A06D-38C8-499A-835A-650BD06BDD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E2A06D-38C8-499A-835A-650BD06BDD0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D6336779-D46D-4421-930A-C884062070F0} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
 		{B358E6D4-76C3-4365-94D5-C32277462FFB} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
 		{28EBF9AF-AB8C-4C44-A481-3BA259196A3A} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
 		{59FC9976-ABA3-4303-B17F-EC402D34A256} = {8E4631DB-829E-41F2-8E29-9B28092D5080}
+		{34E2A06D-38C8-499A-835A-650BD06BDD0D} = {8D55839C-E90D-4A4B-833D-A9F354EFFD08}
 	EndGlobalSection
 EndGlobal

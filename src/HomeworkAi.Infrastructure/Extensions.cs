@@ -3,15 +3,21 @@ using HomeworkAi.Infrastructure.Commands;
 using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Exceptions;
 using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Infrastructure.Settings;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeworkAi.Infrastructure;
 
 public static class Extensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IList<Assembly> assemblies)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IList<Assembly> assemblies,
+        IConfiguration configuration)
     {
+        services.Configure<MsSqlSettings>(configuration.GetSection(MsSqlSettings.SectionName));
+        services.Configure<OpenAiSettings>(configuration.GetSection(OpenAiSettings.SectionName));
+        
         services.AddErrorHandling();
         services.AddCommands(assemblies);
         services.AddQueries(assemblies);

@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises.ClosedAnswer;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -8,12 +10,12 @@ namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 public sealed record AnswerToQuestionClosedQuery(int AmountOfSentences)
     : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>>;
 
-
 public sealed class AnswerToQuestionClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
-    IDeserializerService deserializerService)
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<AnswerToQuestionClosedQuery, ClosedAnswerExerciseResponse<AnswerToQuestionClosed>>
 {
     public async Task<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>> HandleAsync(AnswerToQuestionClosedQuery query)
@@ -44,8 +46,8 @@ public sealed class AnswerToQuestionClosedQueryHandler(
             GrammarSection = query.GrammarSection,
             AmountOfSentences = query.AmountOfSentences
         };
-        
-        //TODO: add event/rabbit with exercise.
+
+        await eventDispatcher.PublishAsync(new AnswerToQuestionClosedGenerated(result));
         return result;
     }
 }
