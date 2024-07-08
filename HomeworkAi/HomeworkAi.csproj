@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\src\HomeworkAi.Modules.OpenAi\HomeworkAi.Modules.OpenAi.csproj" />
+      <ProjectReference Include="..\src\HomeworkAi.Modules.Persistence\HomeworkAi.Modules.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

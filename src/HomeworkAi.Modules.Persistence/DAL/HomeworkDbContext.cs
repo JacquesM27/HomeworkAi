@@ -1,16 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HomeworkAi.Modules.Persistence.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeworkAi.Modules.Persistence.DAL;
 
-internal sealed class HomeworkDbContext : DbContext
+internal sealed class HomeworkDbContext(DbContextOptions<HomeworkDbContext> dbContextOptions)
+    : DbContext(dbContextOptions)
 {
-    //holy shit mssql is not good idea to complex objects
-    /*
-    public DbSet<ExerciseResponse<ClosedAnswerExercise>> ExerciseResponses { get; set; }
-    public DbSet<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>> ClosedAnswerExerciseResponses { get; set; }
-    public DbSet<AnswerToQuestionClosed> AnswerToQuestionCloseds { get; set; }
-    public DbSet<ClosedQuestion> ClosedQuestions { get; set; }
-    public DbSet<Answer> Answers { get; set; }
-    public DbSet<Language> Languages { get; set; }
-     */
+    public DbSet<ClosedAnswerExerciseEntity> ClosedAnswerExercises { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+    }
 }

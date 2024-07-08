@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises.ClosedAnswer;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -14,7 +16,8 @@ public sealed class ConditionalClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
-    IDeserializerService deserializerService)
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<ConditionalClosedQuery, ClosedAnswerExerciseResponse<ConditionalClosed>>
 {
     public async Task<ClosedAnswerExerciseResponse<ConditionalClosed>> HandleAsync(ConditionalClosedQuery query)
@@ -53,7 +56,7 @@ public sealed class ConditionalClosedQueryHandler(
             ThirdConditional = query.ThirdConditional
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new ConditionalClosedGenerated(result));
         return result;
     }
     

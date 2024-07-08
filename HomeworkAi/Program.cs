@@ -1,5 +1,6 @@
 using HomeworkAi.Infrastructure;
 using HomeworkAi.Modules.OpenAi;
+using HomeworkAi.Modules.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddInfrastructure(AppDomain.CurrentDomain.GetAssemblies().ToList(), builder.Configuration);
 
 builder.Services.AddOpenAi(builder.Configuration);
+builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
 

@@ -15,7 +15,7 @@ public static class Extensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IList<Assembly> assemblies,
         IConfiguration configuration)
     {
-        services.Configure<MsSqlSettings>(configuration.GetSection(MsSqlSettings.SectionName));
+        services.Configure<PostgreSqlSettings>(configuration.GetSection(PostgreSqlSettings.SectionName));
         services.Configure<OpenAiSettings>(configuration.GetSection(OpenAiSettings.SectionName));
         
         services.AddErrorHandling();

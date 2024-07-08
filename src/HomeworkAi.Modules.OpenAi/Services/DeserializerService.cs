@@ -6,7 +6,6 @@ using HomeworkAi.Modules.OpenAi.Cache;
 using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.Contracts;
 using HomeworkAi.Modules.Contracts.Exercises;
-using Microsoft.Extensions.Primitives;
 
 namespace HomeworkAi.Modules.OpenAi.Services;
 

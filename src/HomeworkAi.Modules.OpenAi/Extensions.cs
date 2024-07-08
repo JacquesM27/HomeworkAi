@@ -1,8 +1,6 @@
-﻿using System.Reflection;
-using HomeworkAi.Modules.OpenAi.Cache;
+﻿using HomeworkAi.Modules.OpenAi.Cache;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
-using HomeworkAi.Infrastructure;
 using HomeworkAi.Infrastructure.Settings;
 using HomeworkAi.Modules.OpenAi.Endpoints;
 using Microsoft.AspNetCore.Builder;
