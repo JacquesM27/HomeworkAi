@@ -17,6 +17,7 @@ public class ClosedAnswerExerciseEntity
     public bool? SecondConditional { get; set; }
     public bool? ThirdConditional { get; set; }
     public bool? DescriptionInMotherLanguage { get; set; }
+    public string ExerciseType { get; set; }
     public string ExerciseJson { get; set; } // JSONB column
     public bool CheckedByTeacher { get; set; }
 }

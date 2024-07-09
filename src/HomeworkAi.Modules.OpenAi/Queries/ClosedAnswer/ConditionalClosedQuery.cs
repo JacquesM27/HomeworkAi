@@ -56,7 +56,7 @@ public sealed class ConditionalClosedQueryHandler(
             ThirdConditional = query.ThirdConditional
         };
         
-        await eventDispatcher.PublishAsync(new ConditionalClosedGenerated(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<ConditionalClosed>(result));
         return result;
     }
     

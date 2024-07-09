@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using HomeworkAi.Infrastructure.ReflectionExtensions;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Contracts.ValueObjects;
 
@@ -14,11 +15,11 @@ public class ApplicationMemoryCache : IApplicationMemoryCache
     
     public ApplicationMemoryCache()
     {
-        var allExercises = GetNonAbstractDerivedTypes<Exercise>();
+        var allExercises = TypesExtensions.GetNonAbstractDerivedTypes<Exercise>();
         _exercises = allExercises.ToFrozenDictionary(type => type.Name, type => type);
-        _closedAnswerExercises = GetNonAbstractDerivedTypeNames<ClosedAnswerExercise>().ToFrozenSet();
-        _openAnswerExercises = GetNonAbstractDerivedTypeNames<OpenAnswerExercise>().ToFrozenSet();
-        _openFormExercises = GetNonAbstractDerivedTypeNames<OpenFormExercise>().ToFrozenSet();
+        _closedAnswerExercises = TypesExtensions.GetNonAbstractDerivedTypeNames<ClosedAnswerExercise>().ToFrozenSet();
+        _openAnswerExercises = TypesExtensions.GetNonAbstractDerivedTypeNames<OpenAnswerExercise>().ToFrozenSet();
+        _openFormExercises = TypesExtensions.GetNonAbstractDerivedTypeNames<OpenFormExercise>().ToFrozenSet();
         _languages = Language.Languages.ToFrozenSet();
     }
     
@@ -31,16 +32,4 @@ public class ApplicationMemoryCache : IApplicationMemoryCache
     public IEnumerable<string> GetOpenFormExercises() => _openFormExercises;
 
     public IEnumerable<string> GetLanguages() => _languages;
-
-    private static IEnumerable<Type> GetNonAbstractDerivedTypes<T>()
-    {
-        var baseType = typeof(T);
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-        return assemblies.SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.IsSubclassOf(baseType) && !type.IsAbstract);
-    }
-
-    private static IEnumerable<string> GetNonAbstractDerivedTypeNames<T>() 
-        => GetNonAbstractDerivedTypes<T>().Select(t => t.Name);
 }

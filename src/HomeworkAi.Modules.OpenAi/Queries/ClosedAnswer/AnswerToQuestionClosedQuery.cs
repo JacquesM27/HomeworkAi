@@ -47,7 +47,7 @@ public sealed class AnswerToQuestionClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
 
-        await eventDispatcher.PublishAsync(new AnswerToQuestionClosedGenerated(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<AnswerToQuestionClosed>(result));
         return result;
     }
 }
