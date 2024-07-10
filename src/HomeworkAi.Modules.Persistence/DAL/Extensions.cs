@@ -1,4 +1,5 @@
 ﻿using HomeworkAi.Infrastructure.Settings;
+using HomeworkAi.Modules.Persistence.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,9 @@ internal static class Extensions
         var pgSettings = configuration.GetConfiguredOptions<PostgreSqlSettings>(PostgreSqlSettings.SectionName);
 
         services.AddDbContext<HomeworkDbContext>(x => x.UseNpgsql(pgSettings.ConnectionString));
+
+        services.AddScoped<IClosedAnswerExerciseRepository, ClosedAnswerExerciseRepository>();
+        services.AddScoped<IOpenAnswerExerciseRepository, OpenAnswerExerciseRepository>();
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         

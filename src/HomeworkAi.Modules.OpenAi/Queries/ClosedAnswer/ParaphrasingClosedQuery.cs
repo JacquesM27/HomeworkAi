@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -12,7 +14,8 @@ public sealed class ParaphrasingClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
-    IDeserializerService deserializerService)
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<ParaphrasingClosedQuery, ClosedAnswerExerciseResponse<ParaphrasingClosed>>
 {
     public async Task<ClosedAnswerExerciseResponse<ParaphrasingClosed>> HandleAsync(ParaphrasingClosedQuery query)
@@ -30,7 +33,6 @@ public sealed class ParaphrasingClosedQueryHandler(
         
         var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
-        //TODO: if deserialization ends with exception add json fixing method
         var exercise = deserializerService.Deserialize<ParaphrasingClosed>(response);
 
         var result = new ClosedAnswerExerciseResponse<ParaphrasingClosed>()
@@ -45,7 +47,7 @@ public sealed class ParaphrasingClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<ParaphrasingClosed>(result));
         return result;
     }
 }

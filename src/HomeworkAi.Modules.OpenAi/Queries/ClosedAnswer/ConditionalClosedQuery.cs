@@ -1,6 +1,6 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
-using HomeworkAi.Modules.Contracts.Events.Exercises.ClosedAnswer;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;

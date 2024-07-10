@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -12,7 +14,8 @@ public sealed class MissingPhrasalVerbClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
-    IDeserializerService deserializerService)
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<MissingPhrasalVerbClosedQuery, ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>>
 {
     public async Task<ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>> HandleAsync(MissingPhrasalVerbClosedQuery query)
@@ -44,7 +47,7 @@ public sealed class MissingPhrasalVerbClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<MissingPhrasalVerbClosed>(result));
         return result;
     }
 }

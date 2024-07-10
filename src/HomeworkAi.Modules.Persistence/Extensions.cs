@@ -1,11 +1,11 @@
 ﻿using HomeworkAi.Infrastructure.Events;
-using HomeworkAi.Modules.Contracts.Events.Exercises.ClosedAnswer;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Persistence.DAL;
 using HomeworkAi.Modules.Persistence.Events.Handlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using HomeworkAi.Infrastructure.ReflectionExtensions;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 
 namespace HomeworkAi.Modules.Persistence;
 
