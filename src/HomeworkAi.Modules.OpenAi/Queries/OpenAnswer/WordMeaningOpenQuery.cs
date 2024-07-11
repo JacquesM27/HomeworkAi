@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -12,7 +14,8 @@ public sealed class WordMeaningOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
-    IDeserializerService deserializerService)
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<WordMeaningOpenQuery, OpenAnswerExerciseResponse<WordMeaningOpen>>
 {
     public async Task<OpenAnswerExerciseResponse<WordMeaningOpen>> HandleAsync(WordMeaningOpenQuery openQuery)
@@ -45,7 +48,7 @@ public sealed class WordMeaningOpenQueryHandler(
             AmountOfSentences = openQuery.AmountOfSentences
         };
 
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<WordMeaningOpen>(result));
         return result;
     }
 }

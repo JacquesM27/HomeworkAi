@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -8,8 +10,11 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 public sealed record MissingWordOrExpressionOpenQuery(int AmountOfSentences) 
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>>;
     
-public sealed class MissingWordOrExpressionOpenQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+public sealed class MissingWordOrExpressionOpenQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<MissingWordOrExpressionOpenQuery, OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>>
 {
     public async Task<OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>> HandleAsync(MissingWordOrExpressionOpenQuery query)
@@ -39,7 +44,7 @@ public sealed class MissingWordOrExpressionOpenQueryHandler(IPromptFormatter pro
             AmountOfSentences = query.AmountOfSentences
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<MissingWordOrExpressionOpen>(result));
         return result;
     }
 }

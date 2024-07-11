@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -8,8 +10,11 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 public sealed record IrregularVerbsQuery(int AmountOfSentences, bool ShowMotherLanguage, bool ShowFirstForm)
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<IrregularVerbs>>;
     
-public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+public sealed class IrregularVerbsQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<IrregularVerbsQuery, OpenAnswerExerciseResponse<IrregularVerbs>>
 {
     public async Task<OpenAnswerExerciseResponse<IrregularVerbs>> HandleAsync(IrregularVerbsQuery query)
@@ -41,7 +46,7 @@ public sealed class IrregularVerbsQueryHandler(IPromptFormatter promptFormatter,
             ShowMotherLanguage = query.ShowMotherLanguage
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<IrregularVerbs>(result));
         return result;
     }
 }

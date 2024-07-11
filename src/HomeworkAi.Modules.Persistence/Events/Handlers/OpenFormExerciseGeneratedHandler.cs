@@ -6,10 +6,10 @@ using HomeworkAi.Modules.Persistence.Events.Mappers;
 
 namespace HomeworkAi.Modules.Persistence.Events.Handlers;
 
-internal sealed class OpenAnswerExerciseGeneratedHandler<TExercise>(IOpenAnswerExerciseRepository repository)
-    : IEventHandler<OpenAnswerExerciseGenerated<TExercise>> where TExercise : OpenAnswerExercise
+internal sealed class OpenFormExerciseGeneratedHandler<TExercise>(IOpenFormExerciseRepository repository)
+    : IEventHandler<OpenFormExerciseGenerated<TExercise>> where TExercise : OpenFormExercise
 {
-    public Task HandleAsync(OpenAnswerExerciseGenerated<TExercise> @event)
+    public Task HandleAsync(OpenFormExerciseGenerated<TExercise> @event)
     {
         var mapped = @event.Exercise.Map();
         return repository.AddAsync(mapped);

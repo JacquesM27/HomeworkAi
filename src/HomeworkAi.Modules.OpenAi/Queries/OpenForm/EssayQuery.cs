@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -7,8 +9,12 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenForm;
 
 public sealed record EssayQuery(int MinimumNumberOfWords) : ExerciseQueryBase, IQuery<OpenFormExerciseResponse<Essay>>;
 
-internal sealed class EssayQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+internal sealed class EssayQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService,
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<EssayQuery, OpenFormExerciseResponse<Essay>>
 {
     public async Task<OpenFormExerciseResponse<Essay>> HandleAsync(EssayQuery query)
@@ -38,7 +44,7 @@ internal sealed class EssayQueryHandler(IPromptFormatter promptFormatter, IObjec
             GrammarSection = query.GrammarSection
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenFormExerciseGenerated<Essay>(result));
         return result;
     }
 }

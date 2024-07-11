@@ -18,6 +18,14 @@ public static class Extensions
         services.AddAllHandlersForExercises<ClosedAnswerExercise>(
             typeof(ClosedAnswerExerciseGenerated<>),
             typeof(ClosedAnswerExerciseGeneratedHandler<>));
+
+        services.AddAllHandlersForExercises<OpenAnswerExercise>(
+            typeof(OpenAnswerExerciseGenerated<>),
+            typeof(OpenAnswerExerciseGeneratedHandler<>));
+        
+        services.AddAllHandlersForExercises<OpenFormExercise>(
+            typeof(OpenFormExerciseGenerated<>),
+            typeof(OpenFormExerciseGeneratedHandler<>));
         
         return services;
     }

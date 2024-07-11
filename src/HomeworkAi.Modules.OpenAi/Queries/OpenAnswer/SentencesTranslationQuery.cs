@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -7,8 +9,11 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record SentencesTranslationQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<SentencesTranslation>>;
 
-internal sealed class SentencesTranslationQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+internal sealed class SentencesTranslationQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<SentencesTranslationQuery, OpenAnswerExerciseResponse<SentencesTranslation>>
 {
     public async Task<OpenAnswerExerciseResponse<SentencesTranslation>> HandleAsync(SentencesTranslationQuery query)
@@ -39,7 +44,7 @@ internal sealed class SentencesTranslationQueryHandler(IPromptFormatter promptFo
             AmountOfSentences = query.AmountOfSentences
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<SentencesTranslation>(result));
         return result;
     }
 }

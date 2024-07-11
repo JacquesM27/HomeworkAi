@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HomeworkAi.Modules.Persistence.DAL.Configurations;
 
-internal sealed class ClosedAnswerExerciseEntityConfiguration : IEntityTypeConfiguration<ClosedAnswerExerciseEntity>
+internal sealed class OpenFormExerciseEntityConfiguration : IEntityTypeConfiguration<OpenFormExerciseEntity>
 {
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseEntity> builder)
+    public void Configure(EntityTypeBuilder<OpenFormExerciseEntity> builder)
     {
         builder.HasKey(e => e.Id);
         builder.Property(e => e.ExerciseHeaderInMotherLanguage).IsRequired();
@@ -15,14 +15,6 @@ internal sealed class ClosedAnswerExerciseEntityConfiguration : IEntityTypeConfi
         builder.Property(e => e.TargetLanguageLevel).HasMaxLength(50);
         builder.Property(e => e.TopicsOfSentences).HasMaxLength(500);
         builder.Property(e => e.GrammarSection).HasMaxLength(500);
-        builder.Property(e => e.AmountOfSentences);
-        builder.Property(e => e.TranslateFromMotherLanguage);
-        builder.Property(e => e.QuestionsInMotherLanguage);
-        builder.Property(e => e.ZeroConditional);
-        builder.Property(e => e.FirstConditional);
-        builder.Property(e => e.SecondConditional);
-        builder.Property(e => e.ThirdConditional);
-        builder.Property(e => e.DescriptionInMotherLanguage);
         builder.Property(e => e.ExerciseType).IsRequired().HasMaxLength(100);
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();

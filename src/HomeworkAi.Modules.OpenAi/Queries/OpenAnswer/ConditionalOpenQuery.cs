@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -9,8 +11,11 @@ public sealed record ConditionalOpenQuery(int AmountOfSentences, bool TranslateF
     bool FirstConditional, bool SecondConditional, bool ThirdConditional) 
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<ConditionalOpen>>;
     
-public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+public sealed class ConditionalOpenQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<ConditionalOpenQuery, OpenAnswerExerciseResponse<ConditionalOpen>>
 {
     public async Task<OpenAnswerExerciseResponse<ConditionalOpen>> HandleAsync(ConditionalOpenQuery query)
@@ -46,8 +51,8 @@ public sealed class ConditionalOpenQueryHandler(IPromptFormatter promptFormatter
             SecondConditional = query.SecondConditional,
             ThirdConditional = query.ThirdConditional
         };
-        
-        //TODO: add event/rabbit with exercise.
+
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<ConditionalOpen>(result));
         return result;
     }
 

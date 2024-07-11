@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -11,7 +13,8 @@ internal sealed class SummaryOfTextQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService,
-    IDeserializerService deserializerService)
+    IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<SummaryOfTextQuery, OpenFormExerciseResponse<SummaryOfText>>
 {
     public async Task<OpenFormExerciseResponse<SummaryOfText>> HandleAsync(SummaryOfTextQuery query)
@@ -40,7 +43,7 @@ internal sealed class SummaryOfTextQueryHandler(
             GrammarSection = query.GrammarSection
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenFormExerciseGenerated<SummaryOfText>(result));
         return result;
     }
 }

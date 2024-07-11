@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -7,8 +9,11 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record ParaphrasingOpenQuery(int AmountOfSentences) : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<ParaphrasingOpen>>;
 
-public sealed class ParaphrasingOpenQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+public sealed class ParaphrasingOpenQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<ParaphrasingOpenQuery, OpenAnswerExerciseResponse<ParaphrasingOpen>>
 {
     public async Task<OpenAnswerExerciseResponse<ParaphrasingOpen>> HandleAsync(ParaphrasingOpenQuery query)
@@ -38,7 +43,7 @@ public sealed class ParaphrasingOpenQueryHandler(IPromptFormatter promptFormatte
             AmountOfSentences = query.AmountOfSentences
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<ParaphrasingOpen>(result));
         return result;
     }
 }

@@ -1,4 +1,6 @@
-﻿using HomeworkAi.Infrastructure.Queries;
+﻿using HomeworkAi.Infrastructure.Events;
+using HomeworkAi.Infrastructure.Queries;
+using HomeworkAi.Modules.Contracts.Events.Exercises;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
@@ -8,8 +10,11 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 public sealed record PassiveSideOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) 
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<PassiveSideOpen>>;
 
-public sealed class PassiveSideOpenQueryHandler(IPromptFormatter promptFormatter, IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService)
+public sealed class PassiveSideOpenQueryHandler(
+    IPromptFormatter promptFormatter,
+    IObjectSamplerService objectSamplerService,
+    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IEventDispatcher eventDispatcher)
     : IQueryHandler<PassiveSideOpenQuery, OpenAnswerExerciseResponse<PassiveSideOpen>>
 {
     public async Task<OpenAnswerExerciseResponse<PassiveSideOpen>> HandleAsync(PassiveSideOpenQuery query)
@@ -40,7 +45,7 @@ public sealed class PassiveSideOpenQueryHandler(IPromptFormatter promptFormatter
             AmountOfSentences = query.AmountOfSentences
         };
         
-        //TODO: add event/rabbit with exercise.
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<PassiveSideOpen>(result));
         return result;
     }
 }
