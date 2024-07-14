@@ -17,6 +17,7 @@ internal static class Extensions
         services.AddScoped<IClosedAnswerExerciseRepository, ClosedAnswerExerciseRepository>();
         services.AddScoped<IOpenAnswerExerciseRepository, OpenAnswerExerciseRepository>();
         services.AddScoped<IOpenFormExerciseRepository, OpenFormExerciseRepository>();
+        services.AddScoped<ISuspiciousPromptRepository, SuspiciousPromptRepository>();
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         

@@ -1,7 +1,9 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
 using HomeworkAi.Modules.Contracts.Events.Exercises;
+using HomeworkAi.Modules.Contracts.Events.SuspiciousPrompts;
 using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -19,6 +21,14 @@ internal sealed class AnswerToQuestionOpenQueryHandler(
 {
     public async Task<OpenAnswerExerciseResponse<AnswerToQuestionOpen>> HandleAsync(AnswerToQuestionOpenQuery query)
     {
+        var queryAsString = objectSamplerService.GetStringValues(query);
+        var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
+        if (suspiciousPromptResponse.IsSuspicious)
+        {
+            await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
+            throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
+        }
+        
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(AnswerToQuestionOpen));
         
         var prompt = $"1. This is open answer exercise. This means that need to generate {query.AmountOfSentences} questions in {query.TargetLanguage} (questions, not answers) according to the following grammatical requirements. The generated questions are for students to answer.";

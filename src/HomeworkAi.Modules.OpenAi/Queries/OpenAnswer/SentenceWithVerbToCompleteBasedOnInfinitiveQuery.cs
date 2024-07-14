@@ -1,7 +1,9 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
 using HomeworkAi.Modules.Contracts.Events.Exercises;
+using HomeworkAi.Modules.Contracts.Events.SuspiciousPrompts;
 using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -21,6 +23,14 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
 {
     public async Task<OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>> HandleAsync(SentenceWithVerbToCompleteBasedOnInfinitiveQuery query)
     {
+        var queryAsString = objectSamplerService.GetStringValues(query);
+        var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
+        if (suspiciousPromptResponse.IsSuspicious)
+        {
+            await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
+            throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
+        }
+        
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(SentenceWithVerbToCompleteBasedOnInfinitive));
         
         var prompt = $"1. This is open answer - sentences with verb to complete based on infinitive exercise. This means that need to generate {query.AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with ____.";

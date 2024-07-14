@@ -1,7 +1,9 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
 using HomeworkAi.Modules.Contracts.Events.Exercises;
+using HomeworkAi.Modules.Contracts.Events.SuspiciousPrompts;
 using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -22,6 +24,14 @@ public sealed class ConditionalClosedQueryHandler(
 {
     public async Task<ClosedAnswerExerciseResponse<ConditionalClosed>> HandleAsync(ConditionalClosedQuery query)
     {
+        var queryAsString = objectSamplerService.GetStringValues(query);
+        var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
+        if (suspiciousPromptResponse.IsSuspicious)
+        {
+            await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
+            throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
+        }
+        
         var roundedAmountOfSentences = RoundedAmountOfSentences(query);
         
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ConditionalClosed));

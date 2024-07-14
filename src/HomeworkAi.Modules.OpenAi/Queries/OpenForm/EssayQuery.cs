@@ -1,7 +1,9 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
 using HomeworkAi.Modules.Contracts.Events.Exercises;
+using HomeworkAi.Modules.Contracts.Events.SuspiciousPrompts;
 using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -19,6 +21,14 @@ internal sealed class EssayQueryHandler(
 {
     public async Task<OpenFormExerciseResponse<Essay>> HandleAsync(EssayQuery query)
     {
+        var queryAsString = objectSamplerService.GetStringValues(query);
+        var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
+        if (suspiciousPromptResponse.IsSuspicious)
+        {
+            await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
+            throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
+        }
+        
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(Essay));
         
         var prompt = "1. This is open form - essay exercise. This means that you need to generate a short essay topic to be written by the student.";

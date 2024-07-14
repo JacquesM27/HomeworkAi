@@ -1,8 +1,6 @@
 ﻿using HomeworkAi.Modules.Contracts;
 using OpenAI_API;
 using OpenAI_API.Chat;
-using OpenAI_API.Completions;
-using OpenAI_API.Models;
 
 namespace HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -14,16 +12,6 @@ public class OpenAiExerciseService(
 {
     private static Conversation? _exerciseChat;
     private static Conversation? _promptSecurityChat;
-    
-    public async Task<CompletionResult> CompleteSentence(string text)
-    {
-        var completionRequest = new CompletionRequest();
-        completionRequest.Model = Model.DefaultModel;
-        //completionRequest.MaxTokens = 100;
-        completionRequest.Prompt = text;
-        var result = await openAiApi.Completions.CreateCompletionAsync(completionRequest);
-        return result;
-    }
     
     public Task<string> PromptForExercise(string prompt, string motherLanguage, string targetLanguage)
     {

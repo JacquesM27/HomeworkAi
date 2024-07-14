@@ -43,6 +43,31 @@ public class ObjectSamplerService : IObjectSamplerService
         return sb.ToString();
     }
 
+    public IEnumerable<string> GetStringCollectionValues(object? obj)
+    {
+        ArgumentNullException.ThrowIfNull(obj);
+
+        var type = obj.GetType();
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        var result = new List<string>();
+        
+        foreach (var property in properties)
+        {
+            if (property.PropertyType != typeof(string))
+                continue;
+
+            var value = property.GetValue(obj) as string;
+            
+            if (string.IsNullOrWhiteSpace(value))
+                continue;
+
+            result.Add(value);
+        }
+
+        return result;
+    }
+
     /// <summary>
     /// Only for types with default constructor!
     /// </summary>

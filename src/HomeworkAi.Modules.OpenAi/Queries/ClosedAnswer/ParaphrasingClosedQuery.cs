@@ -1,7 +1,9 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
 using HomeworkAi.Modules.Contracts.Events.Exercises;
+using HomeworkAi.Modules.Contracts.Events.SuspiciousPrompts;
 using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -20,6 +22,14 @@ public sealed class ParaphrasingClosedQueryHandler(
 {
     public async Task<ClosedAnswerExerciseResponse<ParaphrasingClosed>> HandleAsync(ParaphrasingClosedQuery query)
     {
+        var queryAsString = objectSamplerService.GetStringValues(query);
+        var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
+        if (suspiciousPromptResponse.IsSuspicious)
+        {
+            await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
+            throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
+        }
+        
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ParaphrasingClosed));
 
         var prompt =

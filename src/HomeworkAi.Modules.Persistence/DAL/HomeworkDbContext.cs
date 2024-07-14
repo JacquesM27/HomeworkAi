@@ -9,6 +9,7 @@ internal sealed class HomeworkDbContext(DbContextOptions<HomeworkDbContext> dbCo
     public DbSet<ClosedAnswerExerciseEntity> ClosedAnswerExercises { get; set; }
     public DbSet<OpenAnswerExerciseEntity> OpenAnswerExercises { get; set; }
     public DbSet<OpenFormExerciseEntity> OpenFormExercises { get; set; }
+    public DbSet<SuspiciousPromptEntity> SuspiciousPrompts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

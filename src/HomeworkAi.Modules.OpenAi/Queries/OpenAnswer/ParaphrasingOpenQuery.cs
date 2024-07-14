@@ -1,7 +1,9 @@
 ﻿using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Queries;
 using HomeworkAi.Modules.Contracts.Events.Exercises;
+using HomeworkAi.Modules.Contracts.Events.SuspiciousPrompts;
 using HomeworkAi.Modules.Contracts.Exercises;
+using HomeworkAi.Modules.OpenAi.Exceptions;
 using HomeworkAi.Modules.OpenAi.Services;
 using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
@@ -18,6 +20,14 @@ public sealed class ParaphrasingOpenQueryHandler(
 {
     public async Task<OpenAnswerExerciseResponse<ParaphrasingOpen>> HandleAsync(ParaphrasingOpenQuery query)
     {
+        var queryAsString = objectSamplerService.GetStringValues(query);
+        var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
+        if (suspiciousPromptResponse.IsSuspicious)
+        {
+            await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
+            throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
+        }
+        
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ParaphrasingOpen));
         
         var prompt = $"1. This is open answer - paraphrasing exercise. This means that need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} so that they can be paraphrased. Transformations involve transforming sentences, that is, expressing the same thought in a different way.";
