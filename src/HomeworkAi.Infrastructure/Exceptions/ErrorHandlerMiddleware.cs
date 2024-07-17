@@ -1,10 +1,12 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace HomeworkAi.Infrastructure.Exceptions;
 
 internal sealed class ErrorHandlerMiddleware(
-    IExceptionCompositionRoot exceptionCompositionRoot)
+    IExceptionCompositionRoot exceptionCompositionRoot,
+    ILogger<ErrorHandlerMiddleware> logger)
     : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -15,6 +17,7 @@ internal sealed class ErrorHandlerMiddleware(
         }
         catch (Exception exception)
         {
+            logger.LogError($"There was an error: {exception.GetType().Name}, description: {exception.Message}, stack trace: {exception.StackTrace}");
             await HandleErrorAsync(context, exception);
         }
     }

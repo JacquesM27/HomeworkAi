@@ -28,6 +28,6 @@ internal sealed class OpenAnswerExerciseEntityConfiguration : IEntityTypeConfigu
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();
         
-        builder.HasIndex(e => e.ExerciseType).HasDatabaseName("ClosedAnswer_NcIx_ExerciseType");
+        builder.HasIndex(e => e.ExerciseType).HasDatabaseName("OpenAnswer_NcIx_ExerciseType");
     }
 }

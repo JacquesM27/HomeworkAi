@@ -11,7 +11,10 @@ public interface IClosedAnswerExerciseRepository
 internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext) : IClosedAnswerExerciseRepository
 {
     private readonly DbSet<ClosedAnswerExerciseEntity> _closedAnswerExercises = dbContext.ClosedAnswerExercises;
-    
+
     public async Task AddAsync(ClosedAnswerExerciseEntity exercise)
-        => await _closedAnswerExercises.AddAsync(exercise).ConfigureAwait(false);
+    {
+        await _closedAnswerExercises.AddAsync(exercise);
+        await dbContext.SaveChangesAsync();
+    }
 }

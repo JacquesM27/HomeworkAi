@@ -14,8 +14,14 @@ internal sealed class SuspiciousPromptRepository(HomeworkDbContext dbContext) : 
     private readonly DbSet<SuspiciousPromptEntity> _suspiciousPrompts = dbContext.SuspiciousPrompts;
 
     public async Task AddAsync(SuspiciousPromptEntity suspiciousPrompt)
-        => await _suspiciousPrompts.AddAsync(suspiciousPrompt).ConfigureAwait(false);
+    {
+        await _suspiciousPrompts.AddAsync(suspiciousPrompt);
+        await dbContext.SaveChangesAsync();
+    }
 
     public async Task AddRangeAsync(IEnumerable<SuspiciousPromptEntity> suspiciousPrompts)
-        => await _suspiciousPrompts.AddRangeAsync(suspiciousPrompts).ConfigureAwait(false);
+    {
+        await _suspiciousPrompts.AddRangeAsync(suspiciousPrompts);
+        await dbContext.SaveChangesAsync();
+    }
 }

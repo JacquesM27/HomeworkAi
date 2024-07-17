@@ -19,6 +19,6 @@ internal sealed class OpenFormExerciseEntityConfiguration : IEntityTypeConfigura
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();
         
-        builder.HasIndex(e => e.ExerciseType).HasDatabaseName("ClosedAnswer_NcIx_ExerciseType");
+        builder.HasIndex(e => e.ExerciseType).HasDatabaseName("OpenForm_NcIx_ExerciseType");
     }
 }

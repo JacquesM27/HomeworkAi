@@ -13,5 +13,8 @@ internal sealed class OpenFormExerciseRepository(HomeworkDbContext dbContext) : 
     private readonly DbSet<OpenFormExerciseEntity> _openFormExercises = dbContext.OpenFormExercises;
 
     public async Task AddAsync(OpenFormExerciseEntity exercise)
-        => await _openFormExercises.AddAsync(exercise).ConfigureAwait(false);
+    {
+        await _openFormExercises.AddAsync(exercise);
+        await dbContext.SaveChangesAsync();
+    }
 }
