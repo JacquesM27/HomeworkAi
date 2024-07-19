@@ -15,7 +15,7 @@ public static class OpenFormExerciseMapper
 
         var mapped = new OpenFormExerciseEntity()
         {
-            Id = Guid.NewGuid(),
+            Id = exerciseResponse.Id,
             ExerciseHeaderInMotherLanguage = exerciseResponse.ExerciseHeaderInMotherLanguage,
             MotherLanguage = exerciseResponse.MotherLanguage,
             TargetLanguage = exerciseResponse.TargetLanguage,

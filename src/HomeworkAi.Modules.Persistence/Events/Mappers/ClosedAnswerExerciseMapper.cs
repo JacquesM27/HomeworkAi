@@ -15,7 +15,7 @@ internal static class ClosedAnswerExerciseMapper
         
         var mapped = new ClosedAnswerExerciseEntity
         {
-            Id = Guid.NewGuid(),
+            Id = exerciseResponse.Id,
             ExerciseHeaderInMotherLanguage = exerciseResponse.ExerciseHeaderInMotherLanguage,
             MotherLanguage = exerciseResponse.MotherLanguage,
             TargetLanguage = exerciseResponse.TargetLanguage,

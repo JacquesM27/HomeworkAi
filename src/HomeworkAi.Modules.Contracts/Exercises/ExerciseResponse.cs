@@ -2,8 +2,14 @@ using HomeworkAi.Modules.Contracts.ValueObjects;
 
 namespace HomeworkAi.Modules.Contracts.Exercises;
 
-public abstract class ExerciseResponse<TExercise>
+public interface IExerciseResponse
 {
+    
+}
+
+public abstract class ExerciseResponse<TExercise> : IExerciseResponse
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
     public TExercise Exercise { get; set; }
     public bool ExerciseHeaderInMotherLanguage { get; set; }
     public Language MotherLanguage { get; set; }
