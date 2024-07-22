@@ -110,7 +110,6 @@ public class MissingWordOrExpressionOpen : OpenAnswerExercise
     }
 }
 
-//TODO: add word meaning open exercise
 public class WordMeaningOpen : OpenAnswerExercise
 {
     public List<string> Words { get; set; }

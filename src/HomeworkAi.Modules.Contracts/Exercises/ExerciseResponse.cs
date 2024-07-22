@@ -1,7 +1,11 @@
+using System.Text.Json.Serialization;
 using HomeworkAi.Modules.Contracts.ValueObjects;
 
 namespace HomeworkAi.Modules.Contracts.Exercises;
 
+// [JsonDerivedType(typeof(OpenFormExerciseResponseMail), nameof(OpenFormExerciseResponseMail))]
+// [JsonDerivedType(typeof(OpenFormExerciseResponseEssay), nameof(OpenFormExerciseResponseEssay))]
+// [JsonDerivedType(typeof(OpenFormExerciseResponseSummaryOfText), nameof(OpenFormExerciseResponseSummaryOfText))]
 public interface IExerciseResponse
 {
     
@@ -19,13 +23,13 @@ public abstract class ExerciseResponse<TExercise> : IExerciseResponse
     public string? GrammarSection { get; set; }
 }
 
-public class OpenFormExerciseResponse<TExercise> : ExerciseResponse<TExercise>
+public abstract class OpenFormExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     where TExercise : OpenFormExercise
 {
     
 }
 
-public class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
+public abstract class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     where TExercise : OpenAnswerExercise
 {
     public int? AmountOfSentences { get; set; }
@@ -41,7 +45,7 @@ public class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     public bool? ShowFirstForm { get; set; }
 }
 
-public class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
+public abstract class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     where TExercise : ClosedAnswerExercise
 {
     public int? AmountOfSentences { get; set; }
@@ -56,3 +60,52 @@ public class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercis
 
     public bool? DescriptionInMotherLanguage { get; set; }
 }
+
+
+public class OpenFormExerciseResponseMail : OpenFormExerciseResponse<Mail>;
+
+public class OpenFormExerciseResponseEssay : OpenFormExerciseResponse<Essay>;
+
+public class OpenFormExerciseResponseSummaryOfText : OpenFormExerciseResponse<SummaryOfText>;
+
+public class OpenAnswerExerciseResponseSentencesTranslation : OpenAnswerExerciseResponse<SentencesTranslation>;
+
+public class OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>;
+
+public class OpenAnswerExerciseResponseSentenceWithVerbToComplete : OpenAnswerExerciseResponse<SentenceWithVerbToComplete>;
+
+public class OpenAnswerExerciseResponseIrregularVerbs : OpenAnswerExerciseResponse<IrregularVerbs>;
+
+public class OpenAnswerExerciseResponseQuestionsToText : OpenAnswerExerciseResponse<QuestionsToTextOpen>;
+
+public class OpenAnswerExerciseResponsePassiveSide : OpenAnswerExerciseResponse<PassiveSideOpen>;
+
+public class OpenAnswerExerciseResponseParaphrasing : OpenAnswerExerciseResponse<ParaphrasingOpen>;
+
+public class OpenAnswerExerciseResponseAnswerToQuestion : OpenAnswerExerciseResponse<AnswerToQuestionOpen>;
+
+public class OpenAnswerExerciseResponseConditional : OpenAnswerExerciseResponse<ConditionalOpen>;
+
+public class OpenAnswerExerciseResponseMissingPhrasalVerb : OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>;
+
+public class OpenAnswerExerciseResponseMissingWordOrExpression : OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>;
+
+public class OpenAnswerExerciseResponseWordMeaning : OpenAnswerExerciseResponse<WordMeaningOpen>;
+
+public class ClosedAnswerExerciseResponseQuestionsToText : ClosedAnswerExerciseResponse<QuestionsToTextClosed>;
+
+public class ClosedAnswerExerciseResponsePassiveSide : ClosedAnswerExerciseResponse<PassiveSideClosed>;
+
+public class ClosedAnswerExerciseResponseParaphrasing : ClosedAnswerExerciseResponse<ParaphrasingClosed>;
+
+public class ClosedAnswerExerciseResponseAnswerToQuestion : ClosedAnswerExerciseResponse<AnswerToQuestionClosed>;
+
+public class ClosedAnswerExerciseResponseConditional : ClosedAnswerExerciseResponse<ConditionalClosed>;
+
+public class ClosedAnswerExerciseResponseWordMeaning : ClosedAnswerExerciseResponse<WordMeaningClosed>;
+
+public class ClosedAnswerExerciseResponsePhrasalVerbsTranslating : ClosedAnswerExerciseResponse<PhrasalVerbsTranslating>;
+
+public class ClosedAnswerExerciseResponseMissingPhrasalVerb : ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>;
+
+public class ClosedAnswerExerciseResponseMissingWordOrExpression : ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>;
