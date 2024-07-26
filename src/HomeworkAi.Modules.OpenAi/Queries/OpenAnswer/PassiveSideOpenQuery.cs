@@ -10,16 +10,16 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record PassiveSideOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) 
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<PassiveSideOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponsePassiveSide>;
 
 public sealed class PassiveSideOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<PassiveSideOpenQuery, OpenAnswerExerciseResponse<PassiveSideOpen>>
+    : IQueryHandler<PassiveSideOpenQuery, OpenAnswerExerciseResponsePassiveSide>
 {
-    public async Task<OpenAnswerExerciseResponse<PassiveSideOpen>> HandleAsync(PassiveSideOpenQuery query)
+    public async Task<OpenAnswerExerciseResponsePassiveSide> HandleAsync(PassiveSideOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -42,7 +42,7 @@ public sealed class PassiveSideOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<PassiveSideOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<PassiveSideOpen>()
+        var result = new OpenAnswerExerciseResponsePassiveSide()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -55,7 +55,7 @@ public sealed class PassiveSideOpenQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<PassiveSideOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponsePassiveSideGenerated(result));
         return result;
     }
 }

@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record SentenceWithVerbToCompleteBasedOnInfinitiveQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive>;
 
 internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
     IPromptFormatter promptFormatter,
@@ -19,9 +19,9 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
     : IQueryHandler<SentenceWithVerbToCompleteBasedOnInfinitiveQuery,
-        OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>>
+        OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive>
 {
-    public async Task<OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>> HandleAsync(SentenceWithVerbToCompleteBasedOnInfinitiveQuery query)
+    public async Task<OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive> HandleAsync(SentenceWithVerbToCompleteBasedOnInfinitiveQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -44,7 +44,7 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
 
         var exercise = deserializerService.Deserialize<SentenceWithVerbToCompleteBasedOnInfinitive>(response);
 
-        var result = new OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>()
+        var result = new OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -56,7 +56,7 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<SentenceWithVerbToCompleteBasedOnInfinitive>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitiveGenerated(result));
         return result;
     }
 }

@@ -10,16 +10,16 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record MissingPhrasalVerbOpenQuery(int AmountOfSentences) 
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseMissingPhrasalVerb>;
 
 public sealed class MissingPhrasalVerbOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<MissingPhrasalVerbOpenQuery, OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>>
+    : IQueryHandler<MissingPhrasalVerbOpenQuery, OpenAnswerExerciseResponseMissingPhrasalVerb>
 {
-    public async Task<OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>> HandleAsync(MissingPhrasalVerbOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseMissingPhrasalVerb> HandleAsync(MissingPhrasalVerbOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -42,7 +42,7 @@ public sealed class MissingPhrasalVerbOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<MissingPhrasalVerbOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>()
+        var result = new OpenAnswerExerciseResponseMissingPhrasalVerb()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -54,7 +54,7 @@ public sealed class MissingPhrasalVerbOpenQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<MissingPhrasalVerbOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseMissingPhrasalVerbGenerated(result));
         return result;
     }
 }

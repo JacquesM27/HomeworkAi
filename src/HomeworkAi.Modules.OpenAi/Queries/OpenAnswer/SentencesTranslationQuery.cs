@@ -9,16 +9,17 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
-public sealed record SentencesTranslationQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<SentencesTranslation>>;
+public sealed record SentencesTranslationQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) 
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseSentencesTranslation>;
 
 internal sealed class SentencesTranslationQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<SentencesTranslationQuery, OpenAnswerExerciseResponse<SentencesTranslation>>
+    : IQueryHandler<SentencesTranslationQuery, OpenAnswerExerciseResponseSentencesTranslation>
 {
-    public async Task<OpenAnswerExerciseResponse<SentencesTranslation>> HandleAsync(SentencesTranslationQuery query)
+    public async Task<OpenAnswerExerciseResponseSentencesTranslation> HandleAsync(SentencesTranslationQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -41,7 +42,7 @@ internal sealed class SentencesTranslationQueryHandler(
 
         var exercise = deserializerService.Deserialize<SentencesTranslation>(response);
 
-        var result = new OpenAnswerExerciseResponse<SentencesTranslation>()
+        var result = new OpenAnswerExerciseResponseSentencesTranslation()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -54,7 +55,7 @@ internal sealed class SentencesTranslationQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<SentencesTranslation>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseSentencesTranslationGenerated(result));
         return result;
     }
 }

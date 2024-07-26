@@ -10,16 +10,16 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record AnswerToQuestionOpenQuery(int AmountOfSentences) 
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<AnswerToQuestionOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseAnswerToQuestion>;
 
 internal sealed class AnswerToQuestionOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<AnswerToQuestionOpenQuery, OpenAnswerExerciseResponse<AnswerToQuestionOpen>>
+    : IQueryHandler<AnswerToQuestionOpenQuery, OpenAnswerExerciseResponseAnswerToQuestion>
 {
-    public async Task<OpenAnswerExerciseResponse<AnswerToQuestionOpen>> HandleAsync(AnswerToQuestionOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseAnswerToQuestion> HandleAsync(AnswerToQuestionOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -42,7 +42,7 @@ internal sealed class AnswerToQuestionOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<AnswerToQuestionOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<AnswerToQuestionOpen>()
+        var result = new OpenAnswerExerciseResponseAnswerToQuestion()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -54,7 +54,7 @@ internal sealed class AnswerToQuestionOpenQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
 
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<AnswerToQuestionOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseAnswerToQuestionGenerated(result));
         return result;
     }
 }

@@ -9,7 +9,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenForm;
 
-public sealed record EssayQuery(int MinimumNumberOfWords) : ExerciseQueryBase, IQuery<OpenFormExerciseResponse<Essay>>;
+public sealed record EssayQuery(int MinimumNumberOfWords) : ExerciseQueryBase, IQuery<OpenFormExerciseResponseEssay>;
 
 internal sealed class EssayQueryHandler(
     IPromptFormatter promptFormatter,
@@ -17,9 +17,9 @@ internal sealed class EssayQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<EssayQuery, OpenFormExerciseResponse<Essay>>
+    : IQueryHandler<EssayQuery, OpenFormExerciseResponseEssay>
 {
-    public async Task<OpenFormExerciseResponse<Essay>> HandleAsync(EssayQuery query)
+    public async Task<OpenFormExerciseResponseEssay> HandleAsync(EssayQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -43,7 +43,7 @@ internal sealed class EssayQueryHandler(
 
         var exercise = deserializerService.Deserialize<Essay>(response);
 
-        var result = new OpenFormExerciseResponse<Essay>()
+        var result = new OpenFormExerciseResponseEssay()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -54,7 +54,7 @@ internal sealed class EssayQueryHandler(
             GrammarSection = query.GrammarSection
         };
         
-        await eventDispatcher.PublishAsync(new OpenFormExerciseGenerated<Essay>(result));
+        await eventDispatcher.PublishAsync(new OpenFormExerciseResponseEssayGenerated(result));
         return result;
     }
 }

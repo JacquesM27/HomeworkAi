@@ -10,16 +10,16 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record MissingWordOrExpressionOpenQuery(int AmountOfSentences) 
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseMissingWordOrExpression>;
     
 public sealed class MissingWordOrExpressionOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<MissingWordOrExpressionOpenQuery, OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>>
+    : IQueryHandler<MissingWordOrExpressionOpenQuery, OpenAnswerExerciseResponseMissingWordOrExpression>
 {
-    public async Task<OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>> HandleAsync(MissingWordOrExpressionOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseMissingWordOrExpression> HandleAsync(MissingWordOrExpressionOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -42,7 +42,7 @@ public sealed class MissingWordOrExpressionOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<MissingWordOrExpressionOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>()
+        var result = new OpenAnswerExerciseResponseMissingWordOrExpression()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -54,7 +54,7 @@ public sealed class MissingWordOrExpressionOpenQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<MissingWordOrExpressionOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseMissingWordOrExpressionGenerated(result));
         return result;
     }
 }

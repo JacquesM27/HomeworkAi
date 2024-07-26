@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record ParaphrasingClosedQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<ParaphrasingClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseParaphrasing>;
 
 public sealed class ParaphrasingClosedQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class ParaphrasingClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<ParaphrasingClosedQuery, ClosedAnswerExerciseResponse<ParaphrasingClosed>>
+    : IQueryHandler<ParaphrasingClosedQuery, ClosedAnswerExerciseResponseParaphrasing>
 {
-    public async Task<ClosedAnswerExerciseResponse<ParaphrasingClosed>> HandleAsync(ParaphrasingClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponseParaphrasing> HandleAsync(ParaphrasingClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -45,7 +45,7 @@ public sealed class ParaphrasingClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<ParaphrasingClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<ParaphrasingClosed>()
+        var result = new ClosedAnswerExerciseResponseParaphrasing()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -57,7 +57,7 @@ public sealed class ParaphrasingClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<ParaphrasingClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseParaphrasingGenerated(result));
         return result;
     }
 }

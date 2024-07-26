@@ -11,16 +11,16 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record ConditionalOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage, bool ZeroConditional,
     bool FirstConditional, bool SecondConditional, bool ThirdConditional) 
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<ConditionalOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseConditional>;
     
 public sealed class ConditionalOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<ConditionalOpenQuery, OpenAnswerExerciseResponse<ConditionalOpen>>
+    : IQueryHandler<ConditionalOpenQuery, OpenAnswerExerciseResponseConditional>
 {
-    public async Task<OpenAnswerExerciseResponse<ConditionalOpen>> HandleAsync(ConditionalOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseConditional> HandleAsync(ConditionalOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -45,7 +45,7 @@ public sealed class ConditionalOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<ConditionalOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<ConditionalOpen>()
+        var result = new OpenAnswerExerciseResponseConditional()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -62,7 +62,7 @@ public sealed class ConditionalOpenQueryHandler(
             ThirdConditional = query.ThirdConditional
         };
 
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<ConditionalOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseConditionalGenerated(result));
         return result;
     }
 

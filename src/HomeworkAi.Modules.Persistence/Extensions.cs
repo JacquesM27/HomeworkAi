@@ -15,37 +15,37 @@ public static class Extensions
     {
         services.AddPostgres(configuration);
         
-        services.AddAllHandlersForExercises<ClosedAnswerExercise>(
-            typeof(ClosedAnswerExerciseGenerated<>),
-            typeof(ClosedAnswerExerciseGeneratedHandler<>));
-
-        services.AddAllHandlersForExercises<OpenAnswerExercise>(
-            typeof(OpenAnswerExerciseGenerated<>),
-            typeof(OpenAnswerExerciseGeneratedHandler<>));
-        
-        services.AddAllHandlersForExercises<OpenFormExercise>(
-            typeof(OpenFormExerciseGenerated<>),
-            typeof(OpenFormExerciseGeneratedHandler<>));
+        // services.AddAllHandlersForExercises<ClosedAnswerExercise>(
+        //     typeof(ClosedAnswerExerciseGenerated<>),
+        //     typeof(ClosedAnswerExerciseGeneratedHandler<>));
+        //
+        // services.AddAllHandlersForExercises<OpenAnswerExercise>(
+        //     typeof(OpenAnswerExerciseGenerated<>),
+        //     typeof(OpenAnswerExerciseGeneratedHandler<>));
+        //
+        // services.AddAllHandlersForExercises<OpenFormExercise>(
+        //     typeof(OpenFormExerciseGenerated<>),
+        //     typeof(OpenFormExerciseGeneratedHandler<>));
         
         return services;
     }
     
-    private static IServiceCollection AddAllHandlersForExercises<TExercise>(
-        this IServiceCollection services,
-        Type eventType,
-        Type eventHandlerType)
-    {
-        var exerciseTypes = TypesExtensions.GetNonAbstractDerivedTypes<TExercise>();
-
-        foreach (var exerciseType in exerciseTypes)
-        {
-            var constructedEventType = eventType.MakeGenericType(exerciseType);
-            var constructedEventHandlerType = eventHandlerType.MakeGenericType(exerciseType);
-            var handlerInterfaceType = typeof(IEventHandler<>).MakeGenericType(constructedEventType);
-
-            services.AddScoped(handlerInterfaceType, constructedEventHandlerType);
-        }
-
-        return services;
-    }
+    // private static IServiceCollection AddAllHandlersForExercises<TExercise>(
+    //     this IServiceCollection services,
+    //     Type eventType,
+    //     Type eventHandlerType)
+    // {
+    //     var exerciseTypes = TypesExtensions.GetNonAbstractDerivedTypes<TExercise>();
+    //
+    //     foreach (var exerciseType in exerciseTypes)
+    //     {
+    //         var constructedEventType = eventType.MakeGenericType(exerciseType);
+    //         var constructedEventHandlerType = eventHandlerType.MakeGenericType(exerciseType);
+    //         var handlerInterfaceType = typeof(IEventHandler<>).MakeGenericType(constructedEventType);
+    //
+    //         services.AddScoped(handlerInterfaceType, constructedEventHandlerType);
+    //     }
+    //
+    //     return services;
+    // }
 }

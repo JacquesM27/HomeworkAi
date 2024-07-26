@@ -11,9 +11,9 @@ internal static class OpenFormEndpoints
         const string route = "open-form";
         const string tag = "Open Form";
         
-        app.MapPostEndpoint<MailQuery, OpenFormExerciseResponse<Mail>, Mail>(route, "mail", tag);
-        app.MapPostEndpoint<EssayQuery, OpenFormExerciseResponse<Essay>, Essay>(route, "essay", tag);
-        app.MapPostEndpoint<SummaryOfTextQuery, OpenFormExerciseResponse<SummaryOfText>, SummaryOfText>(route, "summary-of-text", tag);
+        app.MapPostEndpoint<MailQuery, OpenFormExerciseResponseMail, Mail>(route, "mail", tag);
+        app.MapPostEndpoint<EssayQuery, OpenFormExerciseResponseEssay, Essay>(route, "essay", tag);
+        app.MapPostEndpoint<SummaryOfTextQuery, OpenFormExerciseResponseSummaryOfText, SummaryOfText>(route, "summary-of-text", tag);
         
         return app;
     }

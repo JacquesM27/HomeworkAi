@@ -9,7 +9,8 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenForm;
 
-public sealed record SummaryOfTextQuery : ExerciseQueryBase, IQuery<OpenFormExerciseResponse<SummaryOfText>>;
+public sealed record SummaryOfTextQuery 
+    : ExerciseQueryBase, IQuery<OpenFormExerciseResponseSummaryOfText>;
 
 internal sealed class SummaryOfTextQueryHandler(
     IPromptFormatter promptFormatter,
@@ -17,9 +18,9 @@ internal sealed class SummaryOfTextQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<SummaryOfTextQuery, OpenFormExerciseResponse<SummaryOfText>>
+    : IQueryHandler<SummaryOfTextQuery, OpenFormExerciseResponseSummaryOfText>
 {
-    public async Task<OpenFormExerciseResponse<SummaryOfText>> HandleAsync(SummaryOfTextQuery query)
+    public async Task<OpenFormExerciseResponseSummaryOfText> HandleAsync(SummaryOfTextQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -42,7 +43,7 @@ internal sealed class SummaryOfTextQueryHandler(
 
         var exercise = deserializerService.Deserialize<SummaryOfText>(response);
 
-        var result = new OpenFormExerciseResponse<SummaryOfText>()
+        var result = new OpenFormExerciseResponseSummaryOfText()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -53,7 +54,7 @@ internal sealed class SummaryOfTextQueryHandler(
             GrammarSection = query.GrammarSection
         };
         
-        await eventDispatcher.PublishAsync(new OpenFormExerciseGenerated<SummaryOfText>(result));
+        await eventDispatcher.PublishAsync(new OpenFormExerciseResponseSummaryOfTextGenerated(result));
         return result;
     }
 }

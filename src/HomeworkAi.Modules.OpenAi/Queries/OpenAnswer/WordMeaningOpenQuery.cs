@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record WordMeaningOpenQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<WordMeaningOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseWordMeaning>;
     
 public sealed class WordMeaningOpenQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class WordMeaningOpenQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<WordMeaningOpenQuery, OpenAnswerExerciseResponse<WordMeaningOpen>>
+    : IQueryHandler<WordMeaningOpenQuery, OpenAnswerExerciseResponseWordMeaning>
 {
-    public async Task<OpenAnswerExerciseResponse<WordMeaningOpen>> HandleAsync(WordMeaningOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseWordMeaning> HandleAsync(WordMeaningOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -46,7 +46,7 @@ public sealed class WordMeaningOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<WordMeaningOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<WordMeaningOpen>()
+        var result = new OpenAnswerExerciseResponseWordMeaning()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -58,7 +58,7 @@ public sealed class WordMeaningOpenQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
 
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<WordMeaningOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseWordMeaningGenerated(result));
         return result;
     }
 }

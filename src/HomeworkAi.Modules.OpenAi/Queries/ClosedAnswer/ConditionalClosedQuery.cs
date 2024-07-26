@@ -11,7 +11,7 @@ namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record ConditionalClosedQuery(int AmountOfSentences, bool TranslateFromMotherLanguage, bool ZeroConditional,
     bool FirstConditional, bool SecondConditional, bool ThirdConditional) 
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<ConditionalClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseConditional>;
 
 
 public sealed class ConditionalClosedQueryHandler(
@@ -20,9 +20,9 @@ public sealed class ConditionalClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<ConditionalClosedQuery, ClosedAnswerExerciseResponse<ConditionalClosed>>
+    : IQueryHandler<ConditionalClosedQuery, ClosedAnswerExerciseResponseConditional>
 {
-    public async Task<ClosedAnswerExerciseResponse<ConditionalClosed>> HandleAsync(ConditionalClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponseConditional> HandleAsync(ConditionalClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -49,7 +49,7 @@ public sealed class ConditionalClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<ConditionalClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<ConditionalClosed>()
+        var result = new ClosedAnswerExerciseResponseConditional()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -66,7 +66,7 @@ public sealed class ConditionalClosedQueryHandler(
             ThirdConditional = query.ThirdConditional
         };
         
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<ConditionalClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseConditionalGenerated(result));
         return result;
     }
     

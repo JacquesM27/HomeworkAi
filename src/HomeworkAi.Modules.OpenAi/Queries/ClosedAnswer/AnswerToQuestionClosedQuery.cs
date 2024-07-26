@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record AnswerToQuestionClosedQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseAnswerToQuestion>;
 
 public sealed class AnswerToQuestionClosedQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class AnswerToQuestionClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<AnswerToQuestionClosedQuery, ClosedAnswerExerciseResponse<AnswerToQuestionClosed>>
+    : IQueryHandler<AnswerToQuestionClosedQuery, ClosedAnswerExerciseResponseAnswerToQuestion>
 {
-    public async Task<ClosedAnswerExerciseResponse<AnswerToQuestionClosed>> HandleAsync(AnswerToQuestionClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponseAnswerToQuestion> HandleAsync(AnswerToQuestionClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -45,7 +45,7 @@ public sealed class AnswerToQuestionClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<AnswerToQuestionClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<AnswerToQuestionClosed>()
+        var result = new ClosedAnswerExerciseResponseAnswerToQuestion()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -57,7 +57,7 @@ public sealed class AnswerToQuestionClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
 
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<AnswerToQuestionClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseAnswerToQuestionGenerated(result));
         return result;
     }
 }

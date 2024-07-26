@@ -9,16 +9,17 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
-public sealed record ParaphrasingOpenQuery(int AmountOfSentences) : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<ParaphrasingOpen>>;
+public sealed record ParaphrasingOpenQuery(int AmountOfSentences) 
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseParaphrasing>;
 
 public sealed class ParaphrasingOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<ParaphrasingOpenQuery, OpenAnswerExerciseResponse<ParaphrasingOpen>>
+    : IQueryHandler<ParaphrasingOpenQuery, OpenAnswerExerciseResponseParaphrasing>
 {
-    public async Task<OpenAnswerExerciseResponse<ParaphrasingOpen>> HandleAsync(ParaphrasingOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseParaphrasing> HandleAsync(ParaphrasingOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -41,7 +42,7 @@ public sealed class ParaphrasingOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<ParaphrasingOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<ParaphrasingOpen>()
+        var result = new OpenAnswerExerciseResponseParaphrasing()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -53,7 +54,7 @@ public sealed class ParaphrasingOpenQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<ParaphrasingOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseParaphrasingGenerated(result));
         return result;
     }
 }

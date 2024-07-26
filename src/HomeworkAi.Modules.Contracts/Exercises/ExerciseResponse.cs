@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+// using System.Text.Json.Serialization;
 using HomeworkAi.Modules.Contracts.ValueObjects;
 
 namespace HomeworkAi.Modules.Contracts.Exercises;
@@ -72,6 +72,7 @@ public class OpenAnswerExerciseResponseSentencesTranslation : OpenAnswerExercise
 
 public class OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>;
 
+//TODO
 public class OpenAnswerExerciseResponseSentenceWithVerbToComplete : OpenAnswerExerciseResponse<SentenceWithVerbToComplete>;
 
 public class OpenAnswerExerciseResponseIrregularVerbs : OpenAnswerExerciseResponse<IrregularVerbs>;
@@ -104,6 +105,7 @@ public class ClosedAnswerExerciseResponseConditional : ClosedAnswerExerciseRespo
 
 public class ClosedAnswerExerciseResponseWordMeaning : ClosedAnswerExerciseResponse<WordMeaningClosed>;
 
+//TODO
 public class ClosedAnswerExerciseResponsePhrasalVerbsTranslating : ClosedAnswerExerciseResponse<PhrasalVerbsTranslating>;
 
 public class ClosedAnswerExerciseResponseMissingPhrasalVerb : ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>;

@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record WordMeaningClosedQuery(int AmountOfSentences, bool DescriptionInMotherLanguage)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<WordMeaningClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseWordMeaning>;
 
 public sealed class WordMeaningClosedQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class WordMeaningClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<WordMeaningClosedQuery, ClosedAnswerExerciseResponse<WordMeaningClosed>>
+    : IQueryHandler<WordMeaningClosedQuery, ClosedAnswerExerciseResponseWordMeaning>
 {
-    public async Task<ClosedAnswerExerciseResponse<WordMeaningClosed>> HandleAsync(WordMeaningClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponseWordMeaning> HandleAsync(WordMeaningClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -46,7 +46,7 @@ public sealed class WordMeaningClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<WordMeaningClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<WordMeaningClosed>()
+        var result = new ClosedAnswerExerciseResponseWordMeaning()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -59,7 +59,7 @@ public sealed class WordMeaningClosedQueryHandler(
             DescriptionInMotherLanguage = query.DescriptionInMotherLanguage
         };
 
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<WordMeaningClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseWordMeaningGenerated(result));
         return result;
     }
 }

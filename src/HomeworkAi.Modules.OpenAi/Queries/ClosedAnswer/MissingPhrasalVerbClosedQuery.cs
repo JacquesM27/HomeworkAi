@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record MissingPhrasalVerbClosedQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseMissingPhrasalVerb>;
     
 public sealed class MissingPhrasalVerbClosedQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class MissingPhrasalVerbClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<MissingPhrasalVerbClosedQuery, ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>>
+    : IQueryHandler<MissingPhrasalVerbClosedQuery, ClosedAnswerExerciseResponseMissingPhrasalVerb>
 {
-    public async Task<ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>> HandleAsync(MissingPhrasalVerbClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponseMissingPhrasalVerb> HandleAsync(MissingPhrasalVerbClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -45,7 +45,7 @@ public sealed class MissingPhrasalVerbClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<MissingPhrasalVerbClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>()
+        var result = new ClosedAnswerExerciseResponseMissingPhrasalVerb()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -57,7 +57,7 @@ public sealed class MissingPhrasalVerbClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<MissingPhrasalVerbClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseMissingPhrasalVerbGenerated(result));
         return result;
     }
 }

@@ -10,16 +10,16 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record IrregularVerbsQuery(int AmountOfSentences, bool ShowMotherLanguage, bool ShowFirstForm)
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<IrregularVerbs>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseIrregularVerbs>;
     
 public sealed class IrregularVerbsQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
     IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<IrregularVerbsQuery, OpenAnswerExerciseResponse<IrregularVerbs>>
+    : IQueryHandler<IrregularVerbsQuery, OpenAnswerExerciseResponseIrregularVerbs>
 {
-    public async Task<OpenAnswerExerciseResponse<IrregularVerbs>> HandleAsync(IrregularVerbsQuery query)
+    public async Task<OpenAnswerExerciseResponseIrregularVerbs> HandleAsync(IrregularVerbsQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -42,7 +42,7 @@ public sealed class IrregularVerbsQueryHandler(
 
         var exercise = deserializerService.Deserialize<IrregularVerbs>(response);
 
-        var result = new OpenAnswerExerciseResponse<IrregularVerbs>()
+        var result = new OpenAnswerExerciseResponseIrregularVerbs()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -56,7 +56,7 @@ public sealed class IrregularVerbsQueryHandler(
             ShowMotherLanguage = query.ShowMotherLanguage
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<IrregularVerbs>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseIrregularVerbsGenerated(result));
         return result;
     }
 }

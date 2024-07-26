@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record PassiveSideClosedQuery(int AmountOfSentences)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<PassiveSideClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponsePassiveSide>;
 
 
 public sealed class PassiveSideClosedQueryHandler(
@@ -19,9 +19,9 @@ public sealed class PassiveSideClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<PassiveSideClosedQuery, ClosedAnswerExerciseResponse<PassiveSideClosed>>
+    : IQueryHandler<PassiveSideClosedQuery, ClosedAnswerExerciseResponsePassiveSide>
 {
-    public async Task<ClosedAnswerExerciseResponse<PassiveSideClosed>> HandleAsync(PassiveSideClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponsePassiveSide> HandleAsync(PassiveSideClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -46,7 +46,7 @@ public sealed class PassiveSideClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<PassiveSideClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<PassiveSideClosed>()
+        var result = new ClosedAnswerExerciseResponsePassiveSide()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -58,7 +58,7 @@ public sealed class PassiveSideClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences
         };
         
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<PassiveSideClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponsePassiveSideGenerated(result));
         return result;
     }
 }

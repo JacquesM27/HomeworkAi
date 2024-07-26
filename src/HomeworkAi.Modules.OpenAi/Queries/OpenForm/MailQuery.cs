@@ -9,7 +9,8 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenForm;
 
-public sealed record MailQuery(int MinimumNumberOfWords) : ExerciseQueryBase, IQuery<OpenFormExerciseResponse<Mail>>;
+public sealed record MailQuery(int MinimumNumberOfWords) 
+    : ExerciseQueryBase, IQuery<OpenFormExerciseResponseMail>;
 
 internal sealed class MailQueryHandler(
     IPromptFormatter promptFormatter, 
@@ -17,9 +18,9 @@ internal sealed class MailQueryHandler(
     IOpenAiExerciseService openAiExerciseService, 
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<MailQuery, OpenFormExerciseResponse<Mail>>
+    : IQueryHandler<MailQuery, OpenFormExerciseResponseMail>
 {
-    public async Task<OpenFormExerciseResponse<Mail>> HandleAsync(MailQuery query)
+    public async Task<OpenFormExerciseResponseMail> HandleAsync(MailQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -43,7 +44,7 @@ internal sealed class MailQueryHandler(
 
         var exercise = deserializerService.Deserialize<Mail>(response);
 
-        var result = new OpenFormExerciseResponse<Mail>()
+        var result = new OpenFormExerciseResponseMail()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -54,7 +55,7 @@ internal sealed class MailQueryHandler(
             GrammarSection = query.GrammarSection
         };
         
-        await eventDispatcher.PublishAsync(new OpenFormExerciseGenerated<Mail>(result));
+        await eventDispatcher.PublishAsync(new OpenFormExerciseResponseMailGenerated(result));
         return result;
     }
 }

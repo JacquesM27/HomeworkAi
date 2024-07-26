@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record QuestionsToTextOpenQuery(int AmountOfSentences, bool QuestionsInMotherLanguage)
-    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponse<QuestionsToTextOpen>>;
+    : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseQuestionsToText>;
 
 public sealed class QuestionsToTextOpenQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class QuestionsToTextOpenQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<QuestionsToTextOpenQuery, OpenAnswerExerciseResponse<QuestionsToTextOpen>>
+    : IQueryHandler<QuestionsToTextOpenQuery, OpenAnswerExerciseResponseQuestionsToText>
 {
-    public async Task<OpenAnswerExerciseResponse<QuestionsToTextOpen>> HandleAsync(QuestionsToTextOpenQuery query)
+    public async Task<OpenAnswerExerciseResponseQuestionsToText> HandleAsync(QuestionsToTextOpenQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -43,7 +43,7 @@ public sealed class QuestionsToTextOpenQueryHandler(
 
         var exercise = deserializerService.Deserialize<QuestionsToTextOpen>(response);
 
-        var result = new OpenAnswerExerciseResponse<QuestionsToTextOpen>()
+        var result = new OpenAnswerExerciseResponseQuestionsToText()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -56,7 +56,7 @@ public sealed class QuestionsToTextOpenQueryHandler(
             QuestionsInMotherLanguage = query.QuestionsInMotherLanguage
         };
         
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseGenerated<QuestionsToTextOpen>(result));
+        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseQuestionsToTextGenerated(result));
         return result;
     }
 }

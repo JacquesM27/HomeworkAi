@@ -10,7 +10,7 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record QuestionsToTextClosedQuery(int AmountOfSentences, bool QuestionsInMotherLanguage)
-    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponse<QuestionsToTextClosed>>;
+    : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseQuestionsToText>;
     
 public sealed class QuestionsToTextClosedQueryHandler(
     IPromptFormatter promptFormatter,
@@ -18,9 +18,9 @@ public sealed class QuestionsToTextClosedQueryHandler(
     IOpenAiExerciseService openAiExerciseService,
     IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
-    : IQueryHandler<QuestionsToTextClosedQuery, ClosedAnswerExerciseResponse<QuestionsToTextClosed>>
+    : IQueryHandler<QuestionsToTextClosedQuery, ClosedAnswerExerciseResponseQuestionsToText>
 {
-    public async Task<ClosedAnswerExerciseResponse<QuestionsToTextClosed>> HandleAsync(QuestionsToTextClosedQuery query)
+    public async Task<ClosedAnswerExerciseResponseQuestionsToText> HandleAsync(QuestionsToTextClosedQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -45,7 +45,7 @@ public sealed class QuestionsToTextClosedQueryHandler(
 
         var exercise = deserializerService.Deserialize<QuestionsToTextClosed>(response);
 
-        var result = new ClosedAnswerExerciseResponse<QuestionsToTextClosed>()
+        var result = new ClosedAnswerExerciseResponseQuestionsToText()
         {
             Exercise = exercise,
             ExerciseHeaderInMotherLanguage = query.ExerciseHeaderInMotherLanguage,
@@ -58,7 +58,7 @@ public sealed class QuestionsToTextClosedQueryHandler(
             QuestionsInMotherLanguage = query.QuestionsInMotherLanguage
         };
         
-        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseGenerated<QuestionsToTextClosed>(result));
+        await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseQuestionsToTextGenerated(result));
         return result;
     }
 }
