@@ -1,6 +1,6 @@
 ﻿namespace HomeworkAi.Modules.Persistence.DAL.Entities;
 
-public class OpenFormExerciseEntity
+public abstract class OpenFormExerciseEntity
 {
     public Guid Id { get; set; }
     public bool ExerciseHeaderInMotherLanguage { get; set; }
@@ -9,7 +9,13 @@ public class OpenFormExerciseEntity
     public string TargetLanguageLevel { get; set; }
     public string? TopicsOfSentences { get; set; }
     public string? GrammarSection { get; set; }
-    public string ExerciseType { get; set; }
     public string ExerciseJson { get; set; } // JSONB column
     public bool CheckedByTeacher { get; set; }
 }
+
+
+public sealed class OpenFormExerciseMailEntity : OpenFormExerciseEntity;
+
+public sealed class OpenFormExerciseEssayEntity : OpenFormExerciseEntity;
+
+public sealed class OpenFormExerciseSummaryOfTextEntity : OpenFormExerciseEntity;

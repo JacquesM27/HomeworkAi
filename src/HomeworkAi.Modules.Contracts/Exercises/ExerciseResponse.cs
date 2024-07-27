@@ -6,14 +6,14 @@ namespace HomeworkAi.Modules.Contracts.Exercises;
 // [JsonDerivedType(typeof(OpenFormExerciseResponseMail), nameof(OpenFormExerciseResponseMail))]
 // [JsonDerivedType(typeof(OpenFormExerciseResponseEssay), nameof(OpenFormExerciseResponseEssay))]
 // [JsonDerivedType(typeof(OpenFormExerciseResponseSummaryOfText), nameof(OpenFormExerciseResponseSummaryOfText))]
-public interface IExerciseResponse
-{
-    
-}
+// public interface IExerciseResponse
+// {
+//     
+// }
 
-public abstract class ExerciseResponse<TExercise> : IExerciseResponse
+public abstract class ExerciseResponse<TExercise> //: IExerciseResponse
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; } = Guid.NewGuid();
     public TExercise Exercise { get; set; }
     public bool ExerciseHeaderInMotherLanguage { get; set; }
     public Language MotherLanguage { get; set; }

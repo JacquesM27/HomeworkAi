@@ -6,14 +6,12 @@ namespace HomeworkAi.Modules.Persistence.Events.Mappers;
 
 public static class OpenFormExerciseMapper
 {
-    public static OpenFormExerciseEntity Map<TExercise>(this OpenFormExerciseResponse<TExercise> exerciseResponse)
-        where TExercise : OpenFormExercise
+    public static TEntity Map<TExercise, TEntity>(this OpenFormExerciseResponse<TExercise> exerciseResponse)
+        where TExercise : OpenFormExercise where TEntity : OpenFormExerciseEntity, new()
     {
         var json = JsonSerializer.Serialize(exerciseResponse.Exercise);
 
-        var exerciseType = exerciseResponse.Exercise.GetType().Name;
-
-        var mapped = new OpenFormExerciseEntity()
+        var mapped = new TEntity()
         {
             Id = exerciseResponse.Id,
             ExerciseHeaderInMotherLanguage = exerciseResponse.ExerciseHeaderInMotherLanguage,
@@ -22,7 +20,6 @@ public static class OpenFormExerciseMapper
             TargetLanguageLevel = exerciseResponse.TargetLanguageLevel,
             TopicsOfSentences = exerciseResponse.TopicsOfSentences,
             GrammarSection = exerciseResponse.GrammarSection,
-            ExerciseType = exerciseType,
             ExerciseJson = json,
             CheckedByTeacher = false
         };
