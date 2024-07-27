@@ -29,19 +29,20 @@ public sealed class ParaphrasingClosedQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ParaphrasingClosed));
 
         var prompt =
             $"1. This is closed answer - paraphrasing exercise. This means that you need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} and 3 to 4 paraphrases but only 1 can be correct.";
-        
+
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<ParaphrasingClosed>(response);
 
@@ -56,11 +57,8 @@ public sealed class ParaphrasingClosedQueryHandler(
             GrammarSection = query.GrammarSection,
             AmountOfSentences = query.AmountOfSentences
         };
-        
+
         await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseParaphrasingGenerated(result));
         return result;
     }
 }
-
-
-    

@@ -29,12 +29,9 @@ public static class ModuleLoader
             if (!enabled)
                 disabledModules.Add(file);
         }
-        
-        foreach (var disabledModule in disabledModules)
-        {
-            files.Remove(disabledModule);
-        }
-        
+
+        foreach (var disabledModule in disabledModules) files.Remove(disabledModule);
+
         files.ForEach(x => assemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(x))));
         return assemblies;
     }

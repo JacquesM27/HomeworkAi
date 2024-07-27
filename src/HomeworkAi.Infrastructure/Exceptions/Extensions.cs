@@ -10,7 +10,7 @@ internal static class Extensions
         services.AddScoped<ErrorHandlerMiddleware>();
         services.AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>();
         services.AddSingleton<IExceptionCompositionRoot, ExceptionCompositionRoot>();
-        
+
         return services;
     }
 

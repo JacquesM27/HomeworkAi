@@ -8,7 +8,8 @@ namespace HomeworkAi.Modules.OpenAi.Endpoints;
 
 internal static class Extensions
 {
-    internal static void MapPostEndpoint<TQuery, TResponse, TExercise>(this IEndpointRouteBuilder app, string route, string endpoint, string tag)
+    internal static void MapPostEndpoint<TQuery, TResponse, TExercise>(this IEndpointRouteBuilder app, string route,
+        string endpoint, string tag)
         where TQuery : class, IQuery<TResponse> where TResponse : ExerciseResponse<TExercise>
     {
         app.MapPost($"/{route}/{endpoint}", async (TQuery query, IQueryDispatcher queryDispatcher) =>

@@ -9,11 +9,15 @@ internal sealed class ExceptionToResponseMapper : IExceptionToResponseMapper
     private static readonly ConcurrentDictionary<Type, string> Codes = new();
 
     public ExceptionResponse? Map(Exception exception)
-        => exception switch
+    {
+        return exception switch
         {
-            CustomException ex => new ExceptionResponse(new ErrorsResponse(new Error(GetErrorCode(ex), ex.Message)), HttpStatusCode.BadRequest),
-            _ => new ExceptionResponse(new ErrorsResponse(new Error("error", "There was an error.")), HttpStatusCode.InternalServerError)
+            CustomException ex => new ExceptionResponse(new ErrorsResponse(new Error(GetErrorCode(ex), ex.Message)),
+                HttpStatusCode.BadRequest),
+            _ => new ExceptionResponse(new ErrorsResponse(new Error("error", "There was an error.")),
+                HttpStatusCode.InternalServerError)
         };
+    }
 
     private static string GetErrorCode(object exception)
     {

@@ -27,7 +27,7 @@ internal sealed class OpenAnswerExerciseEntityConfiguration : IEntityTypeConfigu
         builder.Property(e => e.ExerciseType).IsRequired().HasMaxLength(100);
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();
-        
+
         builder.HasIndex(e => e.ExerciseType).HasDatabaseName("OpenAnswer_NcIx_ExerciseType");
     }
 }

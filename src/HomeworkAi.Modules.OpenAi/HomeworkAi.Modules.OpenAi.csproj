@@ -8,23 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspnetCore.App" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.Mvc.Core">
-        <HintPath>..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.4\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-    
-    <ItemGroup>
-        <InternalsVisibleTo Include="HomeworkAi.Modules.OpenAi.Tests.Unit" />
+        <InternalsVisibleTo Include="HomeworkAi.Modules.OpenAi.Tests.Unit"/>
     </ItemGroup>
 
-    
     <ItemGroup>
-      <ProjectReference Include="..\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj" />
-      <ProjectReference Include="..\HomeworkAi.Modules.Contracts\HomeworkAi.Modules.Contracts.csproj" />
+        <ProjectReference Include="..\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj"/>
+        <ProjectReference Include="..\HomeworkAi.Modules.Contracts\HomeworkAi.Modules.Contracts.csproj"/>
     </ItemGroup>
 
 </Project>

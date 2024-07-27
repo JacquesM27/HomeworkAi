@@ -11,7 +11,7 @@ namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
 public sealed record WordMeaningOpenQuery(int AmountOfSentences)
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseWordMeaning>;
-    
+
 public sealed class WordMeaningOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
@@ -29,7 +29,7 @@ public sealed class WordMeaningOpenQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(WordMeaningOpen));
 
         var prompt =
@@ -62,8 +62,3 @@ public sealed class WordMeaningOpenQueryHandler(
         return result;
     }
 }
-
-
-    
-    
-    

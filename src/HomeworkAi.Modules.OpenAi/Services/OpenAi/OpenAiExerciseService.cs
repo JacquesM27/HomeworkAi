@@ -5,14 +5,14 @@ using OpenAI_API.Chat;
 namespace HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 public class OpenAiExerciseService(
-    IOpenAIAPI openAiApi, 
+    IOpenAIAPI openAiApi,
     IPromptFormatter promptFormatter,
     IDeserializerService formatService
-    ) : IOpenAiExerciseService
+) : IOpenAiExerciseService
 {
     private static Conversation? _exerciseChat;
     private static Conversation? _promptSecurityChat;
-    
+
     public Task<string> PromptForExercise(string prompt, string motherLanguage, string targetLanguage)
     {
         if (_exerciseChat is null)
@@ -22,9 +22,9 @@ public class OpenAiExerciseService(
                 promptFormatter.FormatStartingSystemMessage(motherLanguage, targetLanguage);
             _exerciseChat.AppendSystemMessage(startMessage);
         }
-        
+
         _exerciseChat.AppendUserInput(prompt);
-        
+
         return _exerciseChat.GetResponseFromChatbotAsync();
     }
 
@@ -36,6 +36,7 @@ public class OpenAiExerciseService(
             var startMessage = promptFormatter.FormatValidationSystemMessage();
             _promptSecurityChat.AppendSystemMessage(startMessage);
         }
+
         _promptSecurityChat.AppendUserInput(prompt);
         var result = await _promptSecurityChat.GetResponseFromChatbotAsync();
         var deserialized = formatService.DeserializeSuspiciousPrompt(result);

@@ -9,7 +9,7 @@ internal sealed class HomeworkDbContext(DbContextOptions<HomeworkDbContext> dbCo
     public DbSet<OpenFormExerciseMailEntity> OpenFormExerciseMailEntities { get; set; }
     public DbSet<OpenFormExerciseEssayEntity> OpenFormExerciseEssayEntities { get; set; }
     public DbSet<OpenFormExerciseSummaryOfTextEntity> OpenFormExerciseSummaryOfTextEntities { get; set; }
-    
+
     public DbSet<ClosedAnswerExerciseEntity> ClosedAnswerExercises { get; set; }
     public DbSet<OpenAnswerExerciseEntity> OpenAnswerExercises { get; set; }
     public DbSet<SuspiciousPromptEntity> SuspiciousPrompts { get; set; }

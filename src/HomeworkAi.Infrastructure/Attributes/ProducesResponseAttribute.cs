@@ -12,11 +12,11 @@ public sealed class ProducesResponseAttribute : ProducesResponseTypeAttribute
     public ProducesResponseAttribute(HttpStatusCode statusCode) : base((int)statusCode)
     {
     }
-    
+
     public ProducesResponseAttribute(HttpStatusCode statusCode, Type type) : base(type, (int)statusCode)
     {
     }
-    
+
     public ProducesResponseAttribute(int statusCode) : base(statusCode)
     {
     }
@@ -25,7 +25,8 @@ public sealed class ProducesResponseAttribute : ProducesResponseTypeAttribute
     {
     }
 
-    public ProducesResponseAttribute(Type type, int statusCode, string contentType, params string[] additionalContentTypes) : base(type, statusCode, contentType, additionalContentTypes)
+    public ProducesResponseAttribute(Type type, int statusCode, string contentType,
+        params string[] additionalContentTypes) : base(type, statusCode, contentType, additionalContentTypes)
     {
     }
 }

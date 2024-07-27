@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HomeworkAi.Modules.Persistence.DAL.Configurations;
 
-internal sealed class OpenFormExerciseEntityConfiguration 
-    : IEntityTypeConfiguration<OpenFormExerciseMailEntity>, 
+internal sealed class OpenFormExerciseEntityConfiguration
+    : IEntityTypeConfiguration<OpenFormExerciseMailEntity>,
         IEntityTypeConfiguration<OpenFormExerciseEssayEntity>,
         IEntityTypeConfiguration<OpenFormExerciseSummaryOfTextEntity>
-        
+
 {
     public void Configure(EntityTypeBuilder<OpenFormExerciseMailEntity> builder)
     {

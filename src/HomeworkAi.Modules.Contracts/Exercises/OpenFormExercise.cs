@@ -9,10 +9,10 @@ public class Mail : OpenFormExercise
 }
 
 public class Essay : OpenFormExercise
-{    
+{
 }
 
 public class SummaryOfText : OpenFormExercise
-{    
+{
     public string TextToSummary { get; set; }
 }

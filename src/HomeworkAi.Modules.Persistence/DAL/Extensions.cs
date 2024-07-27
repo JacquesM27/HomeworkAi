@@ -20,7 +20,7 @@ internal static class Extensions
         services.AddScoped<ISuspiciousPromptRepository, SuspiciousPromptRepository>();
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        
+
         return services;
     }
 }

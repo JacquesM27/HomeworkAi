@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj" />
+        <ProjectReference Include="..\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

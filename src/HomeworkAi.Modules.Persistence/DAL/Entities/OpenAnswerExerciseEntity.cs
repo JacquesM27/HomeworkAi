@@ -12,7 +12,7 @@ public class OpenAnswerExerciseEntity
     public int? AmountOfSentences { get; set; }
     public bool? TranslateFromMotherLanguage { get; set; }
     public bool? QuestionsInMotherLanguage { get; set; }
-    
+
     public bool? ZeroConditional { get; set; }
     public bool? FirstConditional { get; set; }
     public bool? SecondConditional { get; set; }

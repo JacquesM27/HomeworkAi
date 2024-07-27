@@ -14,7 +14,7 @@ public class DeserializerService(
     IApplicationMemoryCache applicationMemoryCache) : IDeserializerService
 {
     private static readonly ConcurrentDictionary<string, string> ExerciseTypes = [];
-    
+
     //TODO: remove
     public string FormatType(string exerciseType)
     {
@@ -33,11 +33,11 @@ public class DeserializerService(
     public Exercise DeserializeExercise(string json, string exerciseType)
     {
         var type = applicationMemoryCache.GetExerciseType(exerciseType)
-            ?? throw new InvalidExerciseTypeException(exerciseType);
-        
+                   ?? throw new InvalidExerciseTypeException(exerciseType);
+
         var exercise = JsonSerializer.Deserialize(json, type)
-            ?? throw new DeserializationException(json);
-        
+                       ?? throw new DeserializationException(json);
+
         return (Exercise)exercise;
     }
 
@@ -49,19 +49,18 @@ public class DeserializerService(
 
     public T Deserialize<T>(string json)
     {
-        
         var result = JsonSerializer.Deserialize<T>(json);
 
-        if (result is not null) 
+        if (result is not null)
             return result;
-        
+
         var fixedJson = FixJson(json);
-        result = JsonSerializer.Deserialize<T>(json) 
+        result = JsonSerializer.Deserialize<T>(json)
                  ?? throw new DeserializationException(fixedJson);
-        
+
         return result;
     }
-    
+
     public string FixJson(string json)
     {
         //it works only for string values xD
@@ -71,8 +70,9 @@ public class DeserializerService(
         //var fixCollections = FixCollections(json);
         return fixedValues;
     }
-    
-    const string Pattern = @"(?<=\""\w+\"":\s*)""[\w\s\d\.\'\-ĄąĆćĘęŁłŃńÓóŚśŹźŻż:]*""(?![\}\]])";
+
+    private const string Pattern = @"(?<=\""\w+\"":\s*)""[\w\s\d\.\'\-ĄąĆćĘęŁłŃńÓóŚśŹźŻż:]*""(?![\}\]])";
+
     public string FixValues2(string json)
     {
         // Compile the regex pattern
@@ -82,20 +82,18 @@ public class DeserializerService(
         var matches = regex.Matches(json);
 
         // Initialize a string to build the fixed JSON
-        string fixedJson = json;
+        var fixedJson = json;
 
         // Iterate through the matches in reverse order to avoid altering indices of remaining matches
-        for (int i = matches.Count - 1; i >= 0; i--)
+        for (var i = matches.Count - 1; i >= 0; i--)
         {
             var match = matches[i];
 
             // Check if the character after the matched value is not a comma, closing brace, or closing bracket
             if (match.Index + match.Length < json.Length && json[match.Index + match.Length] != ',' &&
                 json[match.Index + match.Length] != '}' && json[match.Index + match.Length] != ']')
-            {
                 // Add a comma after the match if it's not followed by a closing brace or bracket
                 fixedJson = fixedJson.Insert(match.Index + match.Length, ",");
-            }
         }
 
         // Handle edge cases to remove trailing commas before closing braces or brackets
@@ -112,7 +110,7 @@ public class DeserializerService(
         // Remove trailing commas before closing braces or brackets
         return Regex.Replace(json, pattern, "$1");
     }
-    
+
     private string FixValues(string json)
     {
         var valuePattern = @"{?\s+\""\w+\"":\s*""?\w*""?,?{?\[?";
@@ -121,11 +119,11 @@ public class DeserializerService(
 
         if (valueMatches.Count == 0)
             return json;
-        
+
         var sb = new StringBuilder();
         var firstPart = json.Substring(0, valueMatches.First().Index);
         sb.Append(firstPart);
-        
+
         foreach (Match match in valueMatches)
         {
             if (match.Value.EndsWith('{') || match.Value.EndsWith('['))
@@ -133,7 +131,8 @@ public class DeserializerService(
                 sb.Append(match.Value);
                 continue;
             }
-            bool hasNextValue = false;
+
+            var hasNextValue = false;
             var restValueOfJson = json.Substring(match.Length + match.Index);
             for (var index = 0; index < restValueOfJson.Length; index++)
             {
@@ -199,11 +198,11 @@ public class DeserializerService(
 
         if (collectionMatches.Count == 0)
             return json;
-        
+
         var sb = new StringBuilder();
-        var firstPart = json.Substring(0, collectionMatches.First().Index+1);
+        var firstPart = json.Substring(0, collectionMatches.First().Index + 1);
         sb.Append(firstPart);
-        
+
         var collectionElementsPattern = @"(\s*[\""+\w+\.]+),{0,1}|\]";
         //there will be at least one element because of closing bracket
         var collectionElementsRegex = new Regex(collectionElementsPattern);
@@ -213,21 +212,22 @@ public class DeserializerService(
             var collectionMatch = collectionMatches[i];
             var startOfSubstring = collectionMatch.Index;
 
-             string jsonSub2;
-             if (collectionMatches.Count - 1 > i)
-             {
-                 var nextMatch = collectionMatches[i + 1];
-                 var startIndex = nextMatch.Index;
-                 jsonSub2 = json.Substring(startOfSubstring, startIndex - startOfSubstring + 1);
-             }
-             else
-             {
-                 jsonSub2 = json.Substring(startOfSubstring);
-             }
+            string jsonSub2;
+            if (collectionMatches.Count - 1 > i)
+            {
+                var nextMatch = collectionMatches[i + 1];
+                var startIndex = nextMatch.Index;
+                jsonSub2 = json.Substring(startOfSubstring, startIndex - startOfSubstring + 1);
+            }
+            else
+            {
+                jsonSub2 = json.Substring(startOfSubstring);
+            }
+
             var jsonSubstring = jsonSub2;
             //var jsonSubstring = json.Substring(startOfSubstring);
             var elementsMatches = collectionElementsRegex.Matches(jsonSubstring);
-            int appendedCharsCount = 0;
+            var appendedCharsCount = 0;
             for (var j = 0; j < elementsMatches.Count; j++)
             {
                 var elementMatch = elementsMatches[j];
@@ -236,11 +236,11 @@ public class DeserializerService(
                 if (elementMatch.Value.EndsWith(','))
                 {
                     //correct line
-                    sb.Append((elementMatch.Value));
+                    sb.Append(elementMatch.Value);
                     continue;
                 }
 
-                
+
                 // if (j == elementsMatches.Count - 2) //last element of collection
                 // {
                 //     sb.Append((elementMatch.Value));
@@ -248,35 +248,32 @@ public class DeserializerService(
                 // }
 
                 if (elementsMatches.Count - 1 > j)
-                {
                     if (elementsMatches[j + 1].Value == "]" || elementsMatches[j + 1].Value == "],")
                     {
-                        sb.Append((elementMatch.Value));
+                        sb.Append(elementMatch.Value);
                         continue;
                     }
-                }
+
                 if (elementMatch.Value == "]" || elementMatch.Value == "],") //it is the last one
-                {
                     //sb.Append((elementMatch.Value));
                     break;
-                }
-                
-                sb.Append((elementMatch.Value + ","));
+
+                sb.Append(elementMatch.Value + ",");
             }
 
             if (i == collectionMatches.Count - 1)
             {
                 //append all text
-                int startIndex = collectionMatch.Index + appendedCharsCount;
+                var startIndex = collectionMatch.Index + appendedCharsCount;
                 var stringToAppend = json.Substring(startIndex);
                 sb.Append(stringToAppend);
             }
             else
             {
-                int startIndex = collectionMatch.Index + appendedCharsCount;
+                var startIndex = collectionMatch.Index + appendedCharsCount;
                 var nextArray = collectionMatches[i + 1];
-                int startOfNextArray = nextArray.Index;
-                var stringToAppend = json.Substring(startIndex +1, startOfNextArray - startIndex);
+                var startOfNextArray = nextArray.Index;
+                var stringToAppend = json.Substring(startIndex + 1, startOfNextArray - startIndex);
                 sb.Append(stringToAppend);
                 //append text to next array
             }

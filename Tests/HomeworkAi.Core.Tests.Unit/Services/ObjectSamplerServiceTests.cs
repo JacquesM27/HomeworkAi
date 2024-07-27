@@ -35,12 +35,13 @@ public class ObjectSamplerServiceTests
         }".Replace(" ", "").Replace("\n", "").Replace("\r", "");
 
         // Act
-        var json = _service.GetSampleJson(typeof(WordMeaningClosed)).Replace(" ", "").Replace("\n", "").Replace("\r", "");
+        var json = _service.GetSampleJson(typeof(WordMeaningClosed)).Replace(" ", "").Replace("\n", "")
+            .Replace("\r", "");
 
         // Assert
         json.ShouldBe(expectedJson);
     }
-    
+
     [Fact]
     public void GetSampleObject_ReturnsCorrectObject()
     {
@@ -157,7 +158,8 @@ public class ObjectSamplerServiceTests
         var result = _service.GetStringValues(obj);
 
         // Assert
-        result.ShouldBe("Value1" + Environment.NewLine + "Value2" + Environment.NewLine + "Value3" + Environment.NewLine);
+        result.ShouldBe(
+            "Value1" + Environment.NewLine + "Value2" + Environment.NewLine + "Value3" + Environment.NewLine);
     }
 
     [Fact]
@@ -190,12 +192,14 @@ public class ObjectSamplerServiceTests
 
         // Assert
         result.ShouldBe("Value1" + Environment.NewLine + "Value2" + Environment.NewLine);
-    } 
-    
-    
+    }
+
+
     #region GetStringValuesClasses
-    
-    private class EmptyClass { }
+
+    private class EmptyClass
+    {
+    }
 
     private class ClassWithStrings
     {

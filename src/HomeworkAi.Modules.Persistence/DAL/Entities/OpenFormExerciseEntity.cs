@@ -10,9 +10,10 @@ public abstract class OpenFormExerciseEntity
     public string? TopicsOfSentences { get; set; }
     public string? GrammarSection { get; set; }
     public string ExerciseJson { get; set; } // JSONB column
-    public bool CheckedByTeacher { get; set; }
-}
 
+    public bool CheckedByTeacher { get; set; }
+    //TODO: add exercise rating
+}
 
 public sealed class OpenFormExerciseMailEntity : OpenFormExerciseEntity;
 

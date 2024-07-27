@@ -3,6 +3,7 @@
 public abstract class ClosedAnswerExercise : Exercise
 {
 }
+
 public class QuestionsToTextClosed : ClosedAnswerExercise
 {
     public string Text { get; set; }
@@ -35,7 +36,7 @@ public class ConditionalClosed : ClosedAnswerExercise
 public class WordMeaningClosed : ClosedAnswerExercise
 {
     public List<WordMeaning> WordMeanings { get; set; }
-    
+
     public class WordMeaning
     {
         public string Word { get; set; }
@@ -47,7 +48,6 @@ public class WordMeaningClosed : ClosedAnswerExercise
         public string ShortDescription { get; set; }
         public bool Correct { get; set; }
     }
-
 }
 
 public class PhrasalVerbsTranslating : ClosedAnswerExercise
@@ -58,6 +58,7 @@ public class PhrasalVerbsTranslating : ClosedAnswerExercise
 public class MissingPhrasalVerbClosed : ClosedAnswerExercise
 {
     public List<SentenceWithPhrasalVerb> SentencesWithPhrasalVerb { get; set; }
+
     public class SentenceWithPhrasalVerb
     {
         public string SentenceWithUnderscoreInsteadOfPhrasalVerb { get; set; }
@@ -68,6 +69,7 @@ public class MissingPhrasalVerbClosed : ClosedAnswerExercise
 public class MissingWordOrExpressionClosed : ClosedAnswerExercise
 {
     public List<SentenceWithMisingWordOrExpression> SentencesWithMisingWordOrExpression { get; set; }
+
     public class SentenceWithMisingWordOrExpression
     {
         public string SentenceWithUnderscoreInsteadOfWordOrExpression { get; set; }

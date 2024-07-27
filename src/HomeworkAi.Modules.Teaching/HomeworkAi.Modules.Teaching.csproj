@@ -7,4 +7,10 @@
         <RootNamespace>HomeworkAi.Modules.Teaching</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\HomeworkAi.Infrastructure\HomeworkAi.Infrastructure.csproj"/>
+        <ProjectReference Include="..\HomeworkAi.Modules.Contracts\HomeworkAi.Modules.Contracts.csproj"/>
+        <ProjectReference Include="..\HomeworkAi.Modules.Persistence\HomeworkAi.Modules.Persistence.csproj"/>
+    </ItemGroup>
+
 </Project>

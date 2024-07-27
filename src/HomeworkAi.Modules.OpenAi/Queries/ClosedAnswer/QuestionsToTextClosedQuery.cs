@@ -11,7 +11,7 @@ namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
 public sealed record QuestionsToTextClosedQuery(int AmountOfSentences, bool QuestionsInMotherLanguage)
     : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseQuestionsToText>;
-    
+
 public sealed class QuestionsToTextClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
@@ -29,19 +29,21 @@ public sealed class QuestionsToTextClosedQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(QuestionsToTextClosed));
 
-        var prompt = $"1. This is closed answer - questions to text exercise. This means you need to generate a text according to the following requirements (5-8 sentences) and {query.AmountOfSentences} questions for this text. For questions you need to generate responses to them from 3 to 4 according to the json format provided." +
-                 $"Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). Questions and answers for the text have to be in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}.";
-        
+        var prompt =
+            $"1. This is closed answer - questions to text exercise. This means you need to generate a text according to the following requirements (5-8 sentences) and {query.AmountOfSentences} questions for this text. For questions you need to generate responses to them from 3 to 4 according to the json format provided." +
+            $"Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). Questions and answers for the text have to be in {(query.QuestionsInMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}.";
+
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<QuestionsToTextClosed>(response);
 
@@ -57,11 +59,8 @@ public sealed class QuestionsToTextClosedQueryHandler(
             AmountOfSentences = query.AmountOfSentences,
             QuestionsInMotherLanguage = query.QuestionsInMotherLanguage
         };
-        
+
         await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseQuestionsToTextGenerated(result));
         return result;
     }
 }
-
-
-    

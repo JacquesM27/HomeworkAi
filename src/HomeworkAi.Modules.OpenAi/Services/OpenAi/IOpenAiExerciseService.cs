@@ -19,5 +19,4 @@ public interface IOpenAiExerciseService
     /// <param name="prompt">Data to validate.</param>
     /// <returns>Object with bool flag and reasons of suspicious (if any).</returns>
     Task<SuspiciousPrompt> ValidateAvoidingOriginTopic(string prompt);
-    
 }

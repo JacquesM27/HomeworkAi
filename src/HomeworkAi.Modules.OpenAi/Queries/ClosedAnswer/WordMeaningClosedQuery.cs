@@ -29,7 +29,7 @@ public sealed class WordMeaningClosedQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(WordMeaningClosed));
 
         var prompt =
@@ -63,5 +63,3 @@ public sealed class WordMeaningClosedQueryHandler(
         return result;
     }
 }
-
-

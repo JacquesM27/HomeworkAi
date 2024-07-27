@@ -29,19 +29,20 @@ public sealed class AnswerToQuestionClosedQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(AnswerToQuestionClosed));
 
         var prompt =
             $"1. This is closed answer - answer to question exercise. This means that you need to generate {query.AmountOfSentences} questions and 3-4 answers to those questions, where only one answer is grammatically correct (other answers must have grammatical errors) . Questions and answers language is {query.TargetLanguage}.";
-        
+
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<AnswerToQuestionClosed>(response);
 
@@ -61,4 +62,3 @@ public sealed class AnswerToQuestionClosedQueryHandler(
         return result;
     }
 }
-

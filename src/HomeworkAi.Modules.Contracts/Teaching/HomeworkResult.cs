@@ -6,6 +6,6 @@ public class HomeworkResult
     public Homework Homework { get; set; }
     public Student Student { get; set; }
     //TODO: exercises answers
-    
+
     //maybe dictionary or class exercise-answers??
 }

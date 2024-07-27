@@ -17,7 +17,8 @@ internal sealed class ErrorHandlerMiddleware(
         }
         catch (Exception exception)
         {
-            logger.LogError($"There was an error: {exception.GetType().Name}, description: {exception.Message}, stack trace: {exception.StackTrace}");
+            logger.LogError(
+                $"There was an error: {exception.GetType().Name}, description: {exception.Message}, stack trace: {exception.StackTrace}");
             await HandleErrorAsync(context, exception);
         }
     }

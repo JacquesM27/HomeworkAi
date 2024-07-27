@@ -8,15 +8,22 @@ namespace HomeworkAi.Modules.OpenAi.Services;
 public class ObjectSamplerService : IObjectSamplerService
 {
     private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };
+
     public string GetSampleJson(Type type)
     {
         var sample = GenerateSampleObject(type);
         return SerializeToJson(sample);
     }
 
-    private static string SerializeToJson(object sample) => JsonSerializer.Serialize(sample, Options);
+    private static string SerializeToJson(object sample)
+    {
+        return JsonSerializer.Serialize(sample, Options);
+    }
 
-    public object GetSampleObject(Type type) => GenerateSampleObject(type);
+    public object GetSampleObject(Type type)
+    {
+        return GenerateSampleObject(type);
+    }
 
     public string GetStringValues(object? obj)
     {
@@ -26,14 +33,14 @@ public class ObjectSamplerService : IObjectSamplerService
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         var sb = new StringBuilder();
-        
+
         foreach (var property in properties)
         {
             if (property.PropertyType != typeof(string))
                 continue;
 
             var value = property.GetValue(obj) as string;
-            
+
             if (string.IsNullOrWhiteSpace(value))
                 continue;
 
@@ -51,14 +58,14 @@ public class ObjectSamplerService : IObjectSamplerService
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         var result = new List<string>();
-        
+
         foreach (var property in properties)
         {
             if (property.PropertyType != typeof(string))
                 continue;
 
             var value = property.GetValue(obj) as string;
-            
+
             if (string.IsNullOrWhiteSpace(value))
                 continue;
 
@@ -91,10 +98,8 @@ public class ObjectSamplerService : IObjectSamplerService
 
         var obj = Activator.CreateInstance(type);
         foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
-        {
             if (property.CanWrite)
                 property.SetValue(obj, GenerateSampleObject(property.PropertyType));
-        }
 
         return obj!;
     }

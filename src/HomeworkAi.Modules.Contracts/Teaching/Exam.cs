@@ -5,6 +5,7 @@ namespace HomeworkAi.Modules.Contracts.Teaching;
 public class Exam
 {
     public Guid Id { get; set; }
+
     //public IEnumerable<IExerciseResponse> Exercises { get; set; }
     public Teacher Teacher { get; set; }
     public Student? IndividualStudent { get; set; }

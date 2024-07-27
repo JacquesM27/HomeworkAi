@@ -8,15 +8,16 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\HomeworkAi.Modules.OpenAi\HomeworkAi.Modules.OpenAi.csproj" />
-      <ProjectReference Include="..\src\HomeworkAi.Modules.Persistence\HomeworkAi.Modules.Persistence.csproj" />
+        <ProjectReference Include="..\src\HomeworkAi.Modules.OpenAi\HomeworkAi.Modules.OpenAi.csproj"/>
+        <ProjectReference Include="..\src\HomeworkAi.Modules.Persistence\HomeworkAi.Modules.Persistence.csproj"/>
+        <ProjectReference Include="..\src\HomeworkAi.Modules.Teaching\HomeworkAi.Modules.Teaching.csproj"/>
     </ItemGroup>
 
 </Project>

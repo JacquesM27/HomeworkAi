@@ -12,7 +12,7 @@ public class ApplicationMemoryCache : IApplicationMemoryCache
     private readonly FrozenSet<string> _openAnswerExercises;
     private readonly FrozenSet<string> _openFormExercises;
     private readonly FrozenSet<string> _languages;
-    
+
     public ApplicationMemoryCache()
     {
         var allExercises = TypesExtensions.GetNonAbstractDerivedTypes<Exercise>();
@@ -22,14 +22,29 @@ public class ApplicationMemoryCache : IApplicationMemoryCache
         _openFormExercises = TypesExtensions.GetNonAbstractDerivedTypeNames<OpenFormExercise>().ToFrozenSet();
         _languages = Language.Languages.ToFrozenSet();
     }
-    
-    public Type? GetExerciseType(string exerciseName) => _exercises.GetValueOrDefault(exerciseName);
 
-    public IEnumerable<string> GetClosedAnswerExercises() => _closedAnswerExercises;
+    public Type? GetExerciseType(string exerciseName)
+    {
+        return _exercises.GetValueOrDefault(exerciseName);
+    }
 
-    public IEnumerable<string> GetOpenAnswerExercises() => _openAnswerExercises;
+    public IEnumerable<string> GetClosedAnswerExercises()
+    {
+        return _closedAnswerExercises;
+    }
 
-    public IEnumerable<string> GetOpenFormExercises() => _openFormExercises;
+    public IEnumerable<string> GetOpenAnswerExercises()
+    {
+        return _openAnswerExercises;
+    }
 
-    public IEnumerable<string> GetLanguages() => _languages;
+    public IEnumerable<string> GetOpenFormExercises()
+    {
+        return _openFormExercises;
+    }
+
+    public IEnumerable<string> GetLanguages()
+    {
+        return _languages;
+    }
 }

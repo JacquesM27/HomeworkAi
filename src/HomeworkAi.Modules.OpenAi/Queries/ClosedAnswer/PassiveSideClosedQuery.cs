@@ -12,7 +12,6 @@ namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 public sealed record PassiveSideClosedQuery(int AmountOfSentences)
     : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponsePassiveSide>;
 
-
 public sealed class PassiveSideClosedQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
@@ -30,19 +29,20 @@ public sealed class PassiveSideClosedQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(PassiveSideClosed));
 
         var prompt =
             $"1. This is closed answer - passive side exercise. This means that you need to generate {query.AmountOfSentences} sentences in {query.TargetLanguage} in the passive side and answers to them from 3 to 4 according to the json format provided. Only one answer must be grammatically correct and the others are to be incorrect (have small grammatical errors). ";
-        
+
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<PassiveSideClosed>(response);
 
@@ -57,11 +57,8 @@ public sealed class PassiveSideClosedQueryHandler(
             GrammarSection = query.GrammarSection,
             AmountOfSentences = query.AmountOfSentences
         };
-        
+
         await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponsePassiveSideGenerated(result));
         return result;
     }
 }
-
-
-    

@@ -9,14 +9,20 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
-public sealed record ConditionalOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage, bool ZeroConditional,
-    bool FirstConditional, bool SecondConditional, bool ThirdConditional) 
+public sealed record ConditionalOpenQuery(
+    int AmountOfSentences,
+    bool TranslateFromMotherLanguage,
+    bool ZeroConditional,
+    bool FirstConditional,
+    bool SecondConditional,
+    bool ThirdConditional)
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseConditional>;
-    
+
 public sealed class ConditionalOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IOpenAiExerciseService openAiExerciseService,
+    IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
     : IQueryHandler<ConditionalOpenQuery, OpenAnswerExerciseResponseConditional>
 {
@@ -29,19 +35,21 @@ public sealed class ConditionalOpenQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var roundedAmountOfSentences = RoundedAmountOfSentences(query);
 
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ConditionalOpen));
-        
-        var prompt = $"1. This is open answer - conditional exercise. This means that need to generate {TotalAmountOfSentences(query)} sentences ({roundedAmountOfSentences} per conditional list) in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}. Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third": "")} - in JSON format you have list for each mode.";// - in JSON you have list for each mode, complete only those lists that were mentioned in the previous sentence.";
+
+        var prompt =
+            $"1. This is open answer - conditional exercise. This means that need to generate {TotalAmountOfSentences(query)} sentences ({roundedAmountOfSentences} per conditional list) in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)}. Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third" : "")} - in JSON format you have list for each mode."; // - in JSON you have list for each mode, complete only those lists that were mentioned in the previous sentence.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<ConditionalOpen>(response);
 
@@ -68,16 +76,18 @@ public sealed class ConditionalOpenQueryHandler(
 
     private static int RoundedAmountOfSentences(ConditionalOpenQuery query)
     {
-        bool[] conditions = [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
+        bool[] conditions =
+            [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
         var conditionalDenominator = conditions.Count(c => c);
         var amountOfSentences = (double)query.AmountOfSentences / conditionalDenominator;
         var roundedAmountOfSentences = (int)Math.Ceiling(amountOfSentences);
         return roundedAmountOfSentences;
     }
-    
+
     private static int TotalAmountOfSentences(ConditionalOpenQuery query)
     {
-        bool[] conditions = [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
+        bool[] conditions =
+            [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
         var conditionalDenominator = conditions.Count(c => c);
         var amountOfSentences = (double)query.AmountOfSentences / conditionalDenominator;
         var roundedAmountOfSentences = (int)Math.Ceiling(amountOfSentences);

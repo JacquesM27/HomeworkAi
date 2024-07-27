@@ -9,10 +9,14 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.ClosedAnswer;
 
-public sealed record ConditionalClosedQuery(int AmountOfSentences, bool TranslateFromMotherLanguage, bool ZeroConditional,
-    bool FirstConditional, bool SecondConditional, bool ThirdConditional) 
+public sealed record ConditionalClosedQuery(
+    int AmountOfSentences,
+    bool TranslateFromMotherLanguage,
+    bool ZeroConditional,
+    bool FirstConditional,
+    bool SecondConditional,
+    bool ThirdConditional)
     : ExerciseQueryBase, IQuery<ClosedAnswerExerciseResponseConditional>;
-
 
 public sealed class ConditionalClosedQueryHandler(
     IPromptFormatter promptFormatter,
@@ -31,21 +35,22 @@ public sealed class ConditionalClosedQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var roundedAmountOfSentences = RoundedAmountOfSentences(query);
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(ConditionalClosed));
 
         var prompt =
-            $"1. This is closed answer - conditional exercise. This means that you need to generate {TotalAmountOfSentences(query)} sentences ({roundedAmountOfSentences} per conditional list) in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} and for every sentence 3-4 translations in {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)} but only one grammatically correct (other answers must have grammatical errors). Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third" : "")} - in JSON format you have list for each mode.";//", complete only those lists that were mentioned in the previous sentence.";
-        
+            $"1. This is closed answer - conditional exercise. This means that you need to generate {TotalAmountOfSentences(query)} sentences ({roundedAmountOfSentences} per conditional list) in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} and for every sentence 3-4 translations in {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)} but only one grammatically correct (other answers must have grammatical errors). Sentences must be in the indicated conditional modes - {(query.ZeroConditional ? "zero, " : "")}{(query.FirstConditional ? "first, " : "")}{(query.SecondConditional ? "second, " : "")}{(query.ThirdConditional ? "third" : "")} - in JSON format you have list for each mode."; //", complete only those lists that were mentioned in the previous sentence.";
+
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<ConditionalClosed>(response);
 
@@ -65,23 +70,25 @@ public sealed class ConditionalClosedQueryHandler(
             SecondConditional = query.SecondConditional,
             ThirdConditional = query.ThirdConditional
         };
-        
+
         await eventDispatcher.PublishAsync(new ClosedAnswerExerciseResponseConditionalGenerated(result));
         return result;
     }
-    
+
     private static int RoundedAmountOfSentences(ConditionalClosedQuery query)
     {
-        bool[] conditions = [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
+        bool[] conditions =
+            [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
         var conditionalDenominator = conditions.Count(c => c);
         var amountOfSentences = (double)query.AmountOfSentences / conditionalDenominator;
         var roundedAmountOfSentences = (int)Math.Ceiling(amountOfSentences);
         return roundedAmountOfSentences;
     }
-    
+
     private static int TotalAmountOfSentences(ConditionalClosedQuery query)
     {
-        bool[] conditions = [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
+        bool[] conditions =
+            [query.ZeroConditional, query.FirstConditional, query.SecondConditional, query.ThirdConditional];
         var conditionalDenominator = conditions.Count(c => c);
         var amountOfSentences = (double)query.AmountOfSentences / conditionalDenominator;
         var roundedAmountOfSentences = (int)Math.Ceiling(amountOfSentences);

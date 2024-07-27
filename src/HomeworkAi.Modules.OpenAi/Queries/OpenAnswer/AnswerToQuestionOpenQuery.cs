@@ -9,13 +9,14 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
-public sealed record AnswerToQuestionOpenQuery(int AmountOfSentences) 
+public sealed record AnswerToQuestionOpenQuery(int AmountOfSentences)
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponseAnswerToQuestion>;
 
 internal sealed class AnswerToQuestionOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IOpenAiExerciseService openAiExerciseService,
+    IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
     : IQueryHandler<AnswerToQuestionOpenQuery, OpenAnswerExerciseResponseAnswerToQuestion>
 {
@@ -28,17 +29,19 @@ internal sealed class AnswerToQuestionOpenQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(AnswerToQuestionOpen));
-        
-        var prompt = $"1. This is open answer exercise. This means that need to generate {query.AmountOfSentences} QUESTION in {query.TargetLanguage} (questions, not answers, not sentences ONLY QUESTIONS ARE POSSIBLE) according to the following grammatical requirements.";
+
+        var prompt =
+            $"1. This is open answer exercise. This means that need to generate {query.AmountOfSentences} QUESTION in {query.TargetLanguage} (questions, not answers, not sentences ONLY QUESTIONS ARE POSSIBLE) according to the following grammatical requirements.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<AnswerToQuestionOpen>(response);
 
@@ -58,5 +61,3 @@ internal sealed class AnswerToQuestionOpenQueryHandler(
         return result;
     }
 }
-
-

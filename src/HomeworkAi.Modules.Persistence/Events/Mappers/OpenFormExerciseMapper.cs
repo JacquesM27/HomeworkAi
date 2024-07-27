@@ -25,4 +25,25 @@ public static class OpenFormExerciseMapper
         };
         return mapped;
     }
+
+    public static TResponse Map<TResponse, TExercise, TEntity>(this TEntity entity)
+        where TResponse : OpenFormExerciseResponse<TExercise>, new()
+        where TEntity : OpenFormExerciseEntity
+        where TExercise : OpenFormExercise
+    {
+        var deserializedExercise = JsonSerializer.Deserialize<TExercise>(entity.ExerciseJson);
+
+        var mapped = new TResponse()
+        {
+            Exercise = deserializedExercise!,
+            GrammarSection = entity.GrammarSection,
+            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            MotherLanguage = entity.MotherLanguage,
+            TargetLanguage = entity.MotherLanguage,
+            TargetLanguageLevel = entity.TargetLanguageLevel,
+            TopicsOfSentences = entity.TopicsOfSentences
+        };
+
+        return mapped;
+    }
 }

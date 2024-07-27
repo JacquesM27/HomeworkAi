@@ -8,7 +8,7 @@ namespace HomeworkAi.Core.Tests.Unit.Cache;
 public class ApplicationMemoryCacheTests
 {
     private readonly ApplicationMemoryCache _cache = new();
-    
+
     [Fact]
     public void GetExerciseType_ShouldReturnCorrectType()
     {
@@ -21,7 +21,7 @@ public class ApplicationMemoryCacheTests
         // Assert
         exerciseType.ShouldBe(exercise);
     }
-    
+
     [Fact]
     public void GetExerciseType_ShouldNotReturnCorrectType()
     {
@@ -51,18 +51,15 @@ public class ApplicationMemoryCacheTests
             nameof(MissingPhrasalVerbClosed),
             nameof(MissingWordOrExpressionClosed)
         ];
-        
+
         // Act
         var closedAnswerExercises = _cache.GetClosedAnswerExercises().ToList();
-        
+
         // Assert
-        foreach (var exercise in exercises)
-        {
-            closedAnswerExercises.ShouldContain(exercise);
-        }
+        foreach (var exercise in exercises) closedAnswerExercises.ShouldContain(exercise);
         closedAnswerExercises.Count.ShouldBe(exercises.Count);
     }
-    
+
     [Fact]
     public void GetOpenAnswerAnswerExercises_ShouldHasAllDerivedNames()
     {
@@ -82,15 +79,12 @@ public class ApplicationMemoryCacheTests
             nameof(MissingPhrasalVerbOpen),
             nameof(WordMeaningOpen)
         ];
-        
+
         // Act
         var openAnswerExercises = _cache.GetOpenAnswerExercises().ToList();
-        
+
         // Assert
-        foreach (var exercise in exercises)
-        {
-            openAnswerExercises.ShouldContain(exercise);
-        }
+        foreach (var exercise in exercises) openAnswerExercises.ShouldContain(exercise);
         openAnswerExercises.Count.ShouldBe(exercises.Count);
     }
 
@@ -102,17 +96,14 @@ public class ApplicationMemoryCacheTests
         [
             nameof(Mail),
             nameof(Essay),
-            nameof(SummaryOfText),
+            nameof(SummaryOfText)
         ];
-        
+
         // Act
         var openFormExercises = _cache.GetOpenFormExercises().ToList();
-        
+
         // Assert
-        foreach (var exercise in exercises)
-        {
-            openFormExercises.ShouldContain(exercise);
-        }
+        foreach (var exercise in exercises) openFormExercises.ShouldContain(exercise);
         openFormExercises.Count.ShouldBe(exercises.Count);
     }
 
@@ -121,13 +112,10 @@ public class ApplicationMemoryCacheTests
     {
         // Arrange
         var languages = Language.Languages;
-        
+
         // Act
         var cacheLanguages = _cache.GetLanguages().ToList();
-        
-        foreach (var language in languages)
-        {
-            cacheLanguages.ShouldContain(language);
-        }
+
+        foreach (var language in languages) cacheLanguages.ShouldContain(language);
     }
 }

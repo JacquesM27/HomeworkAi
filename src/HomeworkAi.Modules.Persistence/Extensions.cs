@@ -14,7 +14,7 @@ public static class Extensions
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddPostgres(configuration);
-        
+
         // services.AddAllHandlersForExercises<ClosedAnswerExercise>(
         //     typeof(ClosedAnswerExerciseGenerated<>),
         //     typeof(ClosedAnswerExerciseGeneratedHandler<>));
@@ -26,10 +26,10 @@ public static class Extensions
         // services.AddAllHandlersForExercises<OpenFormExercise>(
         //     typeof(OpenFormExerciseGenerated<>),
         //     typeof(OpenFormExerciseGeneratedHandler<>));
-        
+
         return services;
     }
-    
+
     // private static IServiceCollection AddAllHandlersForExercises<TExercise>(
     //     this IServiceCollection services,
     //     Type eventType,

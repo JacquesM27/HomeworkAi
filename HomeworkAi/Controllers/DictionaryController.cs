@@ -11,21 +11,29 @@ public class DictionaryController(IApplicationMemoryCache cache) : ControllerBas
 {
     [HttpGet("/closed-answer")]
     [ProducesResponse(HttpStatusCode.OK, typeof(IEnumerable<string>))]
-    public ActionResult<IEnumerable<string>> GetClosedAnswerExercises() 
-        => Ok(cache.GetClosedAnswerExercises());
-    
+    public ActionResult<IEnumerable<string>> GetClosedAnswerExercises()
+    {
+        return Ok(cache.GetClosedAnswerExercises());
+    }
+
     [HttpGet("/open-answer")]
     [ProducesResponse(HttpStatusCode.OK, typeof(IEnumerable<string>))]
-    public ActionResult<IEnumerable<string>> GetOpenAnswerExercises() 
-        => Ok(cache.GetOpenAnswerExercises());
-    
+    public ActionResult<IEnumerable<string>> GetOpenAnswerExercises()
+    {
+        return Ok(cache.GetOpenAnswerExercises());
+    }
+
     [HttpGet("/open-form")]
     [ProducesResponse(HttpStatusCode.OK, typeof(IEnumerable<string>))]
-    public ActionResult<IEnumerable<string>> GetOpenFormExercises() 
-        => Ok(cache.GetOpenFormExercises());
-    
+    public ActionResult<IEnumerable<string>> GetOpenFormExercises()
+    {
+        return Ok(cache.GetOpenFormExercises());
+    }
+
     [HttpGet("/languages")]
     [ProducesResponse(HttpStatusCode.OK, typeof(IEnumerable<string>))]
-    public ActionResult<IEnumerable<string>> GetLanguages() 
-        => Ok(cache.GetLanguages());
+    public ActionResult<IEnumerable<string>> GetLanguages()
+    {
+        return Ok(cache.GetLanguages());
+    }
 }

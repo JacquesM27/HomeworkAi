@@ -10,7 +10,9 @@ public static class TypesExtensions
         return assemblies.SelectMany(assembly => assembly.GetTypes())
             .Where(type => type.IsSubclassOf(baseType) && !type.IsAbstract);
     }
-    
-    public static IEnumerable<string> GetNonAbstractDerivedTypeNames<T>() 
-        => GetNonAbstractDerivedTypes<T>().Select(t => t.Name);
+
+    public static IEnumerable<string> GetNonAbstractDerivedTypeNames<T>()
+    {
+        return GetNonAbstractDerivedTypes<T>().Select(t => t.Name);
+    }
 }

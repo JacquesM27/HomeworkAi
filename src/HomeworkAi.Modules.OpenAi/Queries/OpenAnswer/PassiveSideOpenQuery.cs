@@ -9,13 +9,14 @@ using HomeworkAi.Modules.OpenAi.Services.OpenAi;
 
 namespace HomeworkAi.Modules.OpenAi.Queries.OpenAnswer;
 
-public sealed record PassiveSideOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage) 
+public sealed record PassiveSideOpenQuery(int AmountOfSentences, bool TranslateFromMotherLanguage)
     : ExerciseQueryBase, IQuery<OpenAnswerExerciseResponsePassiveSide>;
 
 public sealed class PassiveSideOpenQueryHandler(
     IPromptFormatter promptFormatter,
     IObjectSamplerService objectSamplerService,
-    IOpenAiExerciseService openAiExerciseService, IDeserializerService deserializerService,
+    IOpenAiExerciseService openAiExerciseService,
+    IDeserializerService deserializerService,
     IEventDispatcher eventDispatcher)
     : IQueryHandler<PassiveSideOpenQuery, OpenAnswerExerciseResponsePassiveSide>
 {
@@ -28,17 +29,19 @@ public sealed class PassiveSideOpenQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
+
         var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(PassiveSideOpen));
-        
-        var prompt = $"1. This is open answer - passive side exercise. This means that need to generate {query.AmountOfSentences} sentences in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} in the passive side so that the student can translate them into {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)} independently.";
+
+        var prompt =
+            $"1. This is open answer - passive side exercise. This means that need to generate {query.AmountOfSentences} sentences in {(query.TranslateFromMotherLanguage ? query.MotherLanguage : query.TargetLanguage)} in the passive side so that the student can translate them into {(query.TranslateFromMotherLanguage ? query.TargetLanguage : query.MotherLanguage)} independently.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<PassiveSideOpen>(response);
 
@@ -54,9 +57,8 @@ public sealed class PassiveSideOpenQueryHandler(
             TranslateFromMotherLanguage = query.TranslateFromMotherLanguage,
             AmountOfSentences = query.AmountOfSentences
         };
-        
+
         await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponsePassiveSideGenerated(result));
         return result;
     }
 }
-

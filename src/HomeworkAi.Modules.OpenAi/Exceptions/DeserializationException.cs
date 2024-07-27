@@ -1,6 +1,6 @@
 ﻿namespace HomeworkAi.Modules.OpenAi.Exceptions;
 
-public sealed class DeserializationException(string json) 
+public sealed class DeserializationException(string json)
     : Exception("There was a error during response deserialization")
 {
     public string Json => json;

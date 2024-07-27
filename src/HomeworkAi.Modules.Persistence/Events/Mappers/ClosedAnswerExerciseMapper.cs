@@ -6,13 +6,14 @@ namespace HomeworkAi.Modules.Persistence.Events.Mappers;
 
 internal static class ClosedAnswerExerciseMapper
 {
-    public static ClosedAnswerExerciseEntity Map<TExercise>(this ClosedAnswerExerciseResponse<TExercise> exerciseResponse) 
+    public static ClosedAnswerExerciseEntity Map<TExercise>(
+        this ClosedAnswerExerciseResponse<TExercise> exerciseResponse)
         where TExercise : ClosedAnswerExercise
     {
         var json = JsonSerializer.Serialize(exerciseResponse.Exercise);
 
         var exerciseType = exerciseResponse.Exercise.GetType().Name;
-        
+
         var mapped = new ClosedAnswerExerciseEntity
         {
             Id = exerciseResponse.Id,

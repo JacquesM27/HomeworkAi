@@ -21,7 +21,8 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
     : IQueryHandler<SentenceWithVerbToCompleteBasedOnInfinitiveQuery,
         OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive>
 {
-    public async Task<OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive> HandleAsync(SentenceWithVerbToCompleteBasedOnInfinitiveQuery query)
+    public async Task<OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive> HandleAsync(
+        SentenceWithVerbToCompleteBasedOnInfinitiveQuery query)
     {
         var queryAsString = objectSamplerService.GetStringValues(query);
         var suspiciousPromptResponse = await openAiExerciseService.ValidateAvoidingOriginTopic(queryAsString);
@@ -30,17 +31,20 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
             await eventDispatcher.PublishAsync(new SuspiciousPromptInjected(suspiciousPromptResponse));
             throw new PromptInjectionException(suspiciousPromptResponse.Reasons);
         }
-        
-        var exerciseJsonFormat = objectSamplerService.GetSampleJson(typeof(SentenceWithVerbToCompleteBasedOnInfinitive));
-        
-        var prompt = $"1. This is open answer - sentences with verb to complete based on infinitive exercise. This means that need to generate {query.AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with ____.";
+
+        var exerciseJsonFormat =
+            objectSamplerService.GetSampleJson(typeof(SentenceWithVerbToCompleteBasedOnInfinitive));
+
+        var prompt =
+            $"1. This is open answer - sentences with verb to complete based on infinitive exercise. This means that need to generate {query.AmountOfSentences} sentences with a verb to complete based on the infinitive. Replace the place of the verb in the sentence with ____.";
         prompt += promptFormatter.FormatExerciseBaseData(query);
         prompt += $"""
                    12. Your responses should be structured in JSON format as follows:
                    {exerciseJsonFormat}
                    """;
-        
-        var response = await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
+
+        var response =
+            await openAiExerciseService.PromptForExercise(prompt, query.MotherLanguage, query.TargetLanguage);
 
         var exercise = deserializerService.Deserialize<SentenceWithVerbToCompleteBasedOnInfinitive>(response);
 
@@ -55,8 +59,9 @@ internal sealed class SentenceWithVerbToCompleteBasedOnInfinitiveQueryHandler(
             GrammarSection = query.GrammarSection,
             AmountOfSentences = query.AmountOfSentences
         };
-        
-        await eventDispatcher.PublishAsync(new OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitiveGenerated(result));
+
+        await eventDispatcher.PublishAsync(
+            new OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitiveGenerated(result));
         return result;
     }
 }

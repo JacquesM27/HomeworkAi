@@ -17,12 +17,12 @@ public static class Extensions
     {
         services.Configure<PostgreSqlSettings>(configuration.GetSection(PostgreSqlSettings.SectionName));
         services.Configure<OpenAiSettings>(configuration.GetSection(OpenAiSettings.SectionName));
-        
+
         services.AddErrorHandling();
         services.AddCommands(assemblies);
         services.AddQueries(assemblies);
         services.AddEvents(assemblies);
-        
+
         return services;
     }
 

@@ -1,4 +1,5 @@
 // using System.Text.Json.Serialization;
+
 using HomeworkAi.Modules.Contracts.ValueObjects;
 
 namespace HomeworkAi.Modules.Contracts.Exercises;
@@ -26,7 +27,6 @@ public abstract class ExerciseResponse<TExercise> //: IExerciseResponse
 public abstract class OpenFormExerciseResponse<TExercise> : ExerciseResponse<TExercise>
     where TExercise : OpenFormExercise
 {
-    
 }
 
 public abstract class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<TExercise>
@@ -35,7 +35,7 @@ public abstract class OpenAnswerExerciseResponse<TExercise> : ExerciseResponse<T
     public int? AmountOfSentences { get; set; }
     public bool? TranslateFromMotherLanguage { get; set; }
     public bool? QuestionsInMotherLanguage { get; set; }
-    
+
     public bool? ZeroConditional { get; set; }
     public bool? FirstConditional { get; set; }
     public bool? SecondConditional { get; set; }
@@ -49,10 +49,10 @@ public abstract class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse
     where TExercise : ClosedAnswerExercise
 {
     public int? AmountOfSentences { get; set; }
-    
+
     public bool? TranslateFromMotherLanguage { get; set; }
     public bool? QuestionsInMotherLanguage { get; set; }
-    
+
     public bool? ZeroConditional { get; set; }
     public bool? FirstConditional { get; set; }
     public bool? SecondConditional { get; set; }
@@ -60,7 +60,6 @@ public abstract class ClosedAnswerExerciseResponse<TExercise> : ExerciseResponse
 
     public bool? DescriptionInMotherLanguage { get; set; }
 }
-
 
 public class OpenFormExerciseResponseMail : OpenFormExerciseResponse<Mail>;
 
@@ -70,10 +69,13 @@ public class OpenFormExerciseResponseSummaryOfText : OpenFormExerciseResponse<Su
 
 public class OpenAnswerExerciseResponseSentencesTranslation : OpenAnswerExerciseResponse<SentencesTranslation>;
 
-public class OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExerciseResponse<SentenceWithVerbToCompleteBasedOnInfinitive>;
+public class
+    OpenAnswerExerciseResponseSentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExerciseResponse<
+    SentenceWithVerbToCompleteBasedOnInfinitive>;
 
 //TODO
-public class OpenAnswerExerciseResponseSentenceWithVerbToComplete : OpenAnswerExerciseResponse<SentenceWithVerbToComplete>;
+public class
+    OpenAnswerExerciseResponseSentenceWithVerbToComplete : OpenAnswerExerciseResponse<SentenceWithVerbToComplete>;
 
 public class OpenAnswerExerciseResponseIrregularVerbs : OpenAnswerExerciseResponse<IrregularVerbs>;
 
@@ -89,7 +91,8 @@ public class OpenAnswerExerciseResponseConditional : OpenAnswerExerciseResponse<
 
 public class OpenAnswerExerciseResponseMissingPhrasalVerb : OpenAnswerExerciseResponse<MissingPhrasalVerbOpen>;
 
-public class OpenAnswerExerciseResponseMissingWordOrExpression : OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>;
+public class
+    OpenAnswerExerciseResponseMissingWordOrExpression : OpenAnswerExerciseResponse<MissingWordOrExpressionOpen>;
 
 public class OpenAnswerExerciseResponseWordMeaning : OpenAnswerExerciseResponse<WordMeaningOpen>;
 
@@ -106,8 +109,10 @@ public class ClosedAnswerExerciseResponseConditional : ClosedAnswerExerciseRespo
 public class ClosedAnswerExerciseResponseWordMeaning : ClosedAnswerExerciseResponse<WordMeaningClosed>;
 
 //TODO
-public class ClosedAnswerExerciseResponsePhrasalVerbsTranslating : ClosedAnswerExerciseResponse<PhrasalVerbsTranslating>;
+public class
+    ClosedAnswerExerciseResponsePhrasalVerbsTranslating : ClosedAnswerExerciseResponse<PhrasalVerbsTranslating>;
 
 public class ClosedAnswerExerciseResponseMissingPhrasalVerb : ClosedAnswerExerciseResponse<MissingPhrasalVerbClosed>;
 
-public class ClosedAnswerExerciseResponseMissingWordOrExpression : ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>;
+public class
+    ClosedAnswerExerciseResponseMissingWordOrExpression : ClosedAnswerExerciseResponse<MissingWordOrExpressionClosed>;
