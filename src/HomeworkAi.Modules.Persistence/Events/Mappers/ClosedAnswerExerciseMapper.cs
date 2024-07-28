@@ -6,15 +6,13 @@ namespace HomeworkAi.Modules.Persistence.Events.Mappers;
 
 internal static class ClosedAnswerExerciseMapper
 {
-    public static ClosedAnswerExerciseEntity Map<TExercise>(
+    public static TEntity Map<TExercise, TEntity>(
         this ClosedAnswerExerciseResponse<TExercise> exerciseResponse)
-        where TExercise : ClosedAnswerExercise
+        where TExercise : ClosedAnswerExercise where TEntity : ClosedAnswerExerciseEntity, new()
     {
         var json = JsonSerializer.Serialize(exerciseResponse.Exercise);
 
-        var exerciseType = exerciseResponse.Exercise.GetType().Name;
-
-        var mapped = new ClosedAnswerExerciseEntity
+        var mapped = new TEntity()
         {
             Id = exerciseResponse.Id,
             ExerciseHeaderInMotherLanguage = exerciseResponse.ExerciseHeaderInMotherLanguage,
@@ -31,10 +29,30 @@ internal static class ClosedAnswerExerciseMapper
             SecondConditional = exerciseResponse.SecondConditional,
             ThirdConditional = exerciseResponse.ThirdConditional,
             DescriptionInMotherLanguage = exerciseResponse.DescriptionInMotherLanguage,
-            ExerciseType = exerciseType,
             ExerciseJson = json,
             CheckedByTeacher = false
         };
+        return mapped;
+    }
+
+    public static TResponse Map<TResponse, TExercise, TEntity>(this TEntity entity)
+        where TResponse : ClosedAnswerExerciseResponse<TExercise>, new()
+        where TEntity : ClosedAnswerExerciseEntity
+        where TExercise : ClosedAnswerExercise
+    {
+        var deserializedExercise = JsonSerializer.Deserialize<TExercise>(entity.ExerciseJson);
+
+        var mapped = new TResponse()
+        {
+            Exercise = deserializedExercise!,
+            GrammarSection = entity.GrammarSection,
+            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            MotherLanguage = entity.MotherLanguage,
+            TargetLanguage = entity.MotherLanguage,
+            TargetLanguageLevel = entity.TargetLanguageLevel,
+            TopicsOfSentences = entity.TopicsOfSentences
+        };
+
         return mapped;
     }
 }

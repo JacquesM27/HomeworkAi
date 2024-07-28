@@ -1,6 +1,6 @@
 ﻿namespace HomeworkAi.Modules.Persistence.DAL.Entities;
 
-public class ClosedAnswerExerciseEntity
+public abstract class ClosedAnswerExerciseEntity
 {
     public Guid Id { get; set; }
     public bool ExerciseHeaderInMotherLanguage { get; set; }
@@ -17,7 +17,24 @@ public class ClosedAnswerExerciseEntity
     public bool? SecondConditional { get; set; }
     public bool? ThirdConditional { get; set; }
     public bool? DescriptionInMotherLanguage { get; set; }
-    public string ExerciseType { get; set; }
     public string ExerciseJson { get; set; } // JSONB column
     public bool CheckedByTeacher { get; set; }
 }
+
+public sealed class ClosedAnswerExerciseResponseQuestionsToTextEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponsePassiveSideEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponseParaphrasingEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponseAnswerToQuestionEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponseConditionalEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponseWordMeaningEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponseMissingPhrasalVerbEntity : ClosedAnswerExerciseEntity;
+
+public sealed class ClosedAnswerExerciseResponseMissingWordOrExpressionEntity : ClosedAnswerExerciseEntity;
