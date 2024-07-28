@@ -12,7 +12,7 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
 {
     //TODO: responses should be different in openai and in this controller
     [HttpGet("mail/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseResponseMail>> GetMailAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseResponseMail?>> GetMailAsync(Guid id)
     {
         var mailEntity = await repository.GetMailAsync(id);
 
@@ -23,7 +23,7 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
     }
 
     [HttpGet("essay/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseResponseEssay>> GetEssayAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseResponseEssay?>> GetEssayAsync(Guid id)
     {
         var essayEntity = await repository.GetEssayAsync(id);
 
@@ -34,7 +34,7 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
     }
 
     [HttpGet("summary-of-text/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseResponseSummaryOfText>> GetSummaryOfTextAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseResponseSummaryOfText?>> GetSummaryOfTextAsync(Guid id)
     {
         var summaryOfTextEntity = await repository.GetSummaryOfTextAsync(id);
 

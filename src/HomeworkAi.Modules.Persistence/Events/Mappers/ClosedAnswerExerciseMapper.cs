@@ -4,7 +4,7 @@ using HomeworkAi.Modules.Persistence.DAL.Entities;
 
 namespace HomeworkAi.Modules.Persistence.Events.Mappers;
 
-internal static class ClosedAnswerExerciseMapper
+public static class ClosedAnswerExerciseMapper
 {
     public static TEntity Map<TExercise, TEntity>(
         this ClosedAnswerExerciseResponse<TExercise> exerciseResponse)
@@ -44,13 +44,21 @@ internal static class ClosedAnswerExerciseMapper
 
         var mapped = new TResponse()
         {
-            Exercise = deserializedExercise!,
             GrammarSection = entity.GrammarSection,
-            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            AmountOfSentences = entity.AmountOfSentences,
+            TranslateFromMotherLanguage = entity.TranslateFromMotherLanguage,
+            QuestionsInMotherLanguage = entity.QuestionsInMotherLanguage,
+            ZeroConditional = entity.ZeroConditional,
+            FirstConditional = entity.FirstConditional,
+            SecondConditional = entity.SecondConditional,
+            ThirdConditional = entity.ThirdConditional,
+            DescriptionInMotherLanguage = entity.DescriptionInMotherLanguage,
             MotherLanguage = entity.MotherLanguage,
-            TargetLanguage = entity.MotherLanguage,
+            TargetLanguage = entity.TargetLanguage,
             TargetLanguageLevel = entity.TargetLanguageLevel,
-            TopicsOfSentences = entity.TopicsOfSentences
+            TopicsOfSentences = entity.TopicsOfSentences,
+            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            Exercise = deserializedExercise!
         };
 
         return mapped;

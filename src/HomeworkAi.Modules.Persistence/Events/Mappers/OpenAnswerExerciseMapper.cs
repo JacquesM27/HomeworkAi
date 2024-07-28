@@ -6,35 +6,35 @@ namespace HomeworkAi.Modules.Persistence.Events.Mappers;
 
 internal static class OpenAnswerExerciseMapper
 {
-    public static OpenAnswerExerciseEntity Map<TExercise>(this OpenAnswerExerciseResponse<TExercise> exerciseResponse)
-        where TExercise : OpenAnswerExercise
-    {
-        var json = JsonSerializer.Serialize(exerciseResponse.Exercise);
-
-        var exerciseType = exerciseResponse.Exercise.GetType().Name;
-
-        var mapped = new OpenAnswerExerciseEntity()
-        {
-            Id = exerciseResponse.Id,
-            ExerciseHeaderInMotherLanguage = exerciseResponse.ExerciseHeaderInMotherLanguage,
-            MotherLanguage = exerciseResponse.MotherLanguage,
-            TargetLanguage = exerciseResponse.TargetLanguage,
-            TargetLanguageLevel = exerciseResponse.TargetLanguageLevel,
-            TopicsOfSentences = exerciseResponse.TopicsOfSentences,
-            GrammarSection = exerciseResponse.GrammarSection,
-            AmountOfSentences = exerciseResponse.AmountOfSentences,
-            TranslateFromMotherLanguage = exerciseResponse.TranslateFromMotherLanguage,
-            QuestionsInMotherLanguage = exerciseResponse.QuestionsInMotherLanguage,
-            ZeroConditional = exerciseResponse.ZeroConditional,
-            FirstConditional = exerciseResponse.FirstConditional,
-            SecondConditional = exerciseResponse.SecondConditional,
-            ThirdConditional = exerciseResponse.ThirdConditional,
-            ShowMotherLanguage = exerciseResponse.ShowMotherLanguage,
-            ShowFirstForm = exerciseResponse.ShowFirstForm,
-            ExerciseType = exerciseType,
-            ExerciseJson = json,
-            CheckedByTeacher = false
-        };
-        return mapped;
-    }
+    // public static OpenAnswerExerciseEntity Map<TExercise>(this OpenAnswerExerciseResponse<TExercise> exerciseResponse)
+    //     where TExercise : OpenAnswerExercise
+    // {
+    //     var json = JsonSerializer.Serialize(exerciseResponse.Exercise);
+    //
+    //     var exerciseType = exerciseResponse.Exercise.GetType().Name;
+    //
+    //     var mapped = new OpenAnswerExerciseEntity()
+    //     {
+    //         Id = exerciseResponse.Id,
+    //         ExerciseHeaderInMotherLanguage = exerciseResponse.ExerciseHeaderInMotherLanguage,
+    //         MotherLanguage = exerciseResponse.MotherLanguage,
+    //         TargetLanguage = exerciseResponse.TargetLanguage,
+    //         TargetLanguageLevel = exerciseResponse.TargetLanguageLevel,
+    //         TopicsOfSentences = exerciseResponse.TopicsOfSentences,
+    //         GrammarSection = exerciseResponse.GrammarSection,
+    //         AmountOfSentences = exerciseResponse.AmountOfSentences,
+    //         TranslateFromMotherLanguage = exerciseResponse.TranslateFromMotherLanguage,
+    //         QuestionsInMotherLanguage = exerciseResponse.QuestionsInMotherLanguage,
+    //         ZeroConditional = exerciseResponse.ZeroConditional,
+    //         FirstConditional = exerciseResponse.FirstConditional,
+    //         SecondConditional = exerciseResponse.SecondConditional,
+    //         ThirdConditional = exerciseResponse.ThirdConditional,
+    //         ShowMotherLanguage = exerciseResponse.ShowMotherLanguage,
+    //         ShowFirstForm = exerciseResponse.ShowFirstForm,
+    //         ExerciseType = exerciseType,
+    //         ExerciseJson = json,
+    //         CheckedByTeacher = false
+    //     };
+    //     return mapped;
+    // }
 }
