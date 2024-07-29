@@ -13,7 +13,7 @@ internal sealed class ClosedAnswerExerciseResponseQuestionsToTextGeneratedHandle
 {
     public Task HandleAsync(ClosedAnswerExerciseResponseQuestionsToTextGenerated @event)
     {
-        var mapped = @event.Exercise.Map<QuestionsToTextClosed, ClosedAnswerExerciseResponseQuestionsToTextEntity>();
+        var mapped = @event.Exercise.Map<QuestionsToTextClosed, QuestionsToTextClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -24,7 +24,7 @@ internal sealed class ClosedAnswerExerciseResponsePassiveSideGeneratedHandler(
 {
     public Task HandleAsync(ClosedAnswerExerciseResponsePassiveSideGenerated @event)
     {
-        var mapped = @event.Exercise.Map<PassiveSideClosed, ClosedAnswerExerciseResponsePassiveSideEntity>();
+        var mapped = @event.Exercise.Map<PassiveSideClosed, PassiveSideClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -35,7 +35,7 @@ internal sealed class ClosedAnswerExerciseResponseParaphrasingGeneratedHandler(
 {
     public Task HandleAsync(ClosedAnswerExerciseResponseParaphrasingGenerated @event)
     {
-        var mapped = @event.Exercise.Map<ParaphrasingClosed, ClosedAnswerExerciseResponseParaphrasingEntity>();
+        var mapped = @event.Exercise.Map<ParaphrasingClosed, ParaphrasingClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -46,7 +46,7 @@ internal sealed class ClosedAnswerExerciseResponseAnswerToQuestionGeneratedHandl
 {
     public Task HandleAsync(ClosedAnswerExerciseResponseAnswerToQuestionGenerated @event)
     {
-        var mapped = @event.Exercise.Map<AnswerToQuestionClosed, ClosedAnswerExerciseResponseAnswerToQuestionEntity>();
+        var mapped = @event.Exercise.Map<AnswerToQuestionClosed, AnswerToQuestionClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -57,7 +57,7 @@ internal sealed class ClosedAnswerExerciseResponseConditionalGeneratedHandler(
 {
     public Task HandleAsync(ClosedAnswerExerciseResponseConditionalGenerated @event)
     {
-        var mapped = @event.Exercise.Map<ConditionalClosed, ClosedAnswerExerciseResponseConditionalEntity>();
+        var mapped = @event.Exercise.Map<ConditionalClosed, ConditionalClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -68,7 +68,7 @@ internal sealed class ClosedAnswerExerciseResponseWordMeaningGeneratedHandler(
 {
     public Task HandleAsync(ClosedAnswerExerciseResponseWordMeaningGenerated @event)
     {
-        var mapped = @event.Exercise.Map<WordMeaningClosed, ClosedAnswerExerciseResponseWordMeaningEntity>();
+        var mapped = @event.Exercise.Map<WordMeaningClosed, WordMeaningClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -80,7 +80,7 @@ internal sealed class ClosedAnswerExerciseResponsePhrasalVerbsTranslatingGenerat
     public Task HandleAsync(ClosedAnswerExerciseResponsePhrasalVerbsTranslatingGenerated @event)
     {
         var mapped = @event.Exercise
-            .Map<PhrasalVerbsTranslating, ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity>();
+            .Map<PhrasalVerbsTranslating, PhrasalVerbsTranslatingEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -92,7 +92,7 @@ internal sealed class ClosedAnswerExerciseResponseMissingPhrasalVerbGeneratedHan
     public Task HandleAsync(ClosedAnswerExerciseResponseMissingPhrasalVerbGenerated @event)
     {
         var mapped =
-            @event.Exercise.Map<MissingPhrasalVerbClosed, ClosedAnswerExerciseResponseMissingPhrasalVerbEntity>();
+            @event.Exercise.Map<MissingPhrasalVerbClosed, MissingPhrasalVerbClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -104,7 +104,7 @@ internal sealed class ClosedAnswerExerciseResponseMissingWordOrExpressionGenerat
     public Task HandleAsync(ClosedAnswerExerciseResponseMissingWordOrExpressionGenerated @event)
     {
         var mapped = @event.Exercise
-            .Map<MissingWordOrExpressionClosed, ClosedAnswerExerciseResponseMissingWordOrExpressionEntity>();
+            .Map<MissingWordOrExpressionClosed, MissingWordOrExpressionClosedEntity>();
         return repository.AddAsync(mapped);
     }
 }

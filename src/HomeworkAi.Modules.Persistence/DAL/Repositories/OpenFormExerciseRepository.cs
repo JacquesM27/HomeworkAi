@@ -5,52 +5,52 @@ namespace HomeworkAi.Modules.Persistence.DAL.Repositories;
 
 public interface IOpenFormExerciseRepository
 {
-    Task AddAsync(OpenFormExerciseMailEntity exercise);
-    Task AddAsync(OpenFormExerciseEssayEntity exercise);
-    Task AddAsync(OpenFormExerciseSummaryOfTextEntity exercise);
+    Task AddAsync(MailEntity exercise);
+    Task AddAsync(EssayEntity exercise);
+    Task AddAsync(SummaryOfTextEntity exercise);
 
-    Task<OpenFormExerciseMailEntity?> GetMailAsync(Guid id);
-    Task<OpenFormExerciseEssayEntity?> GetEssayAsync(Guid id);
-    Task<OpenFormExerciseSummaryOfTextEntity?> GetSummaryOfTextAsync(Guid id);
+    Task<MailEntity?> GetMailAsync(Guid id);
+    Task<EssayEntity?> GetEssayAsync(Guid id);
+    Task<SummaryOfTextEntity?> GetSummaryOfTextAsync(Guid id);
 }
 
 internal sealed class OpenFormExerciseRepository(HomeworkDbContext dbContext) : IOpenFormExerciseRepository
 {
-    private readonly DbSet<OpenFormExerciseMailEntity> _mail = dbContext.OpenFormExerciseMailEntities;
-    private readonly DbSet<OpenFormExerciseEssayEntity> _essay = dbContext.OpenFormExerciseEssayEntities;
+    private readonly DbSet<MailEntity> _mail = dbContext.MailEntities;
+    private readonly DbSet<EssayEntity> _essay = dbContext.EssayEntities;
 
-    private readonly DbSet<OpenFormExerciseSummaryOfTextEntity> _summaryOfText =
-        dbContext.OpenFormExerciseSummaryOfTextEntities;
+    private readonly DbSet<SummaryOfTextEntity> _summaryOfText =
+        dbContext.SummaryOfTextEntities;
 
-    public async Task AddAsync(OpenFormExerciseMailEntity exercise)
+    public async Task AddAsync(MailEntity exercise)
     {
         await _mail.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(OpenFormExerciseEssayEntity exercise)
+    public async Task AddAsync(EssayEntity exercise)
     {
         await _essay.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(OpenFormExerciseSummaryOfTextEntity exercise)
+    public async Task AddAsync(SummaryOfTextEntity exercise)
     {
         await _summaryOfText.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public Task<OpenFormExerciseMailEntity?> GetMailAsync(Guid id)
+    public Task<MailEntity?> GetMailAsync(Guid id)
     {
         return _mail.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<OpenFormExerciseEssayEntity?> GetEssayAsync(Guid id)
+    public Task<EssayEntity?> GetEssayAsync(Guid id)
     {
         return _essay.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<OpenFormExerciseSummaryOfTextEntity?> GetSummaryOfTextAsync(Guid id)
+    public Task<SummaryOfTextEntity?> GetSummaryOfTextAsync(Guid id)
     {
         return _summaryOfText.Where(x => x.Id == id).FirstOrDefaultAsync();
     }

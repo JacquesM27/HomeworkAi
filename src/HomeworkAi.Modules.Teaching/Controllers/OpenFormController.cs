@@ -18,7 +18,7 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
 
         if (mailEntity == null) return NotFound();
 
-        var mapped = mailEntity.Map<OpenFormExerciseResponseMail, Mail, OpenFormExerciseMailEntity>();
+        var mapped = mailEntity.Map<OpenFormExerciseResponseMail, Mail, MailEntity>();
         return Ok(mapped);
     }
 
@@ -29,7 +29,7 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
 
         if (essayEntity == null) return NotFound();
 
-        var mapped = essayEntity.Map<OpenFormExerciseResponseEssay, Essay, OpenFormExerciseEssayEntity>();
+        var mapped = essayEntity.Map<OpenFormExerciseResponseEssay, Essay, EssayEntity>();
         return Ok(mapped);
     }
 
@@ -41,7 +41,7 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
         if (summaryOfTextEntity == null) return NotFound();
 
         var mapped = summaryOfTextEntity
-            .Map<OpenFormExerciseResponseSummaryOfText, SummaryOfText, OpenFormExerciseSummaryOfTextEntity>();
+            .Map<OpenFormExerciseResponseSummaryOfText, SummaryOfText, SummaryOfTextEntity>();
         return Ok(mapped);
     }
 }

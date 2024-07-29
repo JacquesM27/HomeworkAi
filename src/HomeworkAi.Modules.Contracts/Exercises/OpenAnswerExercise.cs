@@ -21,6 +21,7 @@ public class SentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExercise
     }
 }
 
+//TODO
 public class SentenceWithVerbToComplete : OpenAnswerExercise
 {
     public List<Sentence> Sentences { get; set; }

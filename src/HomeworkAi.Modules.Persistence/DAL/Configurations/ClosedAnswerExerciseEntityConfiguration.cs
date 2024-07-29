@@ -5,57 +5,57 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HomeworkAi.Modules.Persistence.DAL.Configurations;
 
 internal sealed class ClosedAnswerExerciseEntityConfiguration
-    : IEntityTypeConfiguration<ClosedAnswerExerciseResponseQuestionsToTextEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponsePassiveSideEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponseParaphrasingEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponseAnswerToQuestionEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponseConditionalEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponseWordMeaningEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponseMissingPhrasalVerbEntity>,
-        IEntityTypeConfiguration<ClosedAnswerExerciseResponseMissingWordOrExpressionEntity>
+    : IEntityTypeConfiguration<QuestionsToTextClosedEntity>,
+        IEntityTypeConfiguration<PassiveSideClosedEntity>,
+        IEntityTypeConfiguration<ParaphrasingClosedEntity>,
+        IEntityTypeConfiguration<AnswerToQuestionClosedEntity>,
+        IEntityTypeConfiguration<ConditionalClosedEntity>,
+        IEntityTypeConfiguration<WordMeaningClosedEntity>,
+        IEntityTypeConfiguration<PhrasalVerbsTranslatingEntity>,
+        IEntityTypeConfiguration<MissingPhrasalVerbClosedEntity>,
+        IEntityTypeConfiguration<MissingWordOrExpressionClosedEntity>
 {
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseQuestionsToTextEntity> builder)
+    public void Configure(EntityTypeBuilder<QuestionsToTextClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponsePassiveSideEntity> builder)
+    public void Configure(EntityTypeBuilder<PassiveSideClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseParaphrasingEntity> builder)
+    public void Configure(EntityTypeBuilder<ParaphrasingClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseAnswerToQuestionEntity> builder)
+    public void Configure(EntityTypeBuilder<AnswerToQuestionClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseConditionalEntity> builder)
+    public void Configure(EntityTypeBuilder<ConditionalClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseWordMeaningEntity> builder)
+    public void Configure(EntityTypeBuilder<WordMeaningClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity> builder)
+    public void Configure(EntityTypeBuilder<PhrasalVerbsTranslatingEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseMissingPhrasalVerbEntity> builder)
+    public void Configure(EntityTypeBuilder<MissingPhrasalVerbClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<ClosedAnswerExerciseResponseMissingWordOrExpressionEntity> builder)
+    public void Configure(EntityTypeBuilder<MissingWordOrExpressionClosedEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }

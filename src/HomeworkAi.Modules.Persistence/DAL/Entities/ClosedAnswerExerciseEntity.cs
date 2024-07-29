@@ -21,20 +21,20 @@ public abstract class ClosedAnswerExerciseEntity
     public bool CheckedByTeacher { get; set; }
 }
 
-public sealed class ClosedAnswerExerciseResponseQuestionsToTextEntity : ClosedAnswerExerciseEntity;
+public sealed class QuestionsToTextClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponsePassiveSideEntity : ClosedAnswerExerciseEntity;
+public sealed class PassiveSideClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponseParaphrasingEntity : ClosedAnswerExerciseEntity;
+public sealed class ParaphrasingClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponseAnswerToQuestionEntity : ClosedAnswerExerciseEntity;
+public sealed class AnswerToQuestionClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponseConditionalEntity : ClosedAnswerExerciseEntity;
+public sealed class ConditionalClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponseWordMeaningEntity : ClosedAnswerExerciseEntity;
+public sealed class WordMeaningClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity : ClosedAnswerExerciseEntity;
+public sealed class PhrasalVerbsTranslatingEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponseMissingPhrasalVerbEntity : ClosedAnswerExerciseEntity;
+public sealed class MissingPhrasalVerbClosedEntity : ClosedAnswerExerciseEntity;
 
-public sealed class ClosedAnswerExerciseResponseMissingWordOrExpressionEntity : ClosedAnswerExerciseEntity;
+public sealed class MissingWordOrExpressionClosedEntity : ClosedAnswerExerciseEntity;

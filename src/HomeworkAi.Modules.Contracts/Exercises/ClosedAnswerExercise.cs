@@ -50,6 +50,7 @@ public class WordMeaningClosed : ClosedAnswerExercise
     }
 }
 
+//TODO
 public class PhrasalVerbsTranslating : ClosedAnswerExercise
 {
     public List<ClosedQuestion> SentenceWithPhrasalVerb { get; set; }

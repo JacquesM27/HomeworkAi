@@ -4,9 +4,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HomeworkAi.Modules.Persistence.DAL.Configurations;
 
-internal sealed class OpenAnswerExerciseEntityConfiguration : IEntityTypeConfiguration<OpenAnswerExerciseEntity>
+internal sealed class OpenAnswerExerciseEntityConfiguration
+    : IEntityTypeConfiguration<SentencesTranslationEntity>,
+        IEntityTypeConfiguration<SentenceWithVerbToCompleteBasedOnInfinitiveEntity>,
+        IEntityTypeConfiguration<SentenceWithVerbToCompleteEntity>,
+        IEntityTypeConfiguration<IrregularVerbsEntity>,
+        IEntityTypeConfiguration<QuestionsToTextOpenEntity>,
+        IEntityTypeConfiguration<PassiveSideOpenEntity>,
+        IEntityTypeConfiguration<ParaphrasingOpenEntity>,
+        IEntityTypeConfiguration<AnswerToQuestionOpenEntity>,
+        IEntityTypeConfiguration<ConditionalOpenEntity>,
+        IEntityTypeConfiguration<MissingPhrasalVerbOpenEntity>,
+        IEntityTypeConfiguration<MissingWordOrExpressionOpenEntity>,
+        IEntityTypeConfiguration<WordMeaningOpenEntity>
 {
-    public void Configure(EntityTypeBuilder<OpenAnswerExerciseEntity> builder)
+    private static void ConfigureCommonProperties<T>(EntityTypeBuilder<T> builder) where T : OpenAnswerExerciseEntity
     {
         builder.HasKey(e => e.Id);
         builder.Property(e => e.ExerciseHeaderInMotherLanguage).IsRequired();
@@ -24,10 +36,67 @@ internal sealed class OpenAnswerExerciseEntityConfiguration : IEntityTypeConfigu
         builder.Property(e => e.ThirdConditional);
         builder.Property(e => e.ShowMotherLanguage);
         builder.Property(e => e.ShowFirstForm);
-        builder.Property(e => e.ExerciseType).IsRequired().HasMaxLength(100);
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();
+    }
 
-        builder.HasIndex(e => e.ExerciseType).HasDatabaseName("OpenAnswer_NcIx_ExerciseType");
+    public void Configure(EntityTypeBuilder<SentencesTranslationEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<SentenceWithVerbToCompleteBasedOnInfinitiveEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<SentenceWithVerbToCompleteEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<IrregularVerbsEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<QuestionsToTextOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<PassiveSideOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<ParaphrasingOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<AnswerToQuestionOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<ConditionalOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<MissingPhrasalVerbOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<MissingWordOrExpressionOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
+    }
+
+    public void Configure(EntityTypeBuilder<WordMeaningOpenEntity> builder)
+    {
+        ConfigureCommonProperties(builder);
     }
 }

@@ -5,151 +5,151 @@ namespace HomeworkAi.Modules.Persistence.DAL.Repositories;
 
 public interface IClosedAnswerExerciseRepository
 {
-    Task AddAsync(ClosedAnswerExerciseResponseQuestionsToTextEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponsePassiveSideEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponseParaphrasingEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponseAnswerToQuestionEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponseConditionalEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponseWordMeaningEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponseMissingPhrasalVerbEntity exercise);
-    Task AddAsync(ClosedAnswerExerciseResponseMissingWordOrExpressionEntity exercise);
+    Task AddAsync(QuestionsToTextClosedEntity exercise);
+    Task AddAsync(PassiveSideClosedEntity exercise);
+    Task AddAsync(ParaphrasingClosedEntity exercise);
+    Task AddAsync(AnswerToQuestionClosedEntity exercise);
+    Task AddAsync(ConditionalClosedEntity exercise);
+    Task AddAsync(WordMeaningClosedEntity exercise);
+    Task AddAsync(PhrasalVerbsTranslatingEntity exercise);
+    Task AddAsync(MissingPhrasalVerbClosedEntity exercise);
+    Task AddAsync(MissingWordOrExpressionClosedEntity exercise);
 
-    Task<ClosedAnswerExerciseResponseQuestionsToTextEntity?> GetQuestionsToTextAsync(Guid id);
-    Task<ClosedAnswerExerciseResponsePassiveSideEntity?> GetPassiveSideAsync(Guid id);
-    Task<ClosedAnswerExerciseResponseParaphrasingEntity?> GetParaphrasingAsync(Guid id);
-    Task<ClosedAnswerExerciseResponseAnswerToQuestionEntity?> GetAnswerToQuestionAsync(Guid id);
-    Task<ClosedAnswerExerciseResponseConditionalEntity?> GetConditionalAsync(Guid id);
-    Task<ClosedAnswerExerciseResponseWordMeaningEntity?> GetWordMeaningAsync(Guid id);
-    Task<ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity?> GetPhrasalVerbsTranslatingAsync(Guid id);
-    Task<ClosedAnswerExerciseResponseMissingPhrasalVerbEntity?> GetMissingPhrasalVerbAsync(Guid id);
-    Task<ClosedAnswerExerciseResponseMissingWordOrExpressionEntity?> GetMissingWordOrExpressionAsync(Guid id);
+    Task<QuestionsToTextClosedEntity?> GetQuestionsToTextAsync(Guid id);
+    Task<PassiveSideClosedEntity?> GetPassiveSideAsync(Guid id);
+    Task<ParaphrasingClosedEntity?> GetParaphrasingAsync(Guid id);
+    Task<AnswerToQuestionClosedEntity?> GetAnswerToQuestionAsync(Guid id);
+    Task<ConditionalClosedEntity?> GetConditionalAsync(Guid id);
+    Task<WordMeaningClosedEntity?> GetWordMeaningAsync(Guid id);
+    Task<PhrasalVerbsTranslatingEntity?> GetPhrasalVerbsTranslatingAsync(Guid id);
+    Task<MissingPhrasalVerbClosedEntity?> GetMissingPhrasalVerbAsync(Guid id);
+    Task<MissingWordOrExpressionClosedEntity?> GetMissingWordOrExpressionAsync(Guid id);
 }
 
 internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext) : IClosedAnswerExerciseRepository
 {
-    private readonly DbSet<ClosedAnswerExerciseResponseQuestionsToTextEntity> _questionsToText =
-        dbContext.ClosedAnswerExerciseResponseQuestionsToTextEntities;
+    private readonly DbSet<QuestionsToTextClosedEntity> _questionsToText =
+        dbContext.QuestionsToTextClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponsePassiveSideEntity> _passiveSide =
-        dbContext.ClosedAnswerExerciseResponsePassiveSideEntities;
+    private readonly DbSet<PassiveSideClosedEntity> _passiveSide =
+        dbContext.PassiveSideClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponseParaphrasingEntity> _paraphrasing =
-        dbContext.ClosedAnswerExerciseResponseParaphrasingEntities;
+    private readonly DbSet<ParaphrasingClosedEntity> _paraphrasing =
+        dbContext.ParaphrasingClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponseAnswerToQuestionEntity> _answerToQuestion =
-        dbContext.ClosedAnswerExerciseResponseAnswerToQuestionEntities;
+    private readonly DbSet<AnswerToQuestionClosedEntity> _answerToQuestion =
+        dbContext.AnswerToQuestionClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponseConditionalEntity> _conditional =
-        dbContext.ClosedAnswerExerciseResponseConditionalEntities;
+    private readonly DbSet<ConditionalClosedEntity> _conditional =
+        dbContext.ConditionalClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponseWordMeaningEntity> _wordMeaning =
-        dbContext.ClosedAnswerExerciseResponseWordMeaningEntities;
+    private readonly DbSet<WordMeaningClosedEntity> _wordMeaning =
+        dbContext.WordMeaningClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity> _phrasalVerbs =
-        dbContext.ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntities;
+    private readonly DbSet<PhrasalVerbsTranslatingEntity> _phrasalVerbs =
+        dbContext.PhrasalVerbsTranslatingEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponseMissingPhrasalVerbEntity> _missingPhrasalVerb =
-        dbContext.ClosedAnswerExerciseResponseMissingPhrasalVerbEntities;
+    private readonly DbSet<MissingPhrasalVerbClosedEntity> _missingPhrasalVerb =
+        dbContext.MissingPhrasalVerbClosedEntities;
 
-    private readonly DbSet<ClosedAnswerExerciseResponseMissingWordOrExpressionEntity> _missingWordOrExpression =
-        dbContext.ClosedAnswerExerciseResponseMissingWordOrExpressionEntities;
+    private readonly DbSet<MissingWordOrExpressionClosedEntity> _missingWordOrExpression =
+        dbContext.MissingWordOrExpressionClosedEntities;
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseQuestionsToTextEntity exercise)
+    public async Task AddAsync(QuestionsToTextClosedEntity exercise)
     {
         await _questionsToText.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponsePassiveSideEntity exercise)
+    public async Task AddAsync(PassiveSideClosedEntity exercise)
     {
         await _passiveSide.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseParaphrasingEntity exercise)
+    public async Task AddAsync(ParaphrasingClosedEntity exercise)
     {
         await _paraphrasing.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseAnswerToQuestionEntity exercise)
+    public async Task AddAsync(AnswerToQuestionClosedEntity exercise)
     {
         await _answerToQuestion.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseConditionalEntity exercise)
+    public async Task AddAsync(ConditionalClosedEntity exercise)
     {
         await _conditional.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseWordMeaningEntity exercise)
+    public async Task AddAsync(WordMeaningClosedEntity exercise)
     {
         await _wordMeaning.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity exercise)
+    public async Task AddAsync(PhrasalVerbsTranslatingEntity exercise)
     {
         await _phrasalVerbs.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseMissingPhrasalVerbEntity exercise)
+    public async Task AddAsync(MissingPhrasalVerbClosedEntity exercise)
     {
         await _missingPhrasalVerb.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task AddAsync(ClosedAnswerExerciseResponseMissingWordOrExpressionEntity exercise)
+    public async Task AddAsync(MissingWordOrExpressionClosedEntity exercise)
     {
         await _missingWordOrExpression.AddAsync(exercise);
         await dbContext.SaveChangesAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseQuestionsToTextEntity?> GetQuestionsToTextAsync(Guid id)
+    public Task<QuestionsToTextClosedEntity?> GetQuestionsToTextAsync(Guid id)
     {
         return _questionsToText.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponsePassiveSideEntity?> GetPassiveSideAsync(Guid id)
+    public Task<PassiveSideClosedEntity?> GetPassiveSideAsync(Guid id)
     {
         return _passiveSide.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseParaphrasingEntity?> GetParaphrasingAsync(Guid id)
+    public Task<ParaphrasingClosedEntity?> GetParaphrasingAsync(Guid id)
     {
         return _paraphrasing.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseAnswerToQuestionEntity?> GetAnswerToQuestionAsync(Guid id)
+    public Task<AnswerToQuestionClosedEntity?> GetAnswerToQuestionAsync(Guid id)
     {
         return _answerToQuestion.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseConditionalEntity?> GetConditionalAsync(Guid id)
+    public Task<ConditionalClosedEntity?> GetConditionalAsync(Guid id)
     {
         return _conditional.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseWordMeaningEntity?> GetWordMeaningAsync(Guid id)
+    public Task<WordMeaningClosedEntity?> GetWordMeaningAsync(Guid id)
     {
         return _wordMeaning.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponsePhrasalVerbsTranslatingEntity?> GetPhrasalVerbsTranslatingAsync(Guid id)
+    public Task<PhrasalVerbsTranslatingEntity?> GetPhrasalVerbsTranslatingAsync(Guid id)
     {
         return _phrasalVerbs.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseMissingPhrasalVerbEntity?> GetMissingPhrasalVerbAsync(Guid id)
+    public Task<MissingPhrasalVerbClosedEntity?> GetMissingPhrasalVerbAsync(Guid id)
     {
         return _missingPhrasalVerb.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<ClosedAnswerExerciseResponseMissingWordOrExpressionEntity?> GetMissingWordOrExpressionAsync(Guid id)
+    public Task<MissingWordOrExpressionClosedEntity?> GetMissingWordOrExpressionAsync(Guid id)
     {
         return _missingWordOrExpression.Where(x => x.Id == id).FirstOrDefaultAsync();
     }

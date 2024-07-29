@@ -20,7 +20,30 @@ public class OpenAnswerExerciseEntity
 
     public bool? ShowMotherLanguage { get; set; }
     public bool? ShowFirstForm { get; set; }
-    public string ExerciseType { get; set; }
     public string ExerciseJson { get; set; } // JSONB column
     public bool CheckedByTeacher { get; set; }
 }
+
+public sealed class SentencesTranslationEntity : OpenAnswerExerciseEntity;
+
+public sealed class SentenceWithVerbToCompleteBasedOnInfinitiveEntity : OpenAnswerExerciseEntity;
+
+public sealed class SentenceWithVerbToCompleteEntity : OpenAnswerExerciseEntity;
+
+public sealed class IrregularVerbsEntity : OpenAnswerExerciseEntity;
+
+public sealed class QuestionsToTextOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class PassiveSideOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class ParaphrasingOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class AnswerToQuestionOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class ConditionalOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class MissingPhrasalVerbOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class MissingWordOrExpressionOpenEntity : OpenAnswerExerciseEntity;
+
+public sealed class WordMeaningOpenEntity : OpenAnswerExerciseEntity;

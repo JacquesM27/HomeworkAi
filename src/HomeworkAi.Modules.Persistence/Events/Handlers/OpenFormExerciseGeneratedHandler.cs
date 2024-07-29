@@ -12,7 +12,7 @@ internal sealed class OpenFormExerciseMailGeneratedHandler(IOpenFormExerciseRepo
 {
     public Task HandleAsync(OpenFormExerciseResponseMailGenerated @event)
     {
-        var mapped = @event.Exercise.Map<Mail, OpenFormExerciseMailEntity>();
+        var mapped = @event.Exercise.Map<Mail, MailEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -22,7 +22,7 @@ internal sealed class OpenFormExerciseEssayGeneratedHandler(IOpenFormExerciseRep
 {
     public Task HandleAsync(OpenFormExerciseResponseEssayGenerated @event)
     {
-        var mapped = @event.Exercise.Map<Essay, OpenFormExerciseEssayEntity>();
+        var mapped = @event.Exercise.Map<Essay, EssayEntity>();
         return repository.AddAsync(mapped);
     }
 }
@@ -32,7 +32,7 @@ internal sealed class OpenFormExerciseSummaryOfTextGeneratedHandler(IOpenFormExe
 {
     public Task HandleAsync(OpenFormExerciseResponseSummaryOfTextGenerated @event)
     {
-        var mapped = @event.Exercise.Map<SummaryOfText, OpenFormExerciseSummaryOfTextEntity>();
+        var mapped = @event.Exercise.Map<SummaryOfText, SummaryOfTextEntity>();
         return repository.AddAsync(mapped);
     }
 }

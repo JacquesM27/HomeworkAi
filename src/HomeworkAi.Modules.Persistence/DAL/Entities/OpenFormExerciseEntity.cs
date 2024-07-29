@@ -15,8 +15,8 @@ public abstract class OpenFormExerciseEntity
     //TODO: add exercise rating
 }
 
-public sealed class OpenFormExerciseMailEntity : OpenFormExerciseEntity;
+public sealed class MailEntity : OpenFormExerciseEntity;
 
-public sealed class OpenFormExerciseEssayEntity : OpenFormExerciseEntity;
+public sealed class EssayEntity : OpenFormExerciseEntity;
 
-public sealed class OpenFormExerciseSummaryOfTextEntity : OpenFormExerciseEntity;
+public sealed class SummaryOfTextEntity : OpenFormExerciseEntity;

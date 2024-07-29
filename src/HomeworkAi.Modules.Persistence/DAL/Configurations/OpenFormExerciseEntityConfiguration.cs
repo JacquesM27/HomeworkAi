@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HomeworkAi.Modules.Persistence.DAL.Configurations;
 
 internal sealed class OpenFormExerciseEntityConfiguration
-    : IEntityTypeConfiguration<OpenFormExerciseMailEntity>,
-        IEntityTypeConfiguration<OpenFormExerciseEssayEntity>,
-        IEntityTypeConfiguration<OpenFormExerciseSummaryOfTextEntity>
+    : IEntityTypeConfiguration<MailEntity>,
+        IEntityTypeConfiguration<EssayEntity>,
+        IEntityTypeConfiguration<SummaryOfTextEntity>
 
 {
-    public void Configure(EntityTypeBuilder<OpenFormExerciseMailEntity> builder)
+    public void Configure(EntityTypeBuilder<MailEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<OpenFormExerciseEssayEntity> builder)
+    public void Configure(EntityTypeBuilder<EssayEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
 
-    public void Configure(EntityTypeBuilder<OpenFormExerciseSummaryOfTextEntity> builder)
+    public void Configure(EntityTypeBuilder<SummaryOfTextEntity> builder)
     {
         ConfigureCommonProperties(builder);
     }
