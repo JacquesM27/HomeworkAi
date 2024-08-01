@@ -19,6 +19,8 @@ public abstract class ClosedAnswerExerciseEntity
     public bool? DescriptionInMotherLanguage { get; set; }
     public string ExerciseJson { get; set; } // JSONB column
     public bool CheckedByTeacher { get; set; }
+    public double AverageRating { get; set; }
+    public int RatingCount { get; set; }
 }
 
 public sealed class QuestionsToTextClosedEntity : ClosedAnswerExerciseEntity;

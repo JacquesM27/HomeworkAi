@@ -36,5 +36,7 @@ internal sealed class OpenFormExerciseEntityConfiguration
         builder.Property(e => e.GrammarSection).HasMaxLength(500);
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();
+        builder.Property(e => e.AverageRating).IsRequired();
+        builder.Property(e => e.RatingCount).IsRequired();
     }
 }

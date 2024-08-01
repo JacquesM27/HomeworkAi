@@ -1,18 +1,9 @@
-// using System.Text.Json.Serialization;
 
 using HomeworkAi.Modules.Contracts.ValueObjects;
 
 namespace HomeworkAi.Modules.Contracts.Exercises;
 
-// [JsonDerivedType(typeof(OpenFormExerciseResponseMail), nameof(OpenFormExerciseResponseMail))]
-// [JsonDerivedType(typeof(OpenFormExerciseResponseEssay), nameof(OpenFormExerciseResponseEssay))]
-// [JsonDerivedType(typeof(OpenFormExerciseResponseSummaryOfText), nameof(OpenFormExerciseResponseSummaryOfText))]
-// public interface IExerciseResponse
-// {
-//     
-// }
-
-public abstract class ExerciseResponse<TExercise> //: IExerciseResponse
+public abstract class ExerciseResponse<TExercise>
 {
     public Guid Id { get; } = Guid.NewGuid();
     public TExercise Exercise { get; set; }

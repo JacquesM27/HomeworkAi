@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using HomeworkAi.Modules.Contracts.DTOs.Complex;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Persistence.DAL.Entities;
 
@@ -30,7 +31,9 @@ public static class ClosedAnswerExerciseMapper
             ThirdConditional = exerciseResponse.ThirdConditional,
             DescriptionInMotherLanguage = exerciseResponse.DescriptionInMotherLanguage,
             ExerciseJson = json,
-            CheckedByTeacher = false
+            CheckedByTeacher = false,
+            RatingCount = 0,
+            AverageRating = 0
         };
         return mapped;
     }
@@ -59,6 +62,37 @@ public static class ClosedAnswerExerciseMapper
             TopicsOfSentences = entity.TopicsOfSentences,
             ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
             Exercise = deserializedExercise!
+        };
+
+        return mapped;
+    }
+
+    public static TResponse MapToDto<TResponse, TExercise, TEntity>(this TEntity entity)
+        where TResponse : ClosedAnswerExerciseDto<TExercise>, new()
+        where TEntity : ClosedAnswerExerciseEntity
+        where TExercise : ClosedAnswerExercise
+    {
+        var deserializedExercise = JsonSerializer.Deserialize<TExercise>(entity.ExerciseJson);
+
+        var mapped = new TResponse()
+        {
+            GrammarSection = entity.GrammarSection,
+            AmountOfSentences = entity.AmountOfSentences,
+            TranslateFromMotherLanguage = entity.TranslateFromMotherLanguage,
+            QuestionsInMotherLanguage = entity.QuestionsInMotherLanguage,
+            ZeroConditional = entity.ZeroConditional,
+            FirstConditional = entity.FirstConditional,
+            SecondConditional = entity.SecondConditional,
+            ThirdConditional = entity.ThirdConditional,
+            DescriptionInMotherLanguage = entity.DescriptionInMotherLanguage,
+            MotherLanguage = entity.MotherLanguage,
+            TargetLanguage = entity.TargetLanguage,
+            TargetLanguageLevel = entity.TargetLanguageLevel,
+            TopicsOfSentences = entity.TopicsOfSentences,
+            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            Exercise = deserializedExercise!,
+            AverageRating = entity.AverageRating,
+            RatingCount = entity.RatingCount
         };
 
         return mapped;

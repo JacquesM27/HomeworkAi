@@ -12,7 +12,8 @@ public abstract class OpenFormExerciseEntity
     public string ExerciseJson { get; set; } // JSONB column
 
     public bool CheckedByTeacher { get; set; }
-    //TODO: add exercise rating
+    public double AverageRating { get; set; }
+    public int RatingCount { get; set; }
 }
 
 public sealed class MailEntity : OpenFormExerciseEntity;

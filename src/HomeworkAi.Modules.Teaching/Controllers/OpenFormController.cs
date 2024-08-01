@@ -1,4 +1,5 @@
-﻿using HomeworkAi.Modules.Contracts.Exercises;
+﻿using HomeworkAi.Modules.Contracts.DTOs.Complex;
+using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Persistence.DAL.Entities;
 using HomeworkAi.Modules.Persistence.DAL.Repositories;
 using HomeworkAi.Modules.Persistence.Events.Mappers;
@@ -12,36 +13,36 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
 {
     //TODO: responses should be different in openai and in this controller
     [HttpGet("mail/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseResponseMail?>> GetMailAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseMailDto?>> GetMailAsync(Guid id)
     {
         var mailEntity = await repository.GetMailAsync(id);
 
         if (mailEntity == null) return NotFound();
 
-        var mapped = mailEntity.Map<OpenFormExerciseResponseMail, Mail, MailEntity>();
+        var mapped = mailEntity.MapToDto<OpenFormExerciseMailDto, Mail, MailEntity>();
         return Ok(mapped);
     }
 
     [HttpGet("essay/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseResponseEssay?>> GetEssayAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseDtoEssay?>> GetEssayAsync(Guid id)
     {
         var essayEntity = await repository.GetEssayAsync(id);
 
         if (essayEntity == null) return NotFound();
 
-        var mapped = essayEntity.Map<OpenFormExerciseResponseEssay, Essay, EssayEntity>();
+        var mapped = essayEntity.MapToDto<OpenFormExerciseDtoEssay, Essay, EssayEntity>();
         return Ok(mapped);
     }
 
     [HttpGet("summary-of-text/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseResponseSummaryOfText?>> GetSummaryOfTextAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseSummaryOfTextDto?>> GetSummaryOfTextAsync(Guid id)
     {
         var summaryOfTextEntity = await repository.GetSummaryOfTextAsync(id);
 
         if (summaryOfTextEntity == null) return NotFound();
 
         var mapped = summaryOfTextEntity
-            .Map<OpenFormExerciseResponseSummaryOfText, SummaryOfText, SummaryOfTextEntity>();
+            .MapToDto<OpenFormExerciseSummaryOfTextDto, SummaryOfText, SummaryOfTextEntity>();
         return Ok(mapped);
     }
 }

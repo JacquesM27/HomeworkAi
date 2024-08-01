@@ -37,8 +37,13 @@ public interface IOpenAnswerExerciseRepository
 internal sealed class OpenAnswerExerciseRepository(HomeworkDbContext dbContext) : IOpenAnswerExerciseRepository
 {
     private readonly DbSet<SentencesTranslationEntity> _sentencesTranslation = dbContext.SentencesTranslationEntities;
-    private readonly DbSet<SentenceWithVerbToCompleteBasedOnInfinitiveEntity> _sentenceWithVerbToCompleteBasedOnInfinitive = dbContext.SentenceWithVerbToCompleteBasedOnInfinitiveEntities;
-    private readonly DbSet<SentenceWithVerbToCompleteEntity> _sentenceWithVerbToComplete = dbContext.SentenceWithVerbToCompleteEntities;
+
+    private readonly DbSet<SentenceWithVerbToCompleteBasedOnInfinitiveEntity>
+        _sentenceWithVerbToCompleteBasedOnInfinitive = dbContext.SentenceWithVerbToCompleteBasedOnInfinitiveEntities;
+
+    private readonly DbSet<SentenceWithVerbToCompleteEntity> _sentenceWithVerbToComplete =
+        dbContext.SentenceWithVerbToCompleteEntities;
+
     private readonly DbSet<IrregularVerbsEntity> _irregularVerbs = dbContext.IrregularVerbsEntities;
     private readonly DbSet<QuestionsToTextOpenEntity> _questionsToText = dbContext.QuestionsToTextOpenEntities;
     private readonly DbSet<PassiveSideOpenEntity> _passiveSide = dbContext.PassiveSideOpenEntities;
@@ -46,7 +51,10 @@ internal sealed class OpenAnswerExerciseRepository(HomeworkDbContext dbContext) 
     private readonly DbSet<AnswerToQuestionOpenEntity> _answerToQuestion = dbContext.AnswerToQuestionOpenEntities;
     private readonly DbSet<ConditionalOpenEntity> _conditional = dbContext.ConditionalOpenEntities;
     private readonly DbSet<MissingPhrasalVerbOpenEntity> _missingPhrasalVerb = dbContext.MissingPhrasalVerbOpenEntities;
-    private readonly DbSet<MissingWordOrExpressionOpenEntity> _missingWordOrExpression = dbContext.MissingWordOrExpressionOpenEntities;
+
+    private readonly DbSet<MissingWordOrExpressionOpenEntity> _missingWordOrExpression =
+        dbContext.MissingWordOrExpressionOpenEntities;
+
     private readonly DbSet<WordMeaningOpenEntity> _wordMeaning = dbContext.WordMeaningOpenEntities;
 
     public async Task AddAsync(SentencesTranslationEntity exercise)

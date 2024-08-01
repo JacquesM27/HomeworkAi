@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using HomeworkAi.Modules.Contracts.DTOs.Complex;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Persistence.DAL.Entities;
 
@@ -11,7 +12,7 @@ public static class OpenAnswerExerciseMapper
         where TExercise : OpenAnswerExercise where TEntity : OpenAnswerExerciseEntity, new()
     {
         var json = JsonSerializer.Serialize(exerciseResponse.Exercise);
-    
+
         var mapped = new TEntity()
         {
             Id = exerciseResponse.Id,
@@ -31,11 +32,13 @@ public static class OpenAnswerExerciseMapper
             ShowMotherLanguage = exerciseResponse.ShowMotherLanguage,
             ShowFirstForm = exerciseResponse.ShowFirstForm,
             ExerciseJson = json,
-            CheckedByTeacher = false
+            CheckedByTeacher = false,
+            RatingCount = 0,
+            AverageRating = 0
         };
         return mapped;
     }
-    
+
     public static TResponse Map<TResponse, TExercise, TEntity>(this TEntity entity)
         where TResponse : OpenAnswerExerciseResponse<TExercise>, new()
         where TEntity : OpenAnswerExerciseEntity
@@ -61,6 +64,38 @@ public static class OpenAnswerExerciseMapper
             ShowFirstForm = entity.ShowFirstForm,
             ShowMotherLanguage = entity.ShowMotherLanguage,
             Exercise = deserializedExercise!
+        };
+
+        return mapped;
+    }
+
+    public static TResponse MapToDto<TResponse, TExercise, TEntity>(this TEntity entity)
+        where TResponse : OpenAnswerExerciseDto<TExercise>, new()
+        where TEntity : OpenAnswerExerciseEntity
+        where TExercise : OpenAnswerExercise
+    {
+        var deserializedExercise = JsonSerializer.Deserialize<TExercise>(entity.ExerciseJson);
+
+        var mapped = new TResponse()
+        {
+            GrammarSection = entity.GrammarSection,
+            AmountOfSentences = entity.AmountOfSentences,
+            TranslateFromMotherLanguage = entity.TranslateFromMotherLanguage,
+            QuestionsInMotherLanguage = entity.QuestionsInMotherLanguage,
+            ZeroConditional = entity.ZeroConditional,
+            FirstConditional = entity.FirstConditional,
+            SecondConditional = entity.SecondConditional,
+            ThirdConditional = entity.ThirdConditional,
+            MotherLanguage = entity.MotherLanguage,
+            TargetLanguage = entity.TargetLanguage,
+            TargetLanguageLevel = entity.TargetLanguageLevel,
+            TopicsOfSentences = entity.TopicsOfSentences,
+            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            ShowFirstForm = entity.ShowFirstForm,
+            ShowMotherLanguage = entity.ShowMotherLanguage,
+            Exercise = deserializedExercise!,
+            AverageRating = entity.AverageRating,
+            RatingCount = entity.RatingCount
         };
 
         return mapped;

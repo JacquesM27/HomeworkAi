@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using HomeworkAi.Modules.Contracts.DTOs.Complex;
 using HomeworkAi.Modules.Contracts.Exercises;
 using HomeworkAi.Modules.Persistence.DAL.Entities;
 
@@ -21,7 +22,9 @@ public static class OpenFormExerciseMapper
             TopicsOfSentences = exerciseResponse.TopicsOfSentences,
             GrammarSection = exerciseResponse.GrammarSection,
             ExerciseJson = json,
-            CheckedByTeacher = false
+            CheckedByTeacher = false,
+            RatingCount = 0,
+            AverageRating = 0
         };
         return mapped;
     }
@@ -42,6 +45,29 @@ public static class OpenFormExerciseMapper
             TargetLanguage = entity.MotherLanguage,
             TargetLanguageLevel = entity.TargetLanguageLevel,
             TopicsOfSentences = entity.TopicsOfSentences
+        };
+
+        return mapped;
+    }
+    
+    public static TResponse MapToDto<TResponse, TExercise, TEntity>(this TEntity entity)
+        where TResponse : OpenFormExerciseDto<TExercise>, new()
+        where TEntity : OpenFormExerciseEntity
+        where TExercise : OpenFormExercise
+    {
+        var deserializedExercise = JsonSerializer.Deserialize<TExercise>(entity.ExerciseJson);
+
+        var mapped = new TResponse()
+        {
+            Exercise = deserializedExercise!,
+            GrammarSection = entity.GrammarSection,
+            ExerciseHeaderInMotherLanguage = entity.ExerciseHeaderInMotherLanguage,
+            MotherLanguage = entity.MotherLanguage,
+            TargetLanguage = entity.MotherLanguage,
+            TargetLanguageLevel = entity.TargetLanguageLevel,
+            TopicsOfSentences = entity.TopicsOfSentences,
+            AverageRating = entity.AverageRating,
+            RatingCount = entity.RatingCount
         };
 
         return mapped;

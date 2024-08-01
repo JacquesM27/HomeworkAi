@@ -80,5 +80,7 @@ internal sealed class ClosedAnswerExerciseEntityConfiguration
         builder.Property(e => e.DescriptionInMotherLanguage);
         builder.Property(e => e.ExerciseJson).HasColumnType("jsonb");
         builder.Property(e => e.CheckedByTeacher).IsRequired();
+        builder.Property(e => e.AverageRating).IsRequired();
+        builder.Property(e => e.RatingCount).IsRequired();
     }
 }
