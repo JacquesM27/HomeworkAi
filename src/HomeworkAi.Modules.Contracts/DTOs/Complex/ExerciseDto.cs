@@ -57,7 +57,7 @@ public abstract class ClosedAnswerExerciseDto<TExercise> : ExerciseDto<TExercise
 
 public class OpenFormExerciseMailDto : OpenFormExerciseDto<Mail>;
 
-public class OpenFormExerciseDtoEssay : OpenFormExerciseDto<Essay>;
+public class OpenFormExerciseEssayDto : OpenFormExerciseDto<Essay>;
 
 public class OpenFormExerciseSummaryOfTextDto : OpenFormExerciseDto<SummaryOfText>;
 

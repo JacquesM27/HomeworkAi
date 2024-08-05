@@ -24,13 +24,13 @@ public class OpenFormController(IOpenFormExerciseRepository repository) : Contro
     }
 
     [HttpGet("essay/{id:guid}")]
-    public async Task<ActionResult<OpenFormExerciseDtoEssay?>> GetEssayAsync(Guid id)
+    public async Task<ActionResult<OpenFormExerciseEssayDto?>> GetEssayAsync(Guid id)
     {
         var essayEntity = await repository.GetEssayAsync(id);
 
         if (essayEntity == null) return NotFound();
 
-        var mapped = essayEntity.MapToDto<OpenFormExerciseDtoEssay, Essay, EssayEntity>();
+        var mapped = essayEntity.MapToDto<OpenFormExerciseEssayDto, Essay, EssayEntity>();
         return Ok(mapped);
     }
 

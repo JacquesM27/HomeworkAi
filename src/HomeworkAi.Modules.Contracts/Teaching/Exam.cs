@@ -17,7 +17,7 @@ public class Exam
     public string? Password { get; set; }
     
     public List<OpenFormExerciseMailDto> Mails { get; set; }
-    public List<OpenFormExerciseDtoEssay> Essays { get; set; }
+    public List<OpenFormExerciseEssayDto> Essays { get; set; }
     public List<OpenFormExerciseSummaryOfTextDto> SummariesOfTextsClosed { get; set; }
 
     public List<ClosedAnswerExerciseQuestionsToTextDto> QuestionsToTexts { get; set; }

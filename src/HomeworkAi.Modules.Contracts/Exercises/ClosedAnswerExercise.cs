@@ -49,7 +49,7 @@ public class WordMeaningClosed : ClosedAnswerExercise
         public bool Correct { get; set; }
     }
 }
-
+//wyrażenia (break a record, catch an eye on)?
 //TODO
 public class PhrasalVerbsTranslating : ClosedAnswerExercise
 {

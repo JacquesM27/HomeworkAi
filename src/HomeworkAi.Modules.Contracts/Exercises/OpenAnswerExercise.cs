@@ -6,6 +6,7 @@ public abstract class OpenAnswerExercise : Exercise
 
 public class SentencesTranslation : OpenAnswerExercise
 {
+    //TODO: add to every exercise No 
     public List<string> Sentences { get; set; }
 }
 
