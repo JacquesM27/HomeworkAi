@@ -39,6 +39,7 @@ public class WordMeaningClosed : ClosedAnswerExercise
 
     public class WordMeaning
     {
+        public int No { get; set; }
         public string Word { get; set; }
         public List<MeaningAnswer> MeaningAnswers { get; set; }
     }
@@ -62,6 +63,7 @@ public class MissingPhrasalVerbClosed : ClosedAnswerExercise
 
     public class SentenceWithPhrasalVerb
     {
+        public int No { get; set; }
         public string SentenceWithUnderscoreInsteadOfPhrasalVerb { get; set; }
         public List<Answer> Answers { get; set; }
     }
@@ -73,6 +75,7 @@ public class MissingWordOrExpressionClosed : ClosedAnswerExercise
 
     public class SentenceWithMisingWordOrExpression
     {
+        public int No { get; set; }
         public string SentenceWithUnderscoreInsteadOfWordOrExpression { get; set; }
         public List<Answer> Answers { get; set; }
     }
@@ -80,6 +83,7 @@ public class MissingWordOrExpressionClosed : ClosedAnswerExercise
 
 public class ClosedQuestion
 {
+    public int No { get; set; }
     public string Text { get; set; }
     public List<Answer> Answers { get; set; }
 }

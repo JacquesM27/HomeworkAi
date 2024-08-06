@@ -1,4 +1,6 @@
-﻿namespace HomeworkAi.Modules.Contracts.Teaching;
+﻿using HomeworkAi.Modules.Contracts.DTOs.Complex;
+
+namespace HomeworkAi.Modules.Contracts.Teaching;
 
 public class HomeworkResult
 {
@@ -8,4 +10,7 @@ public class HomeworkResult
     //TODO: exercises answers
 
     //maybe dictionary or class exercise-answers??
+    public List<OpenFormExerciseAnswerMailDto> Mails { get; set; }
+    public List<OpenFormExerciseAnswerEssayDto> Essays { get; set; }
+    public List<OpenFormExerciseAnswerSummaryOfTextDto> SummariesOfTexts { get; set; }
 }
