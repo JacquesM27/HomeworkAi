@@ -12,6 +12,7 @@ public abstract class ClosedAnswerExerciseAnswerDto : ExerciseAnswerDto
 {
     public List<Answer> Answers { get; set; }
 }
+
 public abstract class OpenAnswerExerciseAnswerDto : ExerciseAnswerDto
 {
     public List<Answer> Answers { get; set; }
@@ -52,6 +53,8 @@ public class OpenAnswerExerciseAnswerPassiveSide : OpenAnswerExerciseAnswerDto;
 public class OpenAnswerExerciseAnswerQuestionsToText : OpenAnswerExerciseAnswerDto;
 public class OpenAnswerExerciseAnswerSentencesTranslation : OpenAnswerExerciseAnswerDto;
 public class OpenAnswerExerciseAnswerSentenceWithVerbToCompleteBasedOnInfinitive : OpenAnswerExerciseAnswerDto;
+
+public class OpenAnswerExerciseAnswerSentenceWithVerbToComplete : OpenAnswerExerciseAnswerDto;
 public class OpenAnswerExerciseAnswerWordMeaning : OpenAnswerExerciseAnswerDto;
 
 public class Answer

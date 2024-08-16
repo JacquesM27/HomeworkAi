@@ -6,7 +6,7 @@ public sealed class Teacher
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public byte[] PasswordHash { get; set; }
-    public byte[] PasswordSalt { get; set; }
-    public IEnumerable<Student> IndividualStudents { get; set; }
+    public string Password { get; set; }
+    public IList<Student> IndividualStudents { get; set; }
+    public IList<Class> Classes { get; set; }
 }

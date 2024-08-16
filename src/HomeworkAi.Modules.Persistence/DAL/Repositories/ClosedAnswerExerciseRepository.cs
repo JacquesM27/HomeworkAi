@@ -16,14 +16,23 @@ public interface IClosedAnswerExerciseRepository
     Task AddAsync(MissingWordOrExpressionClosedEntity exercise);
 
     Task<QuestionsToTextClosedEntity?> GetQuestionsToTextAsync(Guid id);
+    Task<List<QuestionsToTextClosedEntity>> GetQuestionsToTextAsync(IEnumerable<Guid> ids);
     Task<PassiveSideClosedEntity?> GetPassiveSideAsync(Guid id);
+    Task<List<PassiveSideClosedEntity>> GetPassiveSideAsync(IEnumerable<Guid> ids);
     Task<ParaphrasingClosedEntity?> GetParaphrasingAsync(Guid id);
+    Task<List<ParaphrasingClosedEntity>> GetParaphrasingAsync(IEnumerable<Guid> ids);
     Task<AnswerToQuestionClosedEntity?> GetAnswerToQuestionAsync(Guid id);
+    Task<List<AnswerToQuestionClosedEntity>> GetAnswerToQuestionAsync(IEnumerable<Guid> ids);
     Task<ConditionalClosedEntity?> GetConditionalAsync(Guid id);
+    Task<List<ConditionalClosedEntity>> GetConditionalAsync(IEnumerable<Guid> ids);
     Task<WordMeaningClosedEntity?> GetWordMeaningAsync(Guid id);
+    Task<List<WordMeaningClosedEntity>> GetWordMeaningAsync(IEnumerable<Guid> ids);
     Task<PhrasalVerbsTranslatingEntity?> GetPhrasalVerbsTranslatingAsync(Guid id);
+    Task<List<PhrasalVerbsTranslatingEntity>> GetPhrasalVerbsTranslatingAsync(IEnumerable<Guid> ids);
     Task<MissingPhrasalVerbClosedEntity?> GetMissingPhrasalVerbAsync(Guid id);
+    Task<List<MissingPhrasalVerbClosedEntity>> GetMissingPhrasalVerbAsync(IEnumerable<Guid> ids);
     Task<MissingWordOrExpressionClosedEntity?> GetMissingWordOrExpressionAsync(Guid id);
+    Task<List<MissingWordOrExpressionClosedEntity>> GetMissingWordOrExpressionAsync(IEnumerable<Guid> id);
 }
 
 internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext) : IClosedAnswerExerciseRepository
@@ -114,9 +123,19 @@ internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext
         return _questionsToText.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
+    public Task<List<QuestionsToTextClosedEntity>> GetQuestionsToTextAsync(IEnumerable<Guid> ids)
+    {
+        return _questionsToText.Where(q => ids.Contains(q.Id)).ToListAsync();
+    }
+
     public Task<PassiveSideClosedEntity?> GetPassiveSideAsync(Guid id)
     {
         return _passiveSide.Where(x => x.Id == id).FirstOrDefaultAsync();
+    }
+
+    public Task<List<PassiveSideClosedEntity>> GetPassiveSideAsync(IEnumerable<Guid> ids)
+    {
+        return _passiveSide.Where(ps => ids.Contains(ps.Id)).ToListAsync();
     }
 
     public Task<ParaphrasingClosedEntity?> GetParaphrasingAsync(Guid id)
@@ -124,9 +143,19 @@ internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext
         return _paraphrasing.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
+    public Task<List<ParaphrasingClosedEntity>> GetParaphrasingAsync(IEnumerable<Guid> ids)
+    {
+        return _paraphrasing.Where(p => ids.Contains(p.Id)).ToListAsync();
+    }
+
     public Task<AnswerToQuestionClosedEntity?> GetAnswerToQuestionAsync(Guid id)
     {
         return _answerToQuestion.Where(x => x.Id == id).FirstOrDefaultAsync();
+    }
+
+    public Task<List<AnswerToQuestionClosedEntity>> GetAnswerToQuestionAsync(IEnumerable<Guid> ids)
+    {
+        return _answerToQuestion.Where(atq => ids.Contains(atq.Id)).ToListAsync();
     }
 
     public Task<ConditionalClosedEntity?> GetConditionalAsync(Guid id)
@@ -134,9 +163,19 @@ internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext
         return _conditional.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
+    public Task<List<ConditionalClosedEntity>> GetConditionalAsync(IEnumerable<Guid> ids)
+    {
+        return _conditional.Where(c => ids.Contains(c.Id)).ToListAsync();
+    }
+
     public Task<WordMeaningClosedEntity?> GetWordMeaningAsync(Guid id)
     {
         return _wordMeaning.Where(x => x.Id == id).FirstOrDefaultAsync();
+    }
+
+    public Task<List<WordMeaningClosedEntity>> GetWordMeaningAsync(IEnumerable<Guid> ids)
+    {
+        return _wordMeaning.Where(wm => ids.Contains(wm.Id)).ToListAsync();
     }
 
     public Task<PhrasalVerbsTranslatingEntity?> GetPhrasalVerbsTranslatingAsync(Guid id)
@@ -144,13 +183,28 @@ internal sealed class ClosedAnswerExerciseRepository(HomeworkDbContext dbContext
         return _phrasalVerbs.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
+    public Task<List<PhrasalVerbsTranslatingEntity>> GetPhrasalVerbsTranslatingAsync(IEnumerable<Guid> ids)
+    {
+        return _phrasalVerbs.Where(pv => ids.Contains(pv.Id)).ToListAsync();
+    }
+
     public Task<MissingPhrasalVerbClosedEntity?> GetMissingPhrasalVerbAsync(Guid id)
     {
         return _missingPhrasalVerb.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
+    public Task<List<MissingPhrasalVerbClosedEntity>> GetMissingPhrasalVerbAsync(IEnumerable<Guid> ids)
+    {
+        return _missingPhrasalVerb.Where(m => ids.Contains(m.Id)).ToListAsync();
+    }
+
     public Task<MissingWordOrExpressionClosedEntity?> GetMissingWordOrExpressionAsync(Guid id)
     {
         return _missingWordOrExpression.Where(x => x.Id == id).FirstOrDefaultAsync();
+    }
+
+    public Task<List<MissingWordOrExpressionClosedEntity>> GetMissingWordOrExpressionAsync(IEnumerable<Guid> ids)
+    {
+        return _missingWordOrExpression.Where(m => ids.Contains(m.Id)).ToListAsync();
     }
 }

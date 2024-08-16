@@ -21,3 +21,5 @@ public sealed class MailEntity : OpenFormExerciseEntity;
 public sealed class EssayEntity : OpenFormExerciseEntity;
 
 public sealed class SummaryOfTextEntity : OpenFormExerciseEntity;
+
+//TODO: text translation

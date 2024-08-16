@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using HomeworkAi.Infrastructure.Cache;
 using HomeworkAi.Infrastructure.Commands;
 using HomeworkAi.Infrastructure.Events;
 using HomeworkAi.Infrastructure.Exceptions;
@@ -22,6 +23,9 @@ public static class Extensions
         services.AddCommands(assemblies);
         services.AddQueries(assemblies);
         services.AddEvents(assemblies);
+
+        services.AddMemoryCache();
+        services.AddSingleton<ICacheStorage, CacheStorage>();
 
         return services;
     }

@@ -2,10 +2,10 @@
 
 namespace HomeworkAi.Modules.Contracts.Teaching;
 
-public class HomeworkResult
+public class ExamResult
 {
     public Guid Id { get; set; }
-    public Homework Homework { get; set; }
+    public Exam Exam { get; set; }
     public Student Student { get; set; }
     
     public IList<OpenFormExerciseAnswerMailDto> Mails { get; set; }
@@ -34,5 +34,4 @@ public class HomeworkResult
     public IList<OpenAnswerExerciseAnswerMissingPhrasalVerb> MissingPhrasalVerbsOpen { get; set; }
     public IList<OpenAnswerExerciseAnswerMissingWordOrExpression> MissingWordsOrExperessionsOpen { get; set; }
     public IList<OpenAnswerExerciseAnswerWordMeaning> WordMeaningsOpen { get; set; }
-    
 }

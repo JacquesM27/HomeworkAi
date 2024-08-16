@@ -52,6 +52,10 @@ internal sealed class HomeworkDbContext(DbContextOptions<HomeworkDbContext> dbCo
     public DbSet<MissingWordOrExpressionOpenEntity> MissingWordOrExpressionOpenEntities { get; set; }
     public DbSet<WordMeaningOpenEntity> WordMeaningOpenEntities { get; set; }
     public DbSet<SuspiciousPromptEntity> SuspiciousPrompts { get; set; }
+    public DbSet<HomeworkEntity> HomeworkEntities { get; set; }
+    public DbSet<StudentEntity> StudentEntities { get; set; }
+    public DbSet<TeacherEntity> TeacherEntities { get; set; }
+    public DbSet<ClassEntity> ClassEntities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
